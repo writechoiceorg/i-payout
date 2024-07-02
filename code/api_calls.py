@@ -66,10 +66,10 @@ def create_headers():
 def create_customer():
     customer_url = f"{url}/customer/create"
     data = {
-        "username": "Gabriel Raeder",
+        "username": "gabriel_raeder",
         "firstName": "Gabriel",
         "lastName": "Raeder",
-        "companyName": "Doe Enterprises",
+        "companyName": "Raeder Enterprises",
         "address": "123 Main Street",
         "address2": "Suite 400",
         "city": "Metropolis",
@@ -87,6 +87,28 @@ def create_customer():
     response = requests.post(customer_url, json=data, headers=headers)
     response.raise_for_status()
     save_response(response, "create_customer")
+
+
+def create_payout():
+    data = {
+        "partnerBatchId": "batch_001",
+        "poolId": "pool_123",
+        "allowDuplicates": True,
+        "autoLoad": True,
+        "currencyCode": "USD",
+        "arrAccounts": [
+            {
+                "username": "bruna_salgado",
+                "amount": 100,
+                "comments": "Test payment",
+                "merchantReferenceId": "123456",
+            }
+        ],
+    }
+    headers = create_headers()
+    response = requests.post(url, json=data, headers=headers)
+    response.raise_for_status()
+    save_response(response, "create_payout")
 
 
 if __name__ == "__main__":
