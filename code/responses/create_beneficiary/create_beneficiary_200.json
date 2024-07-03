@@ -1,0 +1,26 @@
+[
+    {
+        "data": {
+            "customerToken": "e0e4764b-9619-4deb-95c4-108ce9f0fe04"
+        },
+        "isSuccess": true,
+        "message": "Customer created successfully",
+        "statusCode": 0,
+        "logIdentifier": "497b73624c0d47bfb0abf58df5dd99ca"
+    },
+    {
+        "data": {
+            "beneficiaryToken": "556bb43b-7395-4bf9-ab5e-fcc32dbfffac"
+        },
+        "isSuccess": true,
+        "message": "Beneficiary created successfully",
+        "statusCode": 0,
+        "logIdentifier": "df2153b9c0b141098522900ef85466a4"
+    },
+    {
+        "IsSuccess": false,
+        "Message": "Username already exists",
+        "StatusCode": -12,
+        "LogIdentifier": "5d1424b6593c48aabf9148efc8a6c457"
+    }
+]

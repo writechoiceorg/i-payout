@@ -15,7 +15,7 @@ def save_response(response, file_name):
     if status == 204:
         return True
 
-    main_path = f"./responses/{file_name}"
+    main_path = f"./code/responses/{file_name}"
     os.makedirs(main_path, exist_ok=True)
     file_path = f"{main_path}/{file_name}_{status}.json"
 
@@ -63,13 +63,13 @@ def create_headers():
     }
 
 
-def create_customer():
-    customer_url = f"{url}/customer/create"
+def create_beneficiary():
+    beneficiary_url = f"{url}/beneficiary/create"
     data = {
-        "username": "gabriel_raeder",
-        "firstName": "Gabriel",
-        "lastName": "Raeder",
-        "companyName": "Raeder Enterprises",
+        "username": "bruna_salgado",
+        "firstName": "Bruna",
+        "lastName": "Salgado",
+        "companyName": "Doe Enterprises",
         "address": "123 Main Street",
         "address2": "Suite 400",
         "city": "Metropolis",
@@ -78,15 +78,15 @@ def create_customer():
         "country": "US",
         "phoneNumber": "+1-555-123-4567",
         "cellPhoneNumber": "+1-555-765-4321",
-        "emailAddress": "gabrielraeder@writechoice.io",
+        "emailAddress": "bruna@writechoice.io",
         "dateOfBirth": "1985-07-02T16:33:04.299Z",
         "preferredLanguage": "en",
-        "kyc": [{"idType": 0, "idNumber": "103-45-6789"}],
+        "kyc": [{"idType": 0, "idNumber": "223-45-6789"}],
     }
     headers = create_headers()
-    response = requests.post(customer_url, json=data, headers=headers)
+    response = requests.post(beneficiary_url, json=data, headers=headers)
     response.raise_for_status()
-    save_response(response, "create_customer")
+    save_response(response, "create_beneficiary")
 
 
 def create_payout():
@@ -112,4 +112,4 @@ def create_payout():
 
 
 if __name__ == "__main__":
-    create_customer()
+    create_payout()
