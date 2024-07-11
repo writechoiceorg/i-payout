@@ -1,0 +1,403 @@
+openapi: '3.0.3'
+info:
+  title: Beneficiary Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Beneficiary
+security:
+  - apikeyAuth: []
+paths:
+  /api/v{version}/beneficiary/create:
+    post:
+      tags:
+        - Beneficiary
+      summary: Create Beneficiary
+      operationId: create-beneficiary
+      description: >-
+        This API will create a new beneficiary. Once the account has been created,
+        the system will send an email with the credentials to the beneficiary.
+      parameters:
+        - $ref: '#/components/parameters/XMerchantId'
+        - $ref: '#/components/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BeneficiaryRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/CommonResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          beneficiaryToken:
+                            type: string
+                            description: The token associated with the newly created beneficiary.
+              example:
+                isSuccess: true
+                message: Beneficiary created successfully
+                statusCode: 0
+                logIdentifier: 497b73624c0d47bfb0abf58df5dd99ca
+                data:
+                  beneficiaryToken: 556bb43b-7395-4bf9-ab5e-108ce9f0fe04
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Bad request
+                statusCode: 400
+                logIdentifier: 12345
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: 67890
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/getSSOToken:
+    get:
+      tags:
+        - Beneficiary
+      operationId: get-sso-token
+      summary: Get SSO Token
+      description: >-
+        This function will give a one time use Single Sign-On token for a
+        customer. This token is valid for 10 minutes. This token can be used to
+        automatically login the customer to eWallet system.
+      parameters:
+        - $ref: '#/components/parameters/XMerchantId'
+        - $ref: '#/components/parameters/Version'
+        - $ref: '#/components/parameters/BeneficiaryToken'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/CommonResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                            description: The Single Sign-On token.
+                          expireInMinutes:
+                            type: integer
+                            description: Token expiration time in minutes.
+              example:
+                isSuccess: true
+                message: Token generated successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  token: ssoToken123
+                  expireInMinutes: 10
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Invalid customer token
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/balance/{currencyCode}:
+    get:
+      tags:
+        - Beneficiary
+      summary: Get Account Balance
+      description: >-
+        This API will return the balance for a given customer for a specified
+        currency.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: '#/components/parameters/XMerchantId'
+        - $ref: '#/components/parameters/Version'
+        - $ref: '#/components/parameters/BeneficiaryToken'
+        - $ref: '#/components/parameters/CurrencyCode'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/CommonResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          currencyCode:
+                            type: string
+                            description: The 3-character currency code.
+                          balance:
+                            type: number
+                            format: double
+                            description: The balance for the specified currency.
+              example:
+                isSuccess: true
+                message: Balance retrieved successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  currencyCode: USD
+                  balance: 1000.50
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/status:
+    get:
+      tags:
+        - Beneficiary
+      summary: Get Account Status
+      description: This API will return the account status for a given customer.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: '#/components/parameters/XMerchantId'
+        - $ref: '#/components/parameters/Version'
+        - $ref: '#/components/parameters/BeneficiaryToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/CommonResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          customerStatus:
+                            type: integer
+                            description: The status of the customer.
+                          isClosed:
+                            type: boolean
+                            description: Indicates if the customer's account is closed.
+                          isSuspended:
+                            type: boolean
+                            description: Indicates if the customer's account is suspended.
+              example:
+                isSuccess: true
+                message: Account status retrieved successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  customerStatus: 1
+                  isClosed: false
+                  isSuspended: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+
+components:
+  parameters:
+    XMerchantId:
+      name: X-MerchantId
+      in: header
+      schema:
+        type: string
+      description: Your Merchant Identifier (GUID)
+      required: true
+    Version:
+      name: version
+      in: path
+      schema:
+        type: string
+      required: true
+    BeneficiaryToken:
+      name: beneficiaryToken
+      in: path
+      schema:
+        type: string
+      required: true
+      description: The beneficiary's Token
+    CurrencyCode:
+      name: currencyCode
+      in: path
+      schema:
+        type: string
+      required: true
+      description: 3 Character Currency Code. Refer to the [ISO Country and Currency Codes](/reference/country-currency-support) page for details.
+      example: USD
+  schemas:
+    CommonResponse:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the operation was successful.
+        message:
+          type: string
+          description: A message describing the result of the operation.
+        statusCode:
+          type: integer
+          description: The status code of the response.
+        logIdentifier:
+          type: string
+          description: A unique identifier for the log entry.
+    BeneficiaryRequest:
+      required:
+        - emailAddress
+        - firstName
+        - lastName
+        - username
+      type: object
+      properties:
+        emailAddress:
+          type: string
+          format: email
+          description: The email address of the beneficiary.
+          example: dineshpounraj09@gmail.com
+        firstName:
+          type: string
+          description: The first name of the beneficiary.
+          example: Dinesh
+        lastName:
+          type: string
+          description: The last name of the beneficiary.
+          example: Pounraj
+        username:
+          type: string
+          description: The username for the beneficiary's account.
+          example: '{{username}}'
+        companyName:
+          type: string
+          description: The company name associated with the beneficiary.
+          example: I-Payout
+        address:
+          type: string
+          description: The primary address of the beneficiary.
+          example: 540 Nw 104th Street
+        address2:
+          type: string
+          description: The secondary address of the beneficiary.
+          example: ''
+        city:
+          type: string
+          description: The city where the beneficiary resides.
+          example: Fort Lauderdale
+        state:
+          type: string
+          description: The state where the beneficiary resides.
+          example: Florida
+        zipcode:
+          type: string
+          description: The postal code of the beneficiary's address.
+          example: '95894'
+        country:
+          type: string
+          description: The country code of the beneficiary's residence.
+          example: US
+        phoneNumber:
+          type: string
+          description: The phone number of the beneficiary.
+          example: '9584562345'
+        cellPhoneNumber:
+          type: string
+          description: The cell phone number of the beneficiary.
+          example: '9584562345'
+        dateOfBirth:
+          type: string
+          format: date
+          description: The date of birth of the beneficiary.
+          example: '1994-10-24'
+        preferredLanguage:
+          type: string
+          description: The preferred language of the beneficiary.
+          example: EN
+        kyc:
+          type: array
+          items:
+            type: string
+          description: The KYC (Know Your Customer) documents for the beneficiary.
+          example:
+            - '*&&%'
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
