@@ -1,45 +1,101 @@
 schemas:
+  CreateWebhookRequest:
+    type: object
+    properties:
+      alias:
+        type: string
+        description: The alias for the webhook.
+        example: I_Payout
+      eventNames:
+        type: array
+        items:
+          type: string
+        description: The events that will trigger the webhook.
+        example:
+          - customer created
+          - customer bank created
+      url:
+        type: string
+        description: The URL to which the webhook notifications will be sent.
+        example: ''
+      additionalPayloadParam:
+        type: string
+        description: Any additional payload parameters for the webhook.
+        example: ''
+      additionalHeader:
+        type: array
+        items:
+          type: object
+          properties:
+            key:
+              type: string
+              description: The key for the additional header.
+            value:
+              type: string
+              description: The value for the additional header.
+        description: Additional headers for the webhook.
+        example:
+          - key: key
+            value: Test_1
   WebhookResponseData:
     type: object
     properties:
       typeName:
         type: string
+        description: The name of the webhook type.
       protocolName:
         type: string
+        description: The name of the protocol used.
       tlsVersionName:
         type: string
+        description: The name of the TLS version used.
       contentTypeName:
         type: string
+        description: The name of the content type.
       typeID:
         type: integer
+        description: The ID of the webhook type.
       alias:
         type: string
+        description: The alias for the webhook.
       email:
         type: string
+        description: The email associated with the webhook.
       protocolID:
         type: integer
+        description: The ID of the protocol used.
       url:
         type: string
+        description: The URL to which the webhook notifications are sent.
       tlsVersionID:
         type: integer
+        description: The ID of the TLS version used.
       contentTypeID:
         type: integer
+        description: The ID of the content type.
       additionalPayloadParam:
         type: string
+        description: Any additional payload parameters for the webhook.
       acceptedResponseCode:
         type: string
+        description: The accepted response code for the webhook.
       acceptedResponseText:
         type: string
+        description: The accepted response text for the webhook.
       createdByManagerID:
         type: integer
+        description: The ID of the manager who created the webhook.
       dateAddedUTC:
         type: string
         format: date-time
+        description: The date and time the webhook was added, in UTC.
       isActive:
         type: boolean
+        description: Indicates whether the webhook is active.
       token:
         type: string
         format: uuid
+        description: The unique identifier (UUID) for the webhook.
       merchantWebHookAdditionalHeaderDetails:
         type: array
         items:
@@ -47,13 +103,19 @@ schemas:
           properties:
             additionalHeaderID:
               type: integer
+              description: The ID of the additional header.
             webhookRecordID:
               type: integer
+              description: The ID of the webhook record.
             key:
               type: string
+              description: The key of the additional header.
             value:
               type: string
+              description: The value of the additional header.
+        description: Details of additional headers for the webhook.
       eventNames:
         type: array
         items:
           type: string
+        description: The list of events that trigger the webhook.

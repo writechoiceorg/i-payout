@@ -12,8 +12,9 @@ paths:
   /api/v{version}/webhook/Create:
     post:
       tags:
-        - Webhook > Webhook Invalid requests > Create Webhook
-      summary: MerchantID
+        - Webhooks
+      summary: Create Webhook
+      operationId: create-webhook
       description: >-
         This API will create a new webhook and send notifications to the
         merchant URL based on the selected events.
@@ -21,49 +22,13 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                alias:
-                  type: string
-                  example: I_Payout
-                eventNames:
-                  type: array
-                  items:
-                    type: string
-                  example:
-                    - customer created
-                    - customer bank created
-                url:
-                  type: string
-                  example: ''
-                additionalPayloadParam:
-                  type: string
-                  example: ''
-                additionalHeader:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      key:
-                        type: string
-                      value:
-                        type: string
-                  example:
-                    - key: key
-                      value: Test_1
-      security:
-        - apikeyAuth: []
+              $ref: './schemas/webhook_schemas.yml#/schemas/CreateWebhookRequest'
       parameters:
         - $ref: './schemas/index.yml#/parameters/XMerchantId'
         - $ref: './schemas/index.yml#/parameters/Version'
       responses:
         '200':
           description: Success
-          headers:
-            Content-Type:
-              schema:
-                type: string
-                example: application/json
           content:
             application/json:
               schema:
@@ -89,6 +54,51 @@ paths:
                 allOf:
                   - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
+  /api/v{version}/webhook/{token}/activate:
+    put:
+      tags:
+        - Webhooks
+      summary: Activate Webhook
+      operationId: activate-webhook
+      description: This API will activate the webhook subscription.
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - name: token
+          in: path
+          schema:
+            type: string
+          required: true
+          description: The unique identifier token for the webhook to be activated.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+
 components:
   securitySchemes:
     apikeyAuth:
