@@ -1,0 +1,195 @@
+parameters:
+  XMerchantId:
+    name: X-MerchantId
+    in: header
+    schema:
+      type: string
+    description: Your Merchant Identifier (GUID)
+    required: true
+  Version:
+    name: version
+    in: path
+    schema:
+      type: string
+      enum: ['1']
+    required: true
+    example: 1
+  BeneficiaryToken:
+    name: beneficiaryToken
+    in: path
+    schema:
+      type: string
+    required: true
+    description: The beneficiary's Token
+  CurrencyCode:
+    name: currencyCode
+    in: path
+    schema:
+      type: string
+    required: true
+    description: 3 Character Currency Code. Refer to the [ISO Country and Currency Codes](/reference/country-currency-support) page for details.
+    example: USD
+schemas:
+  DefaultResponse:
+    type: object
+    properties:
+      isSuccess:
+        type: boolean
+        description: Indicates if the operation was successful.
+      message:
+        type: string
+        description: A message describing the result of the operation.
+      statusCode:
+        type: integer
+        description: The status code of the response.
+      logIdentifier:
+        type: string
+        description: A unique identifier for the log entry.
+  BeneficiaryRequest:
+    required:
+      - emailAddress
+      - firstName
+      - lastName
+      - username
+    type: object
+    properties:
+      emailAddress:
+        type: string
+        format: email
+        description: The email address of the beneficiary.
+        example: dineshpounraj09@gmail.com
+      firstName:
+        type: string
+        description: The first name of the beneficiary.
+        example: Dinesh
+      lastName:
+        type: string
+        description: The last name of the beneficiary.
+        example: Pounraj
+      username:
+        type: string
+        description: The username for the beneficiary's account.
+        example: '{{username}}'
+      companyName:
+        type: string
+        description: The company name associated with the beneficiary.
+        example: I-Payout
+      address:
+        type: string
+        description: The primary address of the beneficiary.
+        example: 540 Nw 104th Street
+      address2:
+        type: string
+        description: The secondary address of the beneficiary.
+        example: ''
+      city:
+        type: string
+        description: The city where the beneficiary resides.
+        example: Fort Lauderdale
+      state:
+        type: string
+        description: The state where the beneficiary resides.
+        example: Florida
+      zipcode:
+        type: string
+        description: The postal code of the beneficiary's address.
+        example: '95894'
+      country:
+        type: string
+        description: The country code of the beneficiary's residence.
+        example: US
+      phoneNumber:
+        type: string
+        description: The phone number of the beneficiary.
+        example: '9584562345'
+      cellPhoneNumber:
+        type: string
+        description: The cell phone number of the beneficiary.
+        example: '9584562345'
+      dateOfBirth:
+        type: string
+        format: date
+        description: The date of birth of the beneficiary.
+        example: '1994-10-24'
+      preferredLanguage:
+        type: string
+        description: The preferred language of the beneficiary.
+        example: EN
+      kyc:
+        type: array
+        items:
+          type: string
+        description: The KYC (Know Your Customer) documents for the beneficiary.
+        example:
+          - '*&&%'
+  BeneficiaryData:
+    type: object
+    properties:
+      beneficiaryToken:
+        type: string
+        format: uuid
+        description: The beneficiary's token.
+      username:
+        type: string
+        description: The beneficiary's username.
+      emailAddress:
+        type: string
+        description: The beneficiary's email address.
+      firstName:
+        type: string
+        description: The beneficiary's first name.
+      lastName:
+        type: string
+        description: The beneficiary's last name.
+      companyName:
+        type: string
+        description: The beneficiary's company name.
+      phoneNumber:
+        type: string
+        description: The beneficiary's phone number.
+      cellPhoneNumber:
+        type: string
+        description: The beneficiary's cell phone number.
+      address:
+        type: string
+        description: The beneficiary's primary address.
+      address2:
+        type: string
+        description: The beneficiary's secondary address.
+      state:
+        type: string
+        description: The beneficiary's state.
+      city:
+        type: string
+        description: The beneficiary's city.
+      zipCode:
+        type: string
+        description: The beneficiary's zip code.
+      country:
+        type: string
+        description: The beneficiary's country.
+      dateOfBirth:
+        type: string
+        format: date
+        description: The beneficiary's date of birth.
+      preferredLanguage:
+        type: string
+        description: The beneficiary's preferred language.
+      isSuspended:
+        type: boolean
+        description: Indicates if the beneficiary is suspended.
+      isInfoVerified:
+        type: boolean
+        description: Indicates if the beneficiary's information is verified.
+      isClosed:
+        type: boolean
+        description: Indicates if the beneficiary's account is closed.
+      createdDate:
+        type: string
+        format: date-time
+        description: The date when the beneficiary's account was created.
+securitySchemes:
+  apikeyAuth:
+    type: apiKey
+    in: header
+    name: Authorization

@@ -1,0 +1,559 @@
+openapi: '3.0.3'
+info:
+  title: Beneficiary Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Beneficiary
+security:
+  - apikeyAuth: []
+paths:
+  /api/v{version}/beneficiary/create:
+    post:
+      tags:
+        - Beneficiary
+      summary: Create Beneficiary
+      operationId: create-beneficiary
+      description: >-
+        This API will create a new beneficiary. Once the account has been created,
+        the system will send an email with the credentials to the beneficiary.
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './components.yml#/schemas/BeneficiaryRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          beneficiaryToken:
+                            type: string
+                            description: The token associated with the newly created beneficiary.
+              example:
+                isSuccess: true
+                message: Beneficiary created successfully
+                statusCode: 0
+                logIdentifier: 497b73624c0d47bfb0abf58df5dd99ca
+                data:
+                  beneficiaryToken: 556bb43b-7395-4bf9-ab5e-108ce9f0fe04
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Bad request
+                statusCode: 400
+                logIdentifier: 12345
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: 67890
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/getSSOToken:
+    get:
+      tags:
+        - Beneficiary
+      operationId: get-sso-token
+      summary: Get SSO Token
+      description: >-
+        This function will give a one time use Single Sign-On token for a
+        customer. This token is valid for 10 minutes. This token can be used to
+        automatically login the beneficiary to eWallet system.
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+        - $ref: './components.yml#/parameters/BeneficiaryToken'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          token:
+                            type: string
+                            description: The Single Sign-On token.
+                          expireInMinutes:
+                            type: integer
+                            description: Token expiration time in minutes.
+              example:
+                isSuccess: true
+                message: Token generated successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  token: ssoToken123
+                  expireInMinutes: 10
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid customer token
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/balance/{currencyCode}:
+    get:
+      tags:
+        - Beneficiary
+      summary: Get Account Balance
+      description: >-
+        This API will return the balance for a given beneficiary for a specified
+        currency.
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+        - $ref: './components.yml#/parameters/BeneficiaryToken'
+        - $ref: './components.yml#/parameters/CurrencyCode'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          currencyCode:
+                            type: string
+                            description: The 3-character currency code.
+                          balance:
+                            type: number
+                            format: double
+                            description: The balance for the specified currency.
+              example:
+                isSuccess: true
+                message: Balance retrieved successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  currencyCode: USD
+                  balance: 1000.50
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/status:
+    get:
+      tags:
+        - Beneficiary
+      operationId: get-account-status
+      summary: Get Account Status
+      description: This API will return the account status for a given beneficiary.
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+        - $ref: './components.yml#/parameters/BeneficiaryToken'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          customerStatus:
+                            type: integer
+                            description: The status of the customer.
+                          isClosed:
+                            type: boolean
+                            description: Indicates if the customer's account is closed.
+                          isSuspended:
+                            type: boolean
+                            description: Indicates if the customer's account is suspended.
+              example:
+                isSuccess: true
+                message: Account status retrieved successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  customerStatus: 1
+                  isClosed: false
+                  isSuspended: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}/verificationstatus:
+    get:
+      tags:
+        - Beneficiary
+      operationId: get-kyc-status
+      summary: Get KYC Status
+      description: This API will return the KYC verification status for a given beneficiary.
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+        - $ref: './components.yml#/parameters/BeneficiaryToken'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          isCustomerVerificationCompleted:
+                            type: boolean
+                            description: Indicates if the customer verification is completed.
+                          message:
+                            type: string
+                            description: Additional message regarding the KYC status.
+              example:
+                isSuccess: true
+                message: KYC status retrieved successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  isCustomerVerificationCompleted: true
+                  message: KYC verification is complete
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/{beneficiaryToken}:
+    get:
+      tags:
+        - Beneficiary
+      operationId: get-beneficiary
+      summary: Get Beneficiary
+      description: This API will return the beneficiary profile information.
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+        - $ref: './components.yml#/parameters/BeneficiaryToken'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './components.yml#/schemas/BeneficiaryData'
+              example:
+                isSuccess: true
+                message: Beneficiary profile retrieved successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  beneficiaryToken: 123e4567-e89b-12d3-a456-426614174000
+                  username: johndoe
+                  emailAddress: johndoe@example.com
+                  firstName: John
+                  lastName: Doe
+                  companyName: Example Company
+                  phoneNumber: '1234567890'
+                  cellPhoneNumber: '0987654321'
+                  address: 123 Main St
+                  address2: Apt 4B
+                  state: CA
+                  city: Los Angeles
+                  zipCode: '90001'
+                  country: US
+                  dateOfBirth: '1980-01-01'
+                  preferredLanguage: EN
+                  isSuspended: false
+                  isInfoVerified: true
+                  isClosed: false
+                  createdDate: '2024-01-01T12:00:00Z'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/exists:
+    get:
+      tags:
+        - Beneficiary
+      summary: Beneficiary Exists
+      operationId: beneficiary-exists
+      description: This API checks if a beneficiary exists by username.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+        - name: userName
+          in: query
+          schema:
+            type: string
+          description: The username to check for existence.
+          example: Dineesh
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          exists:
+                            type: boolean
+                            description: Indicates if the beneficiary exists.
+              example:
+                isSuccess: true
+                message: Beneficiary found
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  exists: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+  /api/v{version}/beneficiary/update/username:
+    post:
+      tags:
+        - Beneficiary
+      operationId: update-username
+      summary: Update Username
+      description: This API will update the username of an existing beneficiary.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentUsername:
+                  type: string
+                  description: The current username of the beneficiary.
+                  example: mannew
+                newUsername:
+                  type: string
+                  description: The new username for the beneficiary.
+                  example: newman
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: './components.yml#/parameters/XMerchantId'
+        - $ref: './components.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './components.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          username:
+                            type: string
+                            description: The updated username of the beneficiary.
+                          beneficiaryToken:
+                            type: string
+                            description: The token associated with the beneficiary.
+              example:
+                isSuccess: true
+                message: Username updated successfully
+                statusCode: 0
+                logIdentifier: abc123
+                data:
+                  username: newman
+                  beneficiaryToken: 556bb43b-7395-4bf9-ab5e-108ce9f0fe04
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+                data: {}
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './components.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+                data: {}
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
