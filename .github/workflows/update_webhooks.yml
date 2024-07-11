@@ -4,7 +4,7 @@ name: Sync API definition to ReadMe
 on:
   push:
     paths:
-      - 'openAPI/beneficiary.yml'
+      - 'openAPI/webhooks.yml'
 
 jobs:  
   sync-readme-api-definition:
@@ -19,6 +19,6 @@ jobs:
         # Docs: https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions#example-using-versioned-actions
         uses: readmeio/rdme@v8
         with:
-          rdme: openapi ./openAPI/beneficiary.yml --key=${{ secrets.README_API_KEY }} --id=${{ secrets.WEBHOOK_ID }}
+          rdme: openapi ./openAPI/webhooks.yml --key=${{ secrets.README_API_KEY }} --id=${{ secrets.WEBHOOK_ID }}
 
           
