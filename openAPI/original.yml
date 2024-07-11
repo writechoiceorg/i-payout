@@ -88,6 +88,1316 @@ tags:
   - name: report > Report Invalid Requests > Get Transfer Report
   - name: report > Report Invalid Requests > Get Transfers using CustomerToken Copy
 paths:
+  /api/v{version}/beneficiary/create:
+    post:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Create Customer
+      summary: Invalid kyc field
+      description: >-
+        This API will create a new customer. Once the account has been created,
+        system will send an email with the credentials to the customer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                emailAddress: dineshpounraj09@gmail.com
+                firstName: Dinesh
+                lastName: Pounraj
+                username: '{{username}}'
+                companyName: I-Payout
+                address: 540 Nw 104th Street
+                address2: ''
+                city: Fort Lauderdale
+                state: Florida
+                zipcode: '95894'
+                country: US
+                phoneNumber: '9584562345'
+                cellPhoneNumber: '9584562345'
+                dateOfBirth: '1994-10-24'
+                preferredLanguage: EN
+                kyc:
+                  - '*&&%'
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerToken: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerToken: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v1/beneficiary/{customerToken}/getSSOToken:
+    get:
+      tags:
+        - beneficiary > Valid beneficiary Requests > Get SSO Token
+      summary: Get SSO Token
+      description: >-
+        This function will give a one time use Single Sign-On token for a
+        customer. This token is valid for 10 minutes. This token can be used to
+        automatically login the customer to eWallet system.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  token: <string>
+                  expireInMinutes: <integer>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  token: <string>
+                  expireInMinutes: <integer>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/beneficiary/{customerToken}/balance/{currencyCode}:
+    get:
+      tags:
+        - beneficiary > Valid beneficiary Requests > Get Account Balance
+      summary: Get Account Balance
+      description: >-
+        This API will return the balance for a given customer for a specified
+        currency.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+        - name: currencyCode
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) 3 Character Currency Code
+          example: USD
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  currencyCode: <string>
+                  balance: <double>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  currencyCode: <string>
+                  balance: <double>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/beneficiary/{customerToken}/status:
+    get:
+      tags:
+        - beneficiary > Valid beneficiary Requests > Get Account Status
+      summary: Get Account Status
+      description: This API will return the account status for a given customer.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerStatus: 1
+                  isClosed: <boolean>
+                  isSuspended: <boolean>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerStatus: 1
+                  isClosed: <boolean>
+                  isSuspended: <boolean>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/beneficiary/{customerToken}/verificationstatus:
+    get:
+      tags:
+        - beneficiary > Valid beneficiary Requests > Get KYC Status
+      summary: Get KYC Status
+      description: This API will return the KYC verification status for a given customer.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  isCustomerVerificationCompleted: <boolean>
+                  message: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  isCustomerVerificationCompleted: <boolean>
+                  message: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/beneficiary/{customerToken}:
+    get:
+      tags:
+        - beneficiary > Valid beneficiary Requests > Get Customer
+      summary: Get beneficiary
+      description: This API will return the customer profile information.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerToken: <uuid>
+                  username: <string>
+                  emailAddress: <string>
+                  firstName: <string>
+                  lastName: <string>
+                  companyName: <string>
+                  phoneNumber: <string>
+                  cellPhoneNumber: <string>
+                  address: <string>
+                  address2: <string>
+                  state: <string>
+                  city: <string>
+                  zipCode: <string>
+                  country: <string>
+                  dateOfBirth: <dateTime>
+                  preferredLanguage: <string>
+                  isSuspended: <boolean>
+                  isInfoVerified: <boolean>
+                  isClosed: <boolean>
+                  createdDate: <dateTime>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerToken: <uuid>
+                  username: <string>
+                  emailAddress: <string>
+                  firstName: <string>
+                  lastName: <string>
+                  companyName: <string>
+                  phoneNumber: <string>
+                  cellPhoneNumber: <string>
+                  address: <string>
+                  address2: <string>
+                  state: <string>
+                  city: <string>
+                  zipCode: <string>
+                  country: <string>
+                  dateOfBirth: <dateTime>
+                  preferredLanguage: <string>
+                  isSuspended: <boolean>
+                  isInfoVerified: <boolean>
+                  isClosed: <boolean>
+                  createdDate: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/beneficiary/exists:
+    get:
+      tags:
+        - beneficiary > Valid beneficiary Requests > beneficiary Exists
+      summary: beneficiary Exists
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: X-MerchantID
+          in: header
+          schema:
+            type: string
+          example: '{{MerchantID}}'
+        - name: userName
+          in: query
+          schema:
+            type: string
+          example: Dineesh
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v{version}/beneficiary/update/username:
+    post:
+      tags:
+        - beneficiary > Valid beneficiary Requests > update username
+      summary: Update Username
+      description: This API will update the username of an existing customer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                currentUsername: mannew
+                newUsername: newman
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantID}}'
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  username: <string>
+                  customerToken: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  username: <string>
+                  customerToken: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v1/customer/{customerToken}/getSSOToken:
+    get:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Get SSO Token
+      summary: MerchantID
+      description: >-
+        This function will give a one time use Single Sign-On token for a
+        customer. This token is valid for 10 minutes. This token can be used to
+        automatically login the customer to eWallet system.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantI}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  token: <string>
+                  expireInMinutes: <integer>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  token: <string>
+                  expireInMinutes: <integer>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/customer/{customerToken}/balance/{currencyCode}:
+    get:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Get Account Balance
+      summary: MerchantID
+      description: >-
+        This API will return the balance for a given customer for a specified
+        currency.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantI}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+        - name: currencyCode
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) 3 Character Currency Code
+          example: USD
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  currencyCode: <string>
+                  balance: <double>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  currencyCode: <string>
+                  balance: <double>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/customer/{customerToken}/status:
+    get:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Get Account Status
+      summary: MerchantID
+      description: This API will return the account status for a given customer.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantI}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerStatus: 1
+                  isClosed: <boolean>
+                  isSuspended: <boolean>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerStatus: 1
+                  isClosed: <boolean>
+                  isSuspended: <boolean>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/customer/{customerToken}/verificationstatus:
+    get:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Get KYC Status
+      summary: MarchantID
+      description: This API will return the KYC verification status for a given customer.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantI}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer's Token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  isCustomerVerificationCompleted: <boolean>
+                  message: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  isCustomerVerificationCompleted: <boolean>
+                  message: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/customer/{customerToken}:
+    get:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Get Customer
+      summary: MerchantID
+      description: This API will return the customer profile information.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantI}}'
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: customerToken
+          in: path
+          schema:
+            type: string
+          required: true
+          description: (Required) Customer token
+          example: '{{Customer_Token}}'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerToken: <uuid>
+                  username: <string>
+                  emailAddress: <string>
+                  firstName: <string>
+                  lastName: <string>
+                  companyName: <string>
+                  phoneNumber: <string>
+                  cellPhoneNumber: <string>
+                  address: <string>
+                  address2: <string>
+                  state: <string>
+                  city: <string>
+                  zipCode: <string>
+                  country: <string>
+                  dateOfBirth: <dateTime>
+                  preferredLanguage: <string>
+                  isSuspended: <boolean>
+                  isInfoVerified: <boolean>
+                  isClosed: <boolean>
+                  createdDate: <dateTime>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  customerToken: <uuid>
+                  username: <string>
+                  emailAddress: <string>
+                  firstName: <string>
+                  lastName: <string>
+                  companyName: <string>
+                  phoneNumber: <string>
+                  cellPhoneNumber: <string>
+                  address: <string>
+                  address2: <string>
+                  state: <string>
+                  city: <string>
+                  zipCode: <string>
+                  country: <string>
+                  dateOfBirth: <dateTime>
+                  preferredLanguage: <string>
+                  isSuspended: <boolean>
+                  isInfoVerified: <boolean>
+                  isClosed: <boolean>
+                  createdDate: <dateTime>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+  /api/v{version}/customer/exists:
+    get:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > Customer Exists Copy
+      summary: Invalid MerchantID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: X-MerchantID
+          in: header
+          schema:
+            type: string
+          example: '{{MerchantI}}'
+        - name: userName
+          in: query
+          schema:
+            type: string
+          example: Dinesh
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v{version}/customer/update/username:
+    post:
+      tags:
+        - beneficiary > Invalid beneficiary Requests > update username
+      summary: Update MerchantID
+      description: This API will update the username of an existing customer.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                currentUsername: Dinesh
+                newUsername: Dineesh
+      security:
+        - apikeyAuth: []
+      parameters:
+        - name: X-MerchantId
+          in: header
+          schema:
+            type: string
+          description: (Required) Merchant Identifier (GUID)
+          example: '{{MerchantI}}'
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: version
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  username: <string>
+                  customerToken: <string>
+        '400':
+          description: Bad Request
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
+                data:
+                  username: <string>
+                  customerToken: <string>
+        '500':
+          description: Internal Server Error
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                isSuccess: <boolean>
+                message: <string>
+                statusCode: 0
+                logIdentifier: <string>
   /api/v{version}/webhook/Create:
     post:
       tags:
