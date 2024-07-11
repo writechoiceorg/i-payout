@@ -1,0 +1,16 @@
+[
+    {
+        "statusCode": -72,
+        "isSuccess": false,
+        "logIdentifier": "27ebc1a688474a2ab4d79c6a8f4d86ab",
+        "message": "400: Bad request. The inputs supplied to the API are invalid",
+        "errors": {
+            "ArrAccounts[0].Comments": [
+                "Comments: Special character not allowed"
+            ],
+            "ArrAccounts[0].MerchantReferenceId": [
+                "Invalid merchant reference id"
+            ]
+        }
+    }
+]

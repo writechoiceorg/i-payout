@@ -1,4 +1,5 @@
 import requests
+from requests import Response
 import json
 import os
 from dotenv import load_dotenv
@@ -8,19 +9,26 @@ load_dotenv()
 url = "https://merchantapi.testewallet.com/api/v1"
 
 
-def save_response(response, file_name):
-    response_data = response.json()
+def save_response(response: Response, file_name):
     status = response.status_code
     print(status)
     if status == 204:
         return True
 
+    try:
+        response_data = response.json()
+    except json.JSONDecodeError:
+        response_data = {"content": response.content.decode("utf-8")}
+
+    if file_name == "token":
+        file_path = f"./code/{file_name}.json"
+        with open(file_path, "w") as json_file:
+            json.dump(response_data, json_file, indent=4)
+        return
+
     main_path = f"./code/responses/{file_name}"
     os.makedirs(main_path, exist_ok=True)
     file_path = f"{main_path}/{file_name}_{status}.json"
-
-    if file_name == "token":
-        file_path = file_name
 
     existing_data = []
     if os.path.exists(file_path):
@@ -63,6 +71,18 @@ def create_headers():
     }
 
 
+def generate_token():
+    token_url = f"{url}/Authentication/Login"
+    data = {
+        "username": "6d099995-e2f9-4a01-bef1-258eb99c1b77",
+        "password": "Dp4xF2MYysp$0g!1",
+    }
+
+    headers = create_headers()
+    response = requests.post(token_url, json=data, headers=headers)
+    save_response(response, "generate_token")
+
+
 def create_beneficiary():
     beneficiary_url = f"{url}/beneficiary/create"
     data = {
@@ -85,7 +105,6 @@ def create_beneficiary():
     }
     headers = create_headers()
     response = requests.post(beneficiary_url, json=data, headers=headers)
-    response.raise_for_status()
     save_response(response, "create_beneficiary")
 
 
@@ -105,11 +124,12 @@ def create_payout():
             }
         ],
     }
+
+    payout_url = f"{url}/PayOut/create"
     headers = create_headers()
-    response = requests.post(url, json=data, headers=headers)
-    response.raise_for_status()
+    response = requests.post(payout_url, json=data, headers=headers)
     save_response(response, "create_payout")
 
 
 if __name__ == "__main__":
-    create_payout()
+    generate_token()
