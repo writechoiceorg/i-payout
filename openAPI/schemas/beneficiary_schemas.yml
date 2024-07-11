@@ -1,50 +1,4 @@
-parameters:
-  XMerchantId:
-    name: X-MerchantId
-    in: header
-    schema:
-      type: string
-    description: Your Merchant Identifier (GUID)
-    required: true
-  Version:
-    name: version
-    in: path
-    schema:
-      type: string
-      enum: ['1']
-    required: true
-    example: 1
-  BeneficiaryToken:
-    name: beneficiaryToken
-    in: path
-    schema:
-      type: string
-    required: true
-    description: The beneficiary's Token
-  CurrencyCode:
-    name: currencyCode
-    in: path
-    schema:
-      type: string
-    required: true
-    description: 3 Character Currency Code. Refer to the [ISO Country and Currency Codes](/reference/country-currency-support) page for details.
-    example: USD
 schemas:
-  DefaultResponse:
-    type: object
-    properties:
-      isSuccess:
-        type: boolean
-        description: Indicates if the operation was successful.
-      message:
-        type: string
-        description: A message describing the result of the operation.
-      statusCode:
-        type: integer
-        description: The status code of the response.
-      logIdentifier:
-        type: string
-        description: A unique identifier for the log entry.
   BeneficiaryRequest:
     required:
       - emailAddress
@@ -188,8 +142,3 @@ schemas:
         type: string
         format: date-time
         description: The date when the beneficiary's account was created.
-securitySchemes:
-  apikeyAuth:
-    type: apiKey
-    in: header
-    name: Authorization

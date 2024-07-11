@@ -1,0 +1,97 @@
+openapi: '3.0.3'
+info:
+  title: Webhooks Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Webhooks
+security:
+  - apikeyAuth: []
+paths:
+  /api/v{version}/webhook/Create:
+    post:
+      tags:
+        - Webhook > Webhook Invalid requests > Create Webhook
+      summary: MerchantID
+      description: >-
+        This API will create a new webhook and send notifications to the
+        merchant URL based on the selected events.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                alias:
+                  type: string
+                  example: I_Payout
+                eventNames:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - customer created
+                    - customer bank created
+                url:
+                  type: string
+                  example: ''
+                additionalPayloadParam:
+                  type: string
+                  example: ''
+                additionalHeader:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      key:
+                        type: string
+                      value:
+                        type: string
+                  example:
+                    - key: key
+                      value: Test_1
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization

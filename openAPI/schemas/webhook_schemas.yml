@@ -1,0 +1,59 @@
+schemas:
+  WebhookResponseData:
+    type: object
+    properties:
+      typeName:
+        type: string
+      protocolName:
+        type: string
+      tlsVersionName:
+        type: string
+      contentTypeName:
+        type: string
+      typeID:
+        type: integer
+      alias:
+        type: string
+      email:
+        type: string
+      protocolID:
+        type: integer
+      url:
+        type: string
+      tlsVersionID:
+        type: integer
+      contentTypeID:
+        type: integer
+      additionalPayloadParam:
+        type: string
+      acceptedResponseCode:
+        type: string
+      acceptedResponseText:
+        type: string
+      createdByManagerID:
+        type: integer
+      dateAddedUTC:
+        type: string
+        format: date-time
+      isActive:
+        type: boolean
+      token:
+        type: string
+        format: uuid
+      merchantWebHookAdditionalHeaderDetails:
+        type: array
+        items:
+          type: object
+          properties:
+            additionalHeaderID:
+              type: integer
+            webhookRecordID:
+              type: integer
+            key:
+              type: string
+            value:
+              type: string
+      eventNames:
+        type: array
+        items:
+          type: string
