@@ -29,6 +29,20 @@ parameters:
     required: true
     description: 3 Character Currency Code. Refer to the [ISO Country and Currency Codes](/reference/country-currency-support) page for details.
     example: USD
+  PageNumber:
+    name: pageNumber
+    in: query
+    schema:
+      type: integer
+    description: The page number to retrieve.
+    example: 1
+  NumberRecords:
+    name: noOfRecords
+    in: query
+    schema:
+      type: integer
+    description: The number of records to retrieve per page.
+    example: 10
 schemas:
   DefaultResponse:
     type: object

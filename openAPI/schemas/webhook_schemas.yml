@@ -11,17 +11,12 @@ schemas:
         items:
           type: string
         description: The events that will trigger the webhook.
-        example:
-          - customer created
-          - customer bank created
       url:
         type: string
         description: The URL to which the webhook notifications will be sent.
-        example: ''
       additionalPayloadParam:
         type: string
         description: Any additional payload parameters for the webhook.
-        example: ''
       additionalHeader:
         type: array
         items:
@@ -119,3 +114,106 @@ schemas:
         items:
           type: string
         description: The list of events that trigger the webhook.
+  WebhookDetails:
+    type: object
+    properties:
+      recordID:
+        type: integer
+        description: Unique identifier for the webhook record.
+      merchantID:
+        type: integer
+        description: Unique identifier for the merchant.
+      typeID:
+        type: integer
+        description: Identifier for the type of webhook.
+      alias:
+        type: string
+        description: Alias name for the webhook.
+      email:
+        type: string
+        description: Email associated with the webhook.
+      protocolID:
+        type: integer
+        description: Identifier for the protocol used.
+      url:
+        type: string
+        description: URL where the webhook notifications will be sent.
+      tlsVersionID:
+        type: integer
+        description: Identifier for the TLS version used.
+      contentTypeID:
+        type: integer
+        description: Identifier for the content type.
+      additionalPayloadParam:
+        type: string
+        description: Additional payload parameters for the webhook.
+      acceptedResponseCode:
+        type: string
+        description: Accepted response code for the webhook.
+      acceptedResponseText:
+        type: string
+        description: Accepted response text for the webhook.
+      createdByManagerID:
+        type: integer
+        description: Identifier for the manager who created the webhook.
+      dateAddedUTC:
+        type: string
+        format: date-time
+        description: Date and time when the webhook was added in UTC.
+      isActive:
+        type: boolean
+        description: Indicates if the webhook is active.
+      identifier:
+        type: string
+        format: uuid
+        description: Unique identifier for the webhook.
+      merchantName:
+        type: string
+        description: Name of the merchant.
+      typeName:
+        type: string
+        description: Name of the webhook type.
+      protocolName:
+        type: string
+        description: Name of the protocol used.
+      tlsVersionName:
+        type: string
+        description: Name of the TLS version used.
+      contentTypeName:
+        type: string
+        description: Name of the content type.
+      webHookEventDetails:
+        type: array
+        items:
+          type: object
+          properties:
+            eventDetailID:
+              type: integer
+              description: Unique identifier for the webhook event detail.
+            webhookRecordID:
+              type: integer
+              description: Unique identifier for the webhook record.
+            eventID:
+              type: integer
+              description: Identifier for the event.
+            eventName:
+              type: string
+              description: Name of the event.
+  GetAllWebhooksResponseData:
+    type: object
+    properties:
+      totalRecords:
+        type: integer
+        description: Total number of records.
+      webhookDetails:
+        type: array
+        items:
+          $ref: '#/schemas/WebhookDetails'
+parameters:
+  Token:
+    name: token
+    in: path
+    schema:
+      type: string
+    required: true
+    description: The unique identifier token for the webhook.

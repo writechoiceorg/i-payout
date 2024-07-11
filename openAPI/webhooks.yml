@@ -64,12 +64,7 @@ paths:
       parameters:
         - $ref: './schemas/index.yml#/parameters/XMerchantId'
         - $ref: './schemas/index.yml#/parameters/Version'
-        - name: token
-          in: path
-          schema:
-            type: string
-          required: true
-          description: The unique identifier token for the webhook to be activated.
+        - $ref: './schemas/webhook_schemas.yml#/parameters/Token'
       responses:
         '200':
           description: Success
@@ -98,7 +93,233 @@ paths:
                 allOf:
                   - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
-
+  /api/v{version}/webhook/{token}/deactivate:
+    put:
+      tags:
+        - Webhooks
+      summary: Deactivate Webhook
+      operationId: deactivate-webhook
+      description: This API will deactivate the webhook subscription.
+      requestBody:
+        content: {}
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/webhook_schemas.yml#/parameters/Token'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/index.yml#/schemas/DefaultResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/index.yml#/schemas/DefaultResponse'
+  /api/v{version}/webhook/{token}:
+    put:
+      tags:
+        - Webhooks
+      summary: Update Webhook
+      operationId: update-webhook
+      description: >-
+        This API will update an existing webhook record based on the given webhook
+        token.
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/webhook_schemas.yml#/parameters/Token'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/webhook_schemas.yml#/schemas/CreateWebhookRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+    delete:
+      tags:
+        - Webhooks
+      summary: Delete Webhook
+      operationId: delete-webhook
+      description: This API will delete the webhook.
+      
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/webhook_schemas.yml#/parameters/Token'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+  /api/v{version}/webhook/search:
+    get:
+      tags:
+        - Webhooks
+      summary: Get All Merchant Webhooks
+      operationId: get-all-merchant-webhooks
+      description: This API will return all the webhook subscriptions for the merchant.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/PageNumber'
+        - $ref: './schemas/index.yml#/parameters/NumberRecords'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: './schemas/webhook_schemas.yml#/schemas/GetAllWebhooksResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+  /api/v{version}/webhook/GetAllEvents:
+    get:
+      tags:
+        - Webhooks
+      summary: Get All Webhook Events
+      operationId: get-all-webhook-events
+      description: >-
+        This API will return a list of all the webhook events that you can
+        subscribe to.
+      security:
+        - apikeyAuth: []
+      parameters:
+        - $ref: './schemas/index.yml#/parameters/XMerchantId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: OK
+          headers:
+            Content-Type:
+              schema:
+                type: string
+                example: application/json
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          webhookEvent:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                eventName:
+                                  type: string
+                                  description: Name of the webhook event
+                              example:
+                                eventName: "CUSTOMER.CREATED"
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
 components:
   securitySchemes:
     apikeyAuth:
