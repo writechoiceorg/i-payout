@@ -19,13 +19,13 @@ paths:
         This API will create a new beneficiary. Once the account has been created,
         the system will send an email with the credentials to the beneficiary.
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'openAPI/schemas//beneficiary_schemas.yml#/schemas/BeneficiaryRequest'
+              $ref: 'openAPI/schemas/beneficiary_schemas.yml#/schemas/BeneficiaryRequest'
       responses:
         '200':
           description: Success
@@ -33,7 +33,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -54,7 +54,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Bad request
@@ -66,7 +66,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -84,9 +84,9 @@ paths:
         customer. This token is valid for 10 minutes. This token can be used to
         automatically login the beneficiary to eWallet system.
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
         '200':
           description: Success
@@ -94,7 +94,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -119,7 +119,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid customer token
@@ -131,7 +131,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -147,10 +147,10 @@ paths:
         This API will return the balance for a given beneficiary for a specified
         currency.
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/BeneficiaryToken'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/CurrencyCode'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
       responses:
         '200':
           description: Success
@@ -158,7 +158,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -184,7 +184,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid request
@@ -196,7 +196,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -211,9 +211,9 @@ paths:
       summary: Get Account Status
       description: This API will return the account status for a given beneficiary.
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
         '200':
           description: OK
@@ -221,7 +221,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -250,7 +250,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid request
@@ -262,7 +262,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -277,9 +277,9 @@ paths:
       summary: Get KYC Status
       description: This API will return the KYC verification status for a given beneficiary.
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
         '200':
           description: Success
@@ -287,7 +287,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -312,7 +312,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid request
@@ -324,7 +324,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -339,9 +339,9 @@ paths:
       summary: Get Beneficiary
       description: This API will return the beneficiary profile information.
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
         - name: Accept
           in: header
           schema:
@@ -354,11 +354,11 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas//beneficiary_schemas.yml#/schemas/BeneficiaryData'
+                        $ref: 'openAPI/schemas/beneficiary_schemas.yml#/schemas/BeneficiaryData'
               example:
                 isSuccess: true
                 message: Beneficiary profile retrieved successfully
@@ -390,7 +390,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid request
@@ -402,7 +402,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -419,8 +419,8 @@ paths:
       security:
         - apikeyAuth: []
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - name: userName
           in: query
           schema:
@@ -434,7 +434,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -455,7 +455,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid request
@@ -467,7 +467,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
@@ -498,8 +498,8 @@ paths:
       security:
         - apikeyAuth: []
       parameters:
-        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       responses:
         '200':
           description: Success
@@ -507,7 +507,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -532,7 +532,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Invalid request
@@ -544,7 +544,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
               example:
                 isSuccess: false
                 message: Internal server error
