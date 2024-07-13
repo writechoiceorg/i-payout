@@ -128,3 +128,128 @@ schemas:
           isInfoVerified: true
           isClosed: false
           createdDate: "2021-02-02T00:00:00Z"
+  TransferReport:
+    type: object
+    properties:
+      totalCount:
+        type: integer
+        description: The total number of transfer records.
+      pageNumber:
+        type: integer
+        description: The current page number.
+      pageSize:
+        type: integer
+        description: The number of records per page.
+      pageCount:
+        type: integer
+        description: The total number of pages.
+      transfersDetails:
+        type: array
+        items:
+          type: object
+          properties:
+            merchantTransactionID:
+              type: string
+              description: The unique identifier for the transaction assigned by the merchant.
+            customerGuid:
+              type: string
+              description: The unique identifier for the customer.
+            destinationTypeID:
+              type: integer
+              description: The ID representing the type of destination.
+            sourceAmount:
+              type: number
+              format: double
+              description: The amount of money being transferred from the source.
+            sourceCurrency:
+              type: string
+              description: The currency code of the source amount.
+            destinationAmount:
+              type: number
+              format: double
+              description: The amount of money being transferred to the destination.
+            destinationCurrency:
+              type: string
+              description: The currency code of the destination amount.
+            statusID:
+              type: integer
+              description: The ID representing the current status of the transfer.
+            subStatusID:
+              type: integer
+              description: The ID representing the sub-status of the transfer.
+            createdDateUTC:
+              type: string
+              format: date-time
+              description: The date and time when the transfer was created, in UTC.
+            updatedDateUTC:
+              type: string
+              format: date-time
+              description: The date and time when the transfer was last updated, in UTC.
+            expiryDateUTC:
+              type: string
+              format: date-time
+              description: The date and time when the transfer will expire, in UTC.
+            comments:
+              type: string
+              description: Additional comments about the transfer.
+            token:
+              type: string
+              description: The unique token associated with the transfer.
+            fxRate:
+              type: number
+              format: double
+              description: The foreign exchange rate applied to the transfer.
+            totalCustomerFee:
+              type: number
+              format: double
+              description: The total fee charged to the customer.
+            totalMerchantFee:
+              type: number
+              format: double
+              description: The total fee charged to the merchant.
+            destinationToken:
+              type: string
+              format: uuid
+              description: The unique token for the destination.
+    example:
+      totalCount: 2
+      pageNumber: 1
+      pageSize: 10
+      pageCount: 1
+      transfersDetails:
+        - merchantTransactionID: "TestTransactionID-1"
+          customerGuid: "a1b2c3d4-e5f6-7890-ab12-cd34ef56gh78"
+          destinationTypeID: 1
+          sourceAmount: 1000.0
+          sourceCurrency: "USD"
+          destinationAmount: 850.0
+          destinationCurrency: "EUR"
+          statusID: 1
+          subStatusID: 0
+          createdDateUTC: "2024-07-13T00:00:00Z"
+          updatedDateUTC: "2024-07-13T00:00:00Z"
+          expiryDateUTC: "2024-08-13T00:00:00Z"
+          comments: "First transfer"
+          token: "unique-token-1"
+          fxRate: 0.85
+          totalCustomerFee: 10.0
+          totalMerchantFee: 5.0
+          destinationToken: "e1a8236b-34cf-473b-9dce-d1dc72bb69f4"
+        - merchantTransactionID: "TestTransactionID-2"
+          customerGuid: "a2b3c4d5-e6f7-8901-ab23-cd45ef67gh89"
+          destinationTypeID: 2
+          sourceAmount: 2000.0
+          sourceCurrency: "USD"
+          destinationAmount: 1700.0
+          destinationCurrency: "EUR"
+          statusID: 2
+          subStatusID: 1
+          createdDateUTC: "2024-07-13T01:00:00Z"
+          updatedDateUTC: "2024-07-13T01:30:00Z"
+          expiryDateUTC: "2024-08-13T01:00:00Z"
+          comments: "Second transfer"
+          token: "unique-token-2"
+          fxRate: 0.85
+          totalCustomerFee: 20.0
+          totalMerchantFee: 10.0
+          destinationToken: "e2b8236b-45cf-483b-9dce-d1dc72bb69f4"

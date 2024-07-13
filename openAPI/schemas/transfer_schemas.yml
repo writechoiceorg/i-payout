@@ -47,3 +47,23 @@ parameters:
       type: string
     required: true
     description: The transfer's unique identifier token.
+  TransferToken:
+    name: transferToken
+    in: query
+    schema:
+      type: string
+    description: A unique token that identifies the specific transfer.
+    example: bbef469f-9bc5-46a2-bf10-5c267336dfc7
+  MerchantTransactionId:
+    name: merchantTransactionId
+    in: query
+    schema:
+      type: string
+    description: A unique identifier for the transaction assigned by the merchant.
+    example: Test1719487137Test52
+  SourceCurrency:
+    name: sourceCurrency
+    in: query
+    schema:
+      type: string
+    description: The currency code of the source from which the transfer is initiated (e.g., USD, EUR).
