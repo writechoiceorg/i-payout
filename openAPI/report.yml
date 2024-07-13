@@ -115,7 +115,7 @@ paths:
         - Report
       summary: Get Transfers Report Data
       description: This API returns matching transfers details based on the filters applied.
-      operationId: get-transfer-report
+      operationId: get-transfer-report-data
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
