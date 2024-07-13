@@ -102,7 +102,52 @@ paths:
                 message: Internal server error
                 statusCode: 500
                 logIdentifier: def456
-
+  /api/v{version}/lookup/iban/{CountryCode}/{IBAN}:
+    get:
+      tags:
+        - Lookup
+      summary: Validate IBAN
+      description: This API validate IBAN provided
+      operationId: validate-iban
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/IBAN'
+        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/CountryCode'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/lookup_schemas.yml#/schemas/IbanDetails'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
 components:
   securitySchemes:
     apikeyAuth:
