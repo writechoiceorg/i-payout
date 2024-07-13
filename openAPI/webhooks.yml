@@ -22,10 +22,10 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/CreateWebhookRequest'
+              $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/CreateWebhookRequest'
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
       responses:
         '200':
           description: Success
@@ -33,18 +33,18 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+                        $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
         '500':
           description: Internal Server Error
@@ -52,7 +52,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
   /api/v{version}/webhook/{token}/activate:
     put:
@@ -62,9 +62,9 @@ paths:
       operationId: activate-webhook
       description: This API will activate the webhook subscription.
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: '.openAPI/schemas/webhook_schemas.yml#/parameters/Token'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//webhook_schemas.yml#/parameters/Token'
       responses:
         '200':
           description: Success
@@ -72,18 +72,18 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+                        $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
         '500':
           description: Internal Server Error
@@ -91,7 +91,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
   /api/v{version}/webhook/{token}/deactivate:
     put:
@@ -103,9 +103,9 @@ paths:
       requestBody:
         content: {}
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: '.openAPI/schemas/webhook_schemas.yml#/parameters/Token'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//webhook_schemas.yml#/parameters/Token'
       responses:
         '200':
           description: Success
@@ -113,23 +113,23 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+                        $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
         '500':
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
   /api/v{version}/webhook/{token}:
     put:
       tags:
@@ -140,14 +140,14 @@ paths:
         This API will update an existing webhook record based on the given webhook
         token.
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: '.openAPI/schemas/webhook_schemas.yml#/parameters/Token'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//webhook_schemas.yml#/parameters/Token'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/CreateWebhookRequest'
+              $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/CreateWebhookRequest'
       responses:
         '200':
           description: Success
@@ -155,18 +155,18 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+                        $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
         '500':
           description: Internal Server Error
@@ -174,7 +174,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
     delete:
       tags:
@@ -184,9 +184,9 @@ paths:
       description: This API will delete the webhook.
       
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: '.openAPI/schemas/webhook_schemas.yml#/parameters/Token'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//webhook_schemas.yml#/parameters/Token'
       responses:
         '200':
           description: Success
@@ -194,18 +194,18 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
+                        $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
         '500':
           description: Internal Server Error
@@ -213,7 +213,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
   /api/v{version}/webhook/search:
     get:
@@ -225,10 +225,10 @@ paths:
       security:
         - apikeyAuth: []
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/PageNumber'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/NumberRecords'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/PageNumber'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/NumberRecords'
       responses:
         '200':
           description: OK
@@ -241,18 +241,18 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: '.openAPI/schemas/webhook_schemas.yml#/schemas/GetAllWebhooksResponseData'
+                        $ref: 'openAPI/schemas//webhook_schemas.yml#/schemas/GetAllWebhooksResponseData'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
         '500':
           description: Internal Server Error
@@ -260,7 +260,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
   /api/v{version}/webhook/GetAllEvents:
     get:
@@ -274,8 +274,8 @@ paths:
       security:
         - apikeyAuth: []
       parameters:
-        - $ref: '.openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: '.openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas//index.yml#/parameters/Version'
       responses:
         '200':
           description: OK
@@ -288,7 +288,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -310,7 +310,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
         '500':
           description: Internal Server Error
@@ -318,7 +318,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '.openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: 'openAPI/schemas//index.yml#/schemas/DefaultResponse'
                   - type: object
 components:
   securitySchemes:
