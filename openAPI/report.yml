@@ -113,8 +113,8 @@ paths:
     get:
       tags:
         - Report
-      summary: Get Transfers Report Data
-      description: This API returns matching transfers details based on the filters applied.
+      summary: Get Transfers Report By Beneficiary
+      description: This API returns matching transfers details filtered by the beneficiary's token.
       operationId: get-transfer-report-data
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
