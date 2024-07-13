@@ -109,7 +109,7 @@ paths:
                 message: Internal server error
                 statusCode: 500
                 logIdentifier: def456
-  /api/v{version}/report/{customerToken}/transfers:
+  /api/v{version}/report/{beneficiaryToken}/transfers:
     get:
       tags:
         - Report
