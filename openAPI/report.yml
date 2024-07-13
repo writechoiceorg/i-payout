@@ -1,0 +1,71 @@
+openapi: '3.0.3'
+info:
+  title: Report Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Report
+security:
+  - apikeyAuth: []
+paths:
+  /api/v{version}/report/customers:
+    get:
+      tags:
+        - Report
+      summary: Get Beneficiary Report
+      description: This API returns matching beneficiary details based on filters applied
+      operationId: get-beneficiary-report
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Country'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/FirstName'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/LastName'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/UserName'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Email'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryTokenQuery'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/PageNumber'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/PageSize'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/report_schemas.yml#/schemas/BeneficiaryReport'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+  
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      

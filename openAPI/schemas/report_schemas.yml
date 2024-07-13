@@ -1,0 +1,130 @@
+schemas:
+  BeneficiaryReport:
+    type: object
+    properties:
+      totalCount:
+        type: integer
+        description: The total number of customers.
+      pageNumber:
+        type: integer
+        description: The current page number.
+      pageSize:
+        type: integer
+        description: The number of records per page.
+      pageCount:
+        type: integer
+        description: The total number of pages.
+      customerDetails:
+        type: array
+        items:
+          type: object
+          properties:
+            customerToken:
+              type: string
+              format: uuid
+              description: The customer's unique i-payout identifier.
+            username:
+              type: string
+              description: The username which identifies the customer.
+            emailAddress:
+              type: string
+              description: The customer's email address.
+            firstName:
+              type: string
+              description: The customer's first name.
+            lastName:
+              type: string
+              description: The customer's last name.
+            companyName:
+              type: string
+              description: The customer's company name.
+            phoneNumber:
+              type: string
+              description: The customer's phone number.
+            cellPhoneNumber:
+              type: string
+              description: The customer's cell phone number.
+            address:
+              type: string
+              description: The customer's address.
+            address2:
+              type: string
+              description: The customer's secondary address.
+            state:
+              type: string
+              description: The state where the customer is located.
+            city:
+              type: string
+              description: The city where the customer is located.
+            zipCode:
+              type: string
+              description: The zip code of the customer's location.
+            country:
+              type: string
+              description: The country where the customer is located.
+            dateOfBirth:
+              type: string
+              format: date-time
+              description: The customer's date of birth.
+            preferredLanguage:
+              type: string
+              description: The customer's preferred language.
+            isSuspended:
+              type: boolean
+              description: Indicates if the customer's account is suspended.
+            isInfoVerified:
+              type: boolean
+              description: Indicates if the customer's information is verified.
+            isClosed:
+              type: boolean
+              description: Indicates if the customer's account is closed.
+            createdDate:
+              type: string
+              format: date-time
+              description: The date and time when the customer's account was created.
+    example:
+      totalCount: 2
+      pageNumber: 1
+      pageSize: 10
+      pageCount: 1
+      customerDetails:
+        - customerToken: "f6178257-4cc2-471c-91b8-64876bfbabdf"
+          username: "john_doe"
+          emailAddress: "john.doe@example.com"
+          firstName: "John"
+          lastName: "Doe"
+          companyName: "Example Corp"
+          phoneNumber: "+1234567890"
+          cellPhoneNumber: "+0987654321"
+          address: "123 Main St"
+          address2: "Apt 4B"
+          state: "NY"
+          city: "New York"
+          zipCode: "10001"
+          country: "US"
+          dateOfBirth: "1980-01-01T00:00:00Z"
+          preferredLanguage: "en"
+          isSuspended: false
+          isInfoVerified: true
+          isClosed: false
+          createdDate: "2020-01-01T00:00:00Z"
+        - customerToken: "a1234567-89ab-cdef-0123-456789abcdef"
+          username: "jane_doe"
+          emailAddress: "jane.doe@example.com"
+          firstName: "Jane"
+          lastName: "Doe"
+          companyName: "Example Corp"
+          phoneNumber: "+1234567890"
+          cellPhoneNumber: "+0987654321"
+          address: "456 Elm St"
+          address2: "Suite 5A"
+          state: "NY"
+          city: "New York"
+          zipCode: "10002"
+          country: "US"
+          dateOfBirth: "1990-02-02T00:00:00Z"
+          preferredLanguage: "en"
+          isSuspended: false
+          isInfoVerified: true
+          isClosed: false
+          createdDate: "2021-02-02T00:00:00Z"

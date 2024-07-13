@@ -4,7 +4,7 @@ parameters:
     in: header
     schema:
       type: string
-    description: Your Merchant Identifier (GUID)
+    description: Your Merchant Identifier (GUID).
     required: true
   Version:
     name: version
@@ -20,7 +20,48 @@ parameters:
     schema:
       type: string
     required: true
-    description: The beneficiary's Token
+    description: The beneficiary's unique i-payout identifier.
+  BeneficiaryTokenQuery:
+    name: beneficiaryToken
+    in: query
+    schema:
+      type: string
+    required: true
+    description: The beneficiary's unique i-payout identifier.
+  Country:
+    name: country
+    in: query
+    schema:
+      type: string
+    description: The beneficiary's two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+    example: US
+  FirstName:
+    name: firstName
+    in: query
+    schema:
+      type: string
+    description: The beneficiary's first name.
+    example: Dinesh
+  LastName:
+    name: lastName
+    in: query
+    schema:
+      type: string
+    description: The beneficiary's last name.
+    example: Pounraj
+  UserName:
+    name: userName
+    in: query
+    schema:
+      type: string
+    description: The username which identifies the beneficiary to be updated.
+  Email:
+    name: email
+    in: query
+    schema:
+      type: string
+    description: The beneficiary's email address.
+    example: dinesh.pounraj@i-payout.com
   CurrencyCode:
     name: currencyCode
     in: path
@@ -43,6 +84,13 @@ parameters:
       type: integer
     description: The number of records to retrieve per page.
     example: 10
+  PageSize:
+    name: pageSize
+    in: query
+    schema:
+      type: integer
+    description: Number of records per page.
+    example: '100'
 schemas:
   DefaultResponse:
     type: object
