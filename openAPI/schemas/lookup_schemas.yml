@@ -7,32 +7,104 @@ parameters:
     required: true
     description: The routing number of the bank for the transfer.
     example: '011000206'
+  CountryCode:
+    name: CountryCode
+    in: path
+    schema:
+      type: string
+    required: true
+    description: The beneficiary's two-letter country code ([ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)).
+    example: IT
+  SwiftCode:
+    name: SwiftCode
+    in: path
+    schema:
+      type: string
+    required: true
+    description: 8-11 character code that identifies your country, city, bank and branch.
+    example: PASCITM1320
 schemas:
-  BankDetails:
-      type: object
-      properties:
-        routingNumber:
-          type: string
-          description: The routing number of the bank.
-        bankName:
-          type: string
-          description: The name of the bank.
-        bankAddress:
-          type: string
-          description: The address of the bank.
-        bankCity:
-          type: string
-          description: The city where the bank is located.
-        bankState:
-          type: string
-          description: The state where the bank is located.
-        bankZipCode:
-          type: string
-          description: The zip code of the bank's location.
-      example:
-        routingNumber: "011000206"
-        bankName: "Bank of Example"
-        bankAddress: "123 Example Street"
-        bankCity: "Example City"
-        bankState: "EX"
-        bankZipCode: "12345"
+  BankDetailsByRoutingNumber:
+    type: object
+    properties:
+      routingNumber:
+        type: string
+        description: The routing number of the bank.
+      bankName:
+        type: string
+        description: The name of the bank.
+      bankAddress:
+        type: string
+        description: The address of the bank.
+      bankCity:
+        type: string
+        description: The city where the bank is located.
+      bankState:
+        type: string
+        description: The state where the bank is located.
+      bankZipCode:
+        type: string
+        description: The zip code of the bank's location.
+    example:
+      routingNumber: "011000206"
+      bankName: "Bank of Example"
+      bankAddress: "123 Example Street"
+      bankCity: "Example City"
+      bankState: "EX"
+      bankZipCode: "12345"
+  BankDetailsBySwiftCode:
+    type: object
+    properties:
+      swiftCode:
+        type: string
+        description: The SWIFT code of the bank.
+      bankName:
+        type: string
+        description: The name of the bank.
+      countryName:
+        type: string
+        description: The name of the country where the bank is located.
+      countryCode:
+        type: string
+        description: The country code where the bank is located.
+      bankAddress:
+        type: string
+        description: The address of the bank.
+      bankCity:
+        type: string
+        description: The city where the bank is located.
+      bankProvince:
+        type: string
+        description: The province where the bank is located.
+      bankZipCode:
+        type: string
+        description: The zip code of the bank's location.
+      branchName:
+        type: string
+        description: The name of the bank branch.
+      branchAddress:
+        type: string
+        description: The address of the bank branch.
+      branchCity:
+        type: string
+        description: The city where the bank branch is located.
+      branchProvince:
+        type: string
+        description: The province where the bank branch is located.
+      branchZipCode:
+        type: string
+        description: The zip code of the bank branch's location.
+    example:
+      swiftCode: "BOFAUS3N"
+      bankName: "Bank of Example"
+      countryName: "United States"
+      countryCode: "US"
+      bankAddress: "123 Example Street"
+      bankCity: "Example City"
+      bankProvince: "Example Province"
+      bankZipCode: "12345"
+      branchName: "Example Branch"
+      branchAddress: "456 Branch Street"
+      branchCity: "Branch City"
+      branchProvince: "Branch Province"
+      branchZipCode: "67890"
