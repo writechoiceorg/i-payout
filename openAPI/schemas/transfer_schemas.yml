@@ -1,0 +1,49 @@
+schemas:
+  CreateTransferRequest:
+    type: object
+    properties:
+      merchantTransactionId:
+        type: string
+        description: A unique identifier for the transaction.
+      beneficiaryToken:
+        type: string
+        description: The beneficiary's token.
+      destinationToken:
+        type: string
+        description: The destination token for the transfer.
+      autoApprove:
+        type: boolean
+        description: Whether the transfer should be automatically approved.
+      comments:
+        type: string
+        description: Additional comments for the transfer.
+      dateExpire:
+        type: string
+        format: date-time
+        description: The expiration date of the transfer.
+      sourceAmount:
+        type: number
+        format: float
+        description: The amount of money to be transferred from the source.
+      sourceCurrency:
+        type: string
+        description: The currency of the source amount.
+      destinationAmount:
+        type: number
+        format: float
+        nullable: true
+        description: The amount of money to be transferred to the destination. If null, it will be calculated based on the source amount and the exchange rate.
+      destinationCurrency:
+        type: string
+        description: The currency of the destination amount.
+      destinationType:
+        type: integer
+        description: The type of destination for the transfer.
+parameters:
+  Token:
+    name: token
+    in: path
+    schema:
+      type: string
+    required: true
+    description: The transfer's unique identifier token.
