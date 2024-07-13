@@ -23,6 +23,16 @@ parameters:
     required: true
     description: 8-11 character code that identifies your country, city, bank and branch.
     example: PASCITM1320
+  IBAN:
+    name: IBAN
+    in: path
+    schema:
+      type: string
+    required: true
+    description: >-
+      International Bank Account Number (IBAN), is a code
+      used to make or receive international payments.
+    example: IE64IRCE92050112345678
 schemas:
   BankDetailsByRoutingNumber:
     type: object
@@ -108,3 +118,19 @@ schemas:
       branchCity: "Branch City"
       branchProvince: "Branch Province"
       branchZipCode: "67890"
+  IbanDetails:
+    type: object
+    properties:
+      iban:
+        type: string
+        description: The International Bank Account Number (IBAN).
+      countryCode:
+        type: string
+        description: The country code associated with the IBAN.
+      isValid:
+        type: boolean
+        description: Indicates whether the IBAN is valid.
+    example:
+      iban: "GB33BUKB20201555555555"
+      countryCode: "GB"
+      isValid: true
