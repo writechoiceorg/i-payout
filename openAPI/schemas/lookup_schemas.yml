@@ -1,0 +1,38 @@
+parameters:
+  RoutingNumber:
+    name: RoutingNumber
+    in: path
+    schema:
+      type: integer
+    required: true
+    description: The routing number of the bank for the transfer.
+    example: '011000206'
+schemas:
+  BankDetails:
+      type: object
+      properties:
+        routingNumber:
+          type: string
+          description: The routing number of the bank.
+        bankName:
+          type: string
+          description: The name of the bank.
+        bankAddress:
+          type: string
+          description: The address of the bank.
+        bankCity:
+          type: string
+          description: The city where the bank is located.
+        bankState:
+          type: string
+          description: The state where the bank is located.
+        bankZipCode:
+          type: string
+          description: The zip code of the bank's location.
+      example:
+        routingNumber: "011000206"
+        bankName: "Bank of Example"
+        bankAddress: "123 Example Street"
+        bankCity: "Example City"
+        bankState: "EX"
+        bankZipCode: "12345"
