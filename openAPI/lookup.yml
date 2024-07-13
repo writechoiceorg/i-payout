@@ -1,0 +1,112 @@
+openapi: '3.0.3'
+info:
+  title: Lookup Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Lookup
+security:
+  - apikeyAuth: []
+paths:
+  /api/v{version}/lookup/usa-routing-number/{RoutingNumber}:
+    get:
+      tags:
+        - Lookup
+      summary: Get Bank Address Details by Routing Number
+      description: This API will return bank address details based on Routing Number
+      operationId: get-bank-address-by-routing-number
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/RoutingNumber'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/lookup_schemas.yml#/schemas/BankDetailsByRoutingNumber'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+  /api/v{version}/lookup/swift-code/{CountryCode}/{SwiftCode}:
+    get:
+      tags:
+        - Lookup
+      summary: Get Bank Address Details by Swift Code
+      description: >-
+        This API will return bank and branch details based on Swift Code and
+        Country Code
+      operationId: get-bank-address-by-swift-code
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/SwiftCode'
+        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/CountryCode'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/lookup_schemas.yml#/schemas/BankDetailsBySwiftCode'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      
