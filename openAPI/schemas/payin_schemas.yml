@@ -171,3 +171,11 @@ schemas:
     items:
       $ref: '#/schemas/GetPaymentItem'
     description: List of payment items.
+  CancelPaymentRequest:
+    type: object
+    required:
+      - merchantReferenceId
+    properties:
+      merchantReferenceId:
+        type: string
+        description: The merchant reference ID for which to cancel for a previously created payment.

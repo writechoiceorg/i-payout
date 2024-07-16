@@ -37,27 +37,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/CreatePayinResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/PayIn/get:
     get:
       tags:
@@ -85,27 +67,35 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/GetPaymentItemResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/PayIn/decline:
+    post:
+      tags:
+        - Payins
+      summary: Get Payment Items
+      description: This API will return the payment item(s) of a customer. You can use the filters like payment status, merchant reference number and date range to filter the result data set.
+      operationId: get-payment-items
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/CancelPaymentRequest'
+      responses:
+        '200':
+          description: Success
           content:
             application/json:
               schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:
