@@ -50,29 +50,9 @@ paths:
                 data:
                   beneficiaryToken: 556bb43b-7395-4bf9-ab5e-108ce9f0fe04
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Bad request
-                statusCode: 400
-                logIdentifier: 12345
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: 67890
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/{beneficiaryToken}/getSSOToken:
     get:
       tags:
@@ -114,29 +94,9 @@ paths:
                   token: ssoToken123
                   expireInMinutes: 10
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid customer token
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/{beneficiaryToken}/balance/{currencyCode}:
     get:
       tags:
@@ -178,29 +138,9 @@ paths:
                   currencyCode: USD
                   balance: 1000.50
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/{beneficiaryToken}/status:
     get:
       tags:
@@ -243,29 +183,9 @@ paths:
                   isClosed: false
                   isSuspended: false
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/{beneficiaryToken}/verificationstatus:
     get:
       tags:
@@ -304,29 +224,9 @@ paths:
                   isCustomerVerificationCompleted: true
                   message: KYC verification is complete
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/{beneficiaryToken}:
     get:
       tags:
@@ -381,29 +281,9 @@ paths:
                   isClosed: false
                   createdDate: '2024-01-01T12:00:00Z'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/exists:
     get:
       tags:
@@ -445,29 +325,9 @@ paths:
                 data:
                   exists: true
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/beneficiary/update/username:
     post:
       tags:
@@ -521,29 +381,9 @@ paths:
                   username: newman
                   beneficiaryToken: 556bb43b-7395-4bf9-ab5e-108ce9f0fe04
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
-                data: {}
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

@@ -39,21 +39,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/webhook/{token}/activate:
     put:
       tags:
@@ -77,21 +65,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/webhook/{token}/deactivate:
     put:
       tags:
@@ -158,21 +134,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
     delete:
       tags:
         - Webhooks
@@ -196,21 +160,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/webhook_schemas.yml#/schemas/WebhookResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/webhook/search:
     get:
       tags:
@@ -242,21 +194,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/webhook_schemas.yml#/schemas/GetAllWebhooksResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/webhook/GetAllEvents:
     get:
       tags:
@@ -299,21 +239,9 @@ paths:
                               example:
                                 eventName: "CUSTOMER.CREATED"
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-                  - type: object
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

@@ -37,27 +37,9 @@ paths:
                       data:
                         $ref: 'openAPI/schemas/voucher_schemas.yml#/schemas/ValidateVoucherResponseData'
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/Voucher/redeem:
     post:
       tags:
@@ -88,27 +70,9 @@ paths:
                           transactionIdentifer:
                             type: integer
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/Voucher/refund:
     post:
       tags:
@@ -139,27 +103,9 @@ paths:
                           transactionIdentifer:
                             type: integer
         '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Invalid request
-                statusCode: 400
-                logIdentifier: xyz789
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
-              example:
-                isSuccess: false
-                message: Internal server error
-                statusCode: 500
-                logIdentifier: def456
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:
