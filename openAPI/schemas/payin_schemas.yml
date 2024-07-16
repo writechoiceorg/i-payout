@@ -1,0 +1,175 @@
+parameters:
+  UserName:
+    name: userName
+    in: query
+    required: false
+    schema:
+      type: string
+    description: User name of whom the items were posted to.
+  MerchantReferenceId:
+    name: merchantReferenceId
+    in: query
+    required: false
+    schema:
+      type: string
+    description: Merchant reference ID for the checkout item.
+  DateFrom:
+    name: dateFrom
+    in: query
+    required: false
+    schema:
+      type: string
+      format: date-time
+    description: Beginning date to search for items.
+  DateTo:
+    name: dateTo
+    in: query
+    required: false
+    schema:
+      type: string
+      format: date-time
+    description: End date to search for items.
+  Status:
+    name: status
+    in: query
+    required: false
+    schema:
+      type: integer
+      format: int32
+    description: Transaction status to filter search.
+
+schemas:
+  CheckoutItem:
+    type: object
+    required:
+      - amount
+      - currencyCode
+      - merchantReferenceId
+      - isSubscription
+    properties:
+      amount:
+        type: number
+        format: double
+        minimum: 0.01
+        description: Checkout item amount.
+      currencyCode:
+        type: string
+        description: The item amount currency code.
+      itemDescription:
+        type: string
+        nullable: true
+        description: The item description of the checkout item.
+      merchantReferenceId:
+        type: string
+        description: A merchant specified reference identifier for this checkout item.
+      userReturnUrl:
+        type: string
+        format: uri
+        nullable: true
+        description: The return URL for this checkout item.
+      mustComplete:
+        type: boolean
+        description: Specifies if this checkout item must be completed.
+      isSubscription:
+        type: boolean
+        description: If true, this checkout item will generate a monthly invoice. The first invoice will begin 1 month after this invoice has been successfully paid.
+      subscriptionAmount:
+        type: number
+        format: double
+        nullable: true
+        description: The monthly recurring subscription amount. Required if isSubscription is true.
+      subscriptionDaysToStart:
+        type: integer
+        format: int32
+        nullable: true
+        description: The days until the subscription starts for this checkout item. Required if isSubscription is true.
+  CheckoutRequest:
+    type: object
+    required:
+      - username
+      - autoChargeAccount
+      - checkoutItems
+    properties:
+      username:
+        type: string
+        description: The username of the customer account.
+      autoChargeAccount:
+        type: boolean
+        description: Specifies if i-payout should automatically charge the account.
+      checkoutItems:
+        type: array
+        items:
+          $ref: '#/schemas/CheckoutItem'
+        description: List of checkout items to be associated with the customer.
+  CreatePayinItem:
+    type: object
+    properties:
+      m_Code:
+        type: integer
+        description: The code of the transaction.
+        example: 0
+      m_Text:
+        type: string
+        description: The text description of the transaction.
+        example: "string"
+      logTransactionId:
+        type: integer
+        description: The log transaction ID.
+        example: 0
+      transactionRefId:
+        type: integer
+        description: The transaction reference ID.
+        example: 0
+  CreatePayinResponseData:
+    type: array
+    items:
+      $ref: '#/schemas/CreatePayinItem'
+    description: List of transaction data items.
+  GetPaymentItem:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+        description: The amount of the transaction.
+        example: 0
+      currencyCode:
+        type: string
+        description: The currency code of the transaction.
+        example: "string"
+      subscriptionAmount:
+        type: number
+        format: double
+        description: The subscription amount if the transaction is a subscription.
+        example: 0
+      isSubscription:
+        type: boolean
+        description: Indicates if the transaction is a subscription.
+        example: true
+      description:
+        type: string
+        description: The description of the transaction.
+        example: "string"
+      mustComplete:
+        type: boolean
+        description: Specifies if the transaction must be completed.
+        example: true
+      merchantTransactionId:
+        type: string
+        description: The merchant transaction ID.
+        example: "string"
+      transactionStatusId:
+        type: integer
+        description: The status ID of the transaction.
+        example: 0
+      returnUrl:
+        type: string
+        description: The return URL for the transaction.
+        example: "string"
+  GetPaymentItemResponseData:
+    data:
+      type: array
+      items:
+        $ref: '#/schemas/GetPaymentItem'
+      description: List of payment items.
+
