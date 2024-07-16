@@ -50,7 +50,7 @@ schemas:
       - currencyCode
       - merchantReferenceId
     allOf:
-      - $ref: '#schemas/ValidateVoucherRequest'
+      - $ref: '#/schemas/ValidateVoucherRequest'
     properties:
       # voucherCode:
       #   type: string
