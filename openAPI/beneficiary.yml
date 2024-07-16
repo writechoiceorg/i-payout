@@ -550,11 +550,9 @@ components:
       type: apiKey
       in: header
       name: Authorization
-      x-default: "<Your api-key>"
       description: Your API Key.
     XMerchantId:
       type: apiKey
       name: X-MerchantId
       in: header
-      x-default: "<Your Merchant Identifier (GUID)>"
       description: Your Merchant Identifier (GUID).
