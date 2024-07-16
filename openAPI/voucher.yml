@@ -16,7 +16,7 @@ paths:
         - Voucher
       summary: Validate Voucher
       description: This API will validate the voucher code.
-      operationId: make-payout
+      operationId: validate-voucher
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       requestBody:
@@ -58,7 +58,57 @@ paths:
                 message: Internal server error
                 statusCode: 500
                 logIdentifier: def456
-  
+  /api/v{version}/Voucher/redeem:
+    post:
+      tags:
+        - Voucher
+      summary: Redeem Voucher
+      description: This API will redeem the provided voucher.
+      operationId: redeem-voucher
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/voucher_schemas.yml#/schemas/VoucherRedemptionRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          transactionIdentifer:
+                            type: integer
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
 components:
   securitySchemes:
     apikeyAuth:
