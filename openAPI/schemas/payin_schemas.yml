@@ -179,4 +179,38 @@ schemas:
       merchantReferenceId:
         type: string
         description: The merchant reference ID for which to cancel for a previously created payment.
-        
+  RefundPaymentRequest:
+    type: object
+    required:
+      - username
+      - logTransactionId
+      - merchantReferenceId
+    properties:
+      username:
+        type: string
+        description: The username of the customer whose payment will be refunded.
+      logTransactionId:
+        type: integer
+        format: int64
+        description: The i-payout logTransactionId associated with the checkout transaction.
+      refundFundingTransactionFee:
+        type: boolean
+        nullable: true
+        description: Indicates if the funding transaction fees will be refunded or not.
+      refundEwalletToMerchantFee:
+        type: boolean
+        nullable: true
+        description: Indicates if the eWallet to merchant fees will be refunded or not.
+      amount:
+        type: number
+        format: double
+        minimum: 0
+        nullable: true
+        description: The amount of the refund. If amount is zero then full payment amount will be refunded otherwise submitted amount will be refunded.
+      comments:
+        type: string
+        nullable: true
+        description: Optional comments associated with the refund.
+      merchantReferenceId:
+        type: string
+        description: The merchant reference ID for the refund transaction.
