@@ -1,0 +1,72 @@
+openapi: '3.0.3'
+info:
+  title: Transactions Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Transactions
+security:
+  - apikeyAuth: []
+    XMerchantId: []
+paths:
+  /api/v{version}/report/customers:
+    get:
+      tags:
+        - Transactions
+      summary: Get Beneficiary Report
+      description: This API returns matching beneficiary details based on filters applied
+      operationId: get-beneficiary-report
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/MerchantReferenceId'
+        - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/MerchantBatchId'
+        - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/LogTransactionId'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transaction_schemas.yml#/schemas/GetTransactionResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+  
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
+      

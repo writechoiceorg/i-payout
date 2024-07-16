@@ -1,0 +1,110 @@
+parameters:
+  MerchantReferenceId:
+    name: merchantReferenceId
+    in: query
+    required: false
+    schema:
+      type: string
+    description: Merchant reference id for the transaction.
+  MerchantBatchId:
+    name: merchantBatchId
+    in: query
+    required: false
+    schema:
+      type: string
+    description: Merchant batch id for the transaction.
+  LogTransactionId:
+    name: logTransactionId
+    in: query
+    required: false
+    schema:
+      type: integer
+      format: int64
+    description: IPS log transaction id.
+schemas:
+  GetTransactionResponseData:
+    type: array
+    items:
+      type: object
+      properties:
+        logTransactionId:
+          type: integer
+          format: int64
+          description: The unique identifier of the transaction log.
+        currencyCode:
+          type: string
+          description: The currency code of the transaction.
+        amount:
+          type: number
+          format: double
+          description: The amount of the transaction.
+        toUsername:
+          type: string
+          description: The username of the recipient.
+        fromUsername:
+          type: string
+          description: The username of the sender.
+        tranDescription:
+          type: string
+          description: The description of the transaction.
+        tranType:
+          type: integer
+          description: The type of the transaction.
+        feeType:
+          type: integer
+          description: The type of fee applied to the transaction.
+        tranStatus:
+          type: integer
+          description: The status of the transaction.
+        customerFeeAmount:
+          type: number
+          format: double
+          description: The fee amount charged to the customer.
+        merchantFeeAmount:
+          type: number
+          format: double
+          description: The fee amount charged to the merchant.
+        merchantReferenceId:
+          type: string
+          description: The merchant reference ID for the transaction.
+        merchantBatchId:
+          type: string
+          description: The merchant batch ID for the transaction.
+        userMemo:
+          type: string
+          description: A memo provided by the user.
+        managerComments:
+          type: string
+          description: Comments provided by the manager.
+        transactionTime:
+          type: string
+          format: date-time
+          description: The time when the transaction occurred.
+        lastUpdatedTime:
+          type: string
+          format: date-time
+          description: The last time the transaction was updated.
+        other:
+          type: string
+          description: Other relevant information.
+        globalProfileId:
+          type: integer
+          format: int64
+          description: The global profile ID associated with the transaction.
+        globalProfileName:
+          type: string
+          description: The name associated with the global profile ID.
+        stopPayOnCheckStatus:
+          type: integer
+          description: The status of stop payment on check.
+        stopPaymentOnCheckInitiatedBy:
+          type: integer
+          description: The ID of the person who initiated the stop payment on check.
+        stopPaymentOnCheckInitiatedtime:
+          type: string
+          format: date-time
+          description: The time when the stop payment on check was initiated.
+        achSubmitDate:
+          type: string
+          format: date-time
+          description: The date when the ACH was submitted.
