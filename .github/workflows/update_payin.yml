@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "openAPI/payin.yml"
+      - "openAPI/schemas/payin_schemas.yml"
 
 jobs:
   sync-readme-api-definition:
