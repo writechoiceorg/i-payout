@@ -8,7 +8,7 @@ tags:
   - name: Lookup
 security:
   - apikeyAuth: []
-  - XMerchantId: []
+    XMerchantId: []
 paths:
   /api/v{version}/lookup/usa-routing-number/{RoutingNumber}:
     get:
