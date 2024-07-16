@@ -1,0 +1,89 @@
+schemas:
+  MakePayoutRequest:
+    required:
+      - allowDuplicates
+      - arrAccounts
+      - autoLoad
+      - currencyCode
+      - partnerBatchId
+    type: object
+    properties:
+      partnerBatchId:
+        maxLength: 100
+        type: string
+        description: It is a parameter that is used to group all loads into one batch.
+          You may call this endpoint multiple times, and as long as the `PartnerBatchID`
+          is the same the payouts will be added to the same batch. Please note that 
+          `PartnerBatchID` is used as a batch name in the management console.
+      poolId:
+        maxLength: 50
+        type: string
+        description: Payout pool/level/tier. If you do not use pools, just leave
+          it blank. This field is just for reference.
+        nullable: true
+      allowDuplicates:
+        type: boolean
+        description: Specifies whether to allow duplicate transactions in this batch.
+          Duplicates are identified by username. Thus, if true, multiple payouts
+          can be made to the same username within this batch.
+      autoLoad:
+        type: boolean
+        description: If set to TRUE - automatically approve and load payout into
+          eWallets. A batch will be automatically closed, and no other loads can
+          be added into this batch.
+      currencyCode:
+        maxLength: 3
+        type: string
+        description: Payout currency code
+      arrAccounts:
+        type: array
+        items:
+          "$ref": "#/schemas/ArrAccountRequest"
+        description: An array of load transactions.
+  ArrAccountRequest:
+    required:
+      - amount
+      - merchantReferenceId
+      - username
+    type: object
+    properties:
+      username:
+        maxLength: 300
+        type: string
+        description: The username of the customer for which funds will be loaded.
+      amount:
+        type: number
+        description: Payout amount.
+        format: double
+      comments:
+        maxLength: 500
+        type: string
+        description: Comments associated with this payout transaction.
+        nullable: true
+      merchantReferenceId:
+        maxLength: 50
+        type: string
+        description: Unique merchant reference ID for this payout transaction.
+      lineItems:
+        type: array
+        items:
+          "$ref": "#/schemas/LineItemsRequest"
+        description: A list of line items for this load transaction.
+        nullable: true
+  LineItemsRequest:
+    type: object
+    properties:
+      amount:
+        type: number
+        description: The amount for this line item.
+        format: double
+      description:
+        maxLength: 500
+        type: string
+        description: The description for this line item.
+        nullable: true
+      referenceId:
+        maxLength: 50
+        type: string
+        description: Merchant specified reference id for this line item.
+        nullable: true

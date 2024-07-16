@@ -1,0 +1,2434 @@
+---
+openapi: 3.0.1
+info:
+  title: IPS Portal Rest API - V1
+  description: i-payout API
+  contact:
+    name: i-payout tech support
+    email: techsupport@i-payout.com
+  license:
+    name: i-payout API
+    url: http://www.i-payout.com
+  version: v1
+servers:
+- url: https://merchantapi.i-payout.net/
+  description: Production server
+- url: https://example.com/
+  description: Sandbox server
+paths:
+  "/api/v{version}/Authentication/Login": {}
+  "/api/v{version}/Customer/create": {}
+  "/api/v{version}/Customer/get": {}
+  "/api/v{version}/Customer/update": {}
+  "/api/v{version}/Customer/update/username": {}
+  "/api/v{version}/Customer/getSSOToken": {}
+  "/api/v{version}/Customer/balance": {}
+  "/api/v{version}/Customer/status": {}
+  "/api/v{version}/Customer/verificationstatus": {}
+  "/api/v{version}/Customer/exists": {}
+  "/api/v{version}/PayIn/create": {}
+  "/api/v{version}/PayIn/get": {}
+  "/api/v{version}/PayIn/decline": {}
+  "/api/v{version}/PayIn/refund": {}
+  "/api/v{version}/PayIn/spendback": {}
+  "/api/v{version}/PayIn/createPublicInvoice": {}
+  "/api/v{version}/PayIn/refundToCustomer": {}
+  "/api/v{version}/PayOut/create":
+    post:
+      tags:
+      - PayOut
+      summary: Make Payout
+      description: This API will loads funds into customer accounts. You can submit
+        array of accounts in one API call. We suggest not to use more than 1000 accounts
+        in one API call. With this API, if one record fails to load, then all the
+        records in the API also will fail. You will need to resubmit all records in
+        the API again once you fixed the failed record.
+      operationId: eWallet_Load
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-MerchantId
+        in: header
+        description: Merchant Identifier (GUID)
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EWalletLoadViewModel"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/EWalletLoadViewModel"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/EWalletLoadViewModel"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseeWalletLoad"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseeWalletLoad"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseeWalletLoad"
+      security:
+      - Bearer: []
+  "/api/v{version}/PayOut/createSpecial":
+    post:
+      tags:
+      - PayOut
+      summary: Make Payout Special Case
+      description: This API will loads funds into customer accounts. You can submit
+        array of accounts in one API call. We suggest not to use more than 1000 accounts
+        in one API call. With this API, all records in the API will not be rejected
+        if one payout record is failed.API response will show what records were failed
+        so that you can only resubmit the failed records instead of all records in
+        the API.
+      operationId: eWallet_LoadEx
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-MerchantId
+        in: header
+        description: Merchant Identifier (GUID)
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/EWalletLoadViewModel"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/EWalletLoadViewModel"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/EWalletLoadViewModel"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseeWalletLoadEx"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseeWalletLoadEx"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseeWalletLoadEx"
+      security:
+      - Bearer: []
+  "/api/v{version}/Transaction/get":
+    get:
+      tags:
+      - Transaction
+      summary: Get Transaction(s)
+      description: This API will return list of transactions. You can use the filters
+        like MerchantReferenceId, MerchantBatchId and LogTransactionId to filter the
+        result data set. Atleast one parameter is required in the filter to search
+        the data.
+      operationId: FindTransaction
+      parameters:
+      - name: merchantReferenceId
+        in: query
+        description: Merchant reference id for the transaction
+        schema:
+          type: string
+      - name: merchantBatchId
+        in: query
+        description: Merchant batch id for the transaction
+        schema:
+          type: string
+      - name: logTransactionId
+        in: query
+        description: IPS log transaction id
+        schema:
+          type: integer
+          format: int64
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-MerchantId
+        in: header
+        description: Merchant Identifier (GUID)
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRetrieveTransactions"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRetrieveTransactions"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRetrieveTransactions"
+      security:
+      - Bearer: []
+  "/api/v{version}/Voucher/validate":
+    post:
+      tags:
+      - Voucher
+      summary: Validate Voucher
+      description: This API will validate the voucher code.
+      operationId: ValidateVoucherCode
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-MerchantId
+        in: header
+        description: Merchant Identifier (GUID)
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateVoucherCodeViewModel"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/ValidateVoucherCodeViewModel"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/ValidateVoucherCodeViewModel"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseValidateVoucherCode"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseValidateVoucherCode"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseValidateVoucherCode"
+      security:
+      - Bearer: []
+  "/api/v{version}/Voucher/redeem":
+    post:
+      tags:
+      - Voucher
+      summary: Redeem Voucher
+      description: This API will redeem the provided voucher.
+      operationId: RedeemVoucherCode
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-MerchantId
+        in: header
+        description: Merchant Identifier (GUID)
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RedeemVoucherCodeViewModel"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/RedeemVoucherCodeViewModel"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/RedeemVoucherCodeViewModel"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRedeemVoucherCode"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRedeemVoucherCode"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRedeemVoucherCode"
+      security:
+      - Bearer: []
+  "/api/v{version}/Voucher/refund":
+    post:
+      tags:
+      - Voucher
+      summary: Refund Voucher
+      description: This API will refund the customer for a redeemed voucher payment.
+      operationId: RefundVoucherPayment
+      parameters:
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-MerchantId
+        in: header
+        description: Merchant Identifier (GUID)
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RefundVoucherPaymentViewModel"
+          text/json:
+            schema:
+              "$ref": "#/components/schemas/RefundVoucherPaymentViewModel"
+          application/*+json:
+            schema:
+              "$ref": "#/components/schemas/RefundVoucherPaymentViewModel"
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRefundVoucherPayment"
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRefundVoucherPayment"
+            text/json:
+              schema:
+                "$ref": "#/components/schemas/ApiResponseRefundVoucherPayment"
+      security:
+      - Bearer: []
+components:
+  schemas:
+    AddCheckoutItemDTO:
+      type: object
+      properties:
+        m_Code:
+          "$ref": "#/components/schemas/StatusConstants"
+        m_Text:
+          type: string
+          description: The human readable m_Text associated with this customer checkout
+            item.
+          nullable: true
+        logTransactionId:
+          type: integer
+          description: The i-payout logging transaction id which may be utilized for
+            debugging purposes.
+          format: int64
+        transactionRefId:
+          type: integer
+          description: The i-payout transaction reference id.
+          format: int64
+      additionalProperties: false
+      description: Add Customer Checkout Items Response Data
+    ApiRefundPaymentToMerchant:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/RefundPaymentToMerchantData"
+      additionalProperties: false
+    ApiResponse:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+      additionalProperties: false
+      description: Standard API Response object.
+    ApiResponseAddCustomerCheckoutItems:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/AddCheckoutItemDTO"
+          description: Add customer checkout items response data
+          nullable: true
+      additionalProperties: false
+      description: Add customer checkout items response data
+    ApiResponseAddCustomerSpendBackCheckoutItems:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/AddCheckoutItemDTO"
+          description: Make Spendback Payment Response Data
+          nullable: true
+      additionalProperties: false
+      description: Add customer spend back checkout items response data
+    ApiResponseCheckCustomerExistance:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseCheckCustomerExistanceData"
+      additionalProperties: false
+      description: Check customer's existance response
+    ApiResponseCheckCustomerExistanceData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the account
+          nullable: true
+        isCustomerExists:
+          type: boolean
+          description: Indicates whether or not a customer with the given username
+            is associated with an i-payout account.
+      additionalProperties: false
+      description: Check customer's existance response data
+    ApiResponseCreateNewCustomer:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseCreateNewCustomerData"
+      additionalProperties: false
+      description: Create new customer response
+    ApiResponseCreateNewCustomerData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the account.
+          nullable: true
+        userIdentifier:
+          type: string
+          description: i-payout assigned user identifier for the account
+          nullable: true
+      additionalProperties: false
+      description: Create new customer response data.
+    ApiResponseCreatePublicInvoice:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          type: string
+          description: The unique i-payout transaction reference number, which should
+            be used while redirecting the user to i-payout checkout system.
+          nullable: true
+      additionalProperties: false
+      description: The unique i-payout transaction reference number, which should
+        be used while redirecting the user to i-payout checkout system.
+    ApiResponseeWalletLoad:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/EWalletLoadServiceDTO"
+      additionalProperties: false
+      description: eWallet Load Response Data
+    ApiResponseeWalletLoadEx:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseeWalletLoadExData"
+      additionalProperties: false
+      description: eWallet Load Create Special Response
+    ApiResponseeWalletLoadExData:
+      type: object
+      properties:
+        partnerBatchId:
+          type: string
+          description: Partner batch id.
+          nullable: true
+        currencyCode:
+          type: string
+          description: Currency code.
+          nullable: true
+        isFullBatchFailed:
+          type: boolean
+          description: If batch load fully failed or not.
+        isPartialBatchFailed:
+          type: boolean
+          description: Is batch load partially failed or not.
+        failedRecordCount:
+          type: integer
+          description: number of records failed to load.
+          format: int32
+        successRecordCount:
+          type: integer
+          description: number of records succeeded while loading.
+          format: int32
+        batchConfirmationId:
+          type: integer
+          description: Batch confirmation id.
+          format: int64
+        records:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PayoutRecordResponse"
+          description: Array of records with individual load status.
+          nullable: true
+      additionalProperties: false
+      description: eWallet Load Create Special Response Data
+    ApiResponseGenerateSsoToken:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseGenerateSsoTokenData"
+      additionalProperties: false
+      description: Generate SSO token response
+    ApiResponseGenerateSsoTokenData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the account
+          nullable: true
+        token:
+          type: string
+          description: The Single-Sign-On token for the user to login to eWallet which
+            will expire in 10 minutes.
+          nullable: true
+        expireInMinutes:
+          type: integer
+          description: The Token expiry in minutes.
+          format: int32
+      additionalProperties: false
+      description: Generate SSO token response data
+    ApiResponseLogin:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/AuthenticateResponse"
+      additionalProperties: false
+      description: Api Response Login class
+    ApiResponseRedeemVoucherCode:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseRedeemVoucherCodeData"
+      additionalProperties: false
+      description: Redeem voucher response
+    ApiResponseRedeemVoucherCodeData:
+      type: object
+      properties:
+        transactionIdentifer:
+          type: integer
+          description: i-payout redeem transaction identiffier
+          format: int64
+      additionalProperties: false
+      description: Redeem voucher response
+    ApiResponseRefundToCustomer:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/EWalletRefundToCustomer"
+      additionalProperties: false
+    ApiResponseRefundVoucherPayment:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseRefundVoucherPaymentData"
+      additionalProperties: false
+      description: Refund voucher response
+    ApiResponseRefundVoucherPaymentData:
+      type: object
+      properties:
+        transactionIdentifer:
+          type: integer
+          description: i-payout refund transaction identiffier
+          format: int64
+      additionalProperties: false
+      description: Redeem voucher response
+    ApiResponseRetrieveCustomerBalance:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseRetrieveCustomerBalanceData"
+      additionalProperties: false
+      description: Get customer balanace response
+    ApiResponseRetrieveCustomerBalanceData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the account
+          nullable: true
+        currencyCode:
+          type: string
+          description: Currency code
+          nullable: true
+        balance:
+          type: number
+          description: The customer's balance.
+          format: double
+      additionalProperties: false
+      description: Get customer balanace response data
+    ApiResponseRetrieveCustomerCheckoutItems:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/CheckoutItemsDTO"
+          description: Retrieve Customer Checkout Items Response Data List
+          nullable: true
+      additionalProperties: false
+      description: Customer Checkout Items Response Data List
+    ApiResponseRetrieveCustomerInformation:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/CustomerDTO"
+      additionalProperties: false
+      description: customer's information
+    ApiResponseRetrieveCustomerStatus:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/CustomerStatusDto"
+      additionalProperties: false
+      description: Retrieve customer status
+    ApiResponseRetrieveCustomerVerificationStatus:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/CustomerKycVerificationStatusDTO"
+      additionalProperties: false
+      description: Retrieve customer verification status
+    ApiResponseRetrieveTransactions:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TransactionInfoDTO"
+          description: Retrieve Tranasctions Response Data
+          nullable: true
+      additionalProperties: false
+      description: Retrieve Tranasctions Response Data
+    ApiResponseUpdateCustomer:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseUpdateCustomerData"
+      additionalProperties: false
+      description: Update customer response.
+    ApiResponseUpdateCustomerData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the account
+          nullable: true
+        userIdentifier:
+          type: string
+          description: i-payout assigned user identifier for the account
+          nullable: true
+      additionalProperties: false
+      description: Update customer response data.
+    ApiResponseUpdateUsername:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ApiResponseUpdateUsernameData"
+      additionalProperties: false
+      description: Update customer username response
+    ApiResponseUpdateUsernameData:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Username of the account
+          nullable: true
+        userIdentifier:
+          type: string
+          description: i-payout assigned user identifier for the account
+          nullable: true
+      additionalProperties: false
+      description: Update customer username response data.
+    ApiResponseValidateVoucherCode:
+      type: object
+      properties:
+        isSuccess:
+          type: boolean
+          description: Indicates if the API call was successful or not.
+        message:
+          type: string
+          description: A human readable status message that may be used for debugging.
+          nullable: true
+        statusCode:
+          "$ref": "#/components/schemas/StatusConstants"
+        logIdentifier:
+          type: string
+          description: Utilized for support, a log identifier to provide to i-payout
+            when requesting technical support.
+          nullable: true
+        data:
+          "$ref": "#/components/schemas/ValidateVoucherCodeResponseDTO"
+      additionalProperties: false
+      description: Validate voucher response
+    AuthenticateResponse:
+      type: object
+      properties:
+        merchantId:
+          type: string
+          description: Set to 'The i-payout Merchant Identifier.'
+          format: uuid
+        token:
+          type: string
+          description: The bearer token which can be utilized for other API calls.  This
+            token is valid for 24 hours.
+          nullable: true
+        expireInMinutes:
+          type: integer
+          format: int32
+      additionalProperties: false
+      description: Merchant Authentication Response Data
+    CheckoutItemCartViewModel:
+      required:
+      - autoChargeAccount
+      - checkoutItems
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 300
+          type: string
+          description: The username of the customer account.
+        autoChargeAccount:
+          type: boolean
+          description: Specifies if i-payout should automatically charge the account.
+        checkoutItems:
+          type: array
+          items:
+            "$ref": "#/components/schemas/CheckOutItemsViewModel"
+          description: List of checkout items to be associated with the customer.
+      additionalProperties: false
+      description: Request model for adding items
+    CheckoutItemsDTO:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount of this checkout item for the customer.
+          format: double
+          nullable: true
+        currencyCode:
+          type: string
+          description: The currency of this checkout item for the customer. See <a
+            target='_blank' href='https://i-payout.readme.io/reference/country-currency-support'
+            />Country / Currency Support </a>
+          nullable: true
+        subscriptionAmount:
+          type: number
+          description: If a subscription, the amount of the subscription, in the currency
+            currencyCode.
+          format: double
+        isSubscription:
+          type: boolean
+          description: Indicates if this checkout item is a subscription.
+          readOnly: true
+        description:
+          type: string
+          description: The item description of this checkout item.
+          nullable: true
+        mustComplete:
+          type: boolean
+          description: Indicates if this checkout item must be completed.
+          nullable: true
+        merchantTransactionId:
+          type: string
+          description: The merchant transaction id as specified in the Add Customer
+            Checkout Items merchantReferenceId parameter.
+          nullable: true
+        transactionStatusId:
+          type: integer
+          description: The transaction status of this checkout item. For possible
+            values, see <a target='_blank' href='https://i-payout.readme.io/reference/transaction-status-code-values'/>Status
+            Code Details </a>.
+          format: int32
+        returnUrl:
+          type: string
+          description: The returnUrl for this checkout item, as specified in the Add
+            Customer Checkout Items userReturnURL parameter.
+          nullable: true
+      additionalProperties: false
+      description: An array of checkout items.
+    CheckOutItemsViewModel:
+      required:
+      - amount
+      - currencyCode
+      - isSubscription
+      - merchantReferenceId
+      type: object
+      properties:
+        amount:
+          minimum: 0.01
+          type: number
+          description: Checkout item amount.
+          format: double
+        currencyCode:
+          maxLength: 3
+          type: string
+          description: The item amount currency code.
+        itemDescription:
+          maxLength: 500
+          type: string
+          description: The item description of the checkout item.
+          nullable: true
+        merchantReferenceId:
+          maxLength: 100
+          type: string
+          description: A merchant specified reference identifier for this checkout
+            item.
+        userReturnUrl:
+          maxLength: 500
+          type: string
+          description: The returnURL for this checkout item.
+          format: uri
+          nullable: true
+        mustComplete:
+          type: boolean
+          description: Specifies if this checkout item must be completed.
+        isSubscription:
+          type: boolean
+          description: If true this checkout item will generate a monthly invoice.The
+            first invoice will begin 1 month after this invoice has been successfully
+            paid.
+        subscriptionAmount:
+          type: number
+          description: The monthly recurring subscription amount.  Required if isSubscription
+            is true.
+          format: double
+        subscriptionDaysToStart:
+          type: integer
+          description: The days until the subscription starts for this checkout item.  Required
+            if isSubscription is true.
+          format: int32
+      additionalProperties: false
+      description: Request models for check out items.
+    CommonFeeType:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 4
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 26
+      - 27
+      - 30
+      - 31
+      - 32
+      - 33
+      - 34
+      - 35
+      - 36
+      - 37
+      - 38
+      - 39
+      - 65
+      - 66
+      - 67
+      - 68
+      - 69
+      - 70
+      - 71
+      - 75
+      - 76
+      - 77
+      - 80
+      - 87
+      - 88
+      - 92
+      - 93
+      - 107
+      - 307
+      - 308
+      - 321
+      - 322
+      - 323
+      - 324
+      - 325
+      - 326
+      - 327
+      - 328
+      - 329
+      - 333
+      - 334
+      - 335
+      - 336
+      - 337
+      - 338
+      - 339
+      - 340
+      - 341
+      - 342
+      - 343
+      - 344
+      - 345
+      - 346
+      - 347
+      - 348
+      - 356
+      - 358
+      - 359
+      - 360
+      - 361
+      - 362
+      - 363
+      - 364
+      - 365
+      - 366
+      - 367
+      - 368
+      - 369
+      - 371
+      - 372
+      - 373
+      - 374
+      - 375
+      - 376
+      - 377
+      - 378
+      - 379
+      - 380
+      - 381
+      - 382
+      - 383
+      - 384
+      - 385
+      - 386
+      - 387
+      - 388
+      - 389
+      - 390
+      - 391
+      - 392
+      - 393
+      - 394
+      - 395
+      - 396
+      - 397
+      - 398
+      - 399
+      - 400
+      - 401
+      - 402
+      - 403
+      - 404
+      - 405
+      - 406
+      - 407
+      - 408
+      - 409
+      - 410
+      - 411
+      - 412
+      - 413
+      - 414
+      - 415
+      - 416
+      - 417
+      type: integer
+      description: The fee type of this transaction. For possible values, see <a target='_blank'
+        href='https://i-payout.readme.io/reference/fee-type-code-values' />Fee Code
+        Details </a>.
+      format: int32
+    CreatePublicInvoiceViewModel:
+      required:
+      - arrItems
+      - currencyCode
+      - merchantReferenceId
+      type: object
+      properties:
+        currencyCode:
+          maxLength: 3
+          type: string
+          description: The currency code of this invoice. See <a target='_blank' href='https://i-payout.readme.io/reference/country-currency-support'
+            />Country / Currency Support </a>
+        merchantReferenceId:
+          maxLength: 100
+          type: string
+          description: The merchant specified merchant reference ID for this invoice.
+        arrItems:
+          type: array
+          items:
+            "$ref": "#/components/schemas/MerchantPublicPaymentItemsViewModel"
+          description: A list of items which are to be included in the invoice.
+        notificationUrl:
+          maxLength: 500
+          type: string
+          description: The webhook notification Url to send the updates for this invoice.
+          nullable: true
+        notificationReturnParams:
+          maxLength: 1000
+          type: string
+          description: The return parameters to be added to the notificationUrl when
+            updates are sent for this invoice.
+          nullable: true
+        userReturnUrl:
+          maxLength: 500
+          type: string
+          description: The URL to send a user,  once the user has successfully paid
+            for this invoice.
+          nullable: true
+        userReturnUrlParameters:
+          maxLength: 1000
+          type: string
+          description: The return parameters to be added to the userReturnUrl when
+            a user is redirected once the user has successfully paid for this invoice.
+          nullable: true
+        userCancelUrl:
+          maxLength: 500
+          type: string
+          description: The URL to send a user, if the user does not complete payment
+            for this invoice.
+          nullable: true
+        userCancelUrlParameters:
+          maxLength: 1000
+          type: string
+          description: The return parameters to be added to the userCancelUrl when
+            a user is redirected if the user does not complete payment for this invoice.
+          nullable: true
+        notificationEmail:
+          maxLength: 200
+          type: string
+          description: An email address to send notifications to when updates are
+            made to this invoice.
+          nullable: true
+        restrictPaymentTypeId:
+          type: integer
+          description: Restricts the payment types which can be utilized to pay for
+            this invoice.
+          format: int64
+      additionalProperties: false
+    CustomerAccountStatus:
+      enum:
+      - 0
+      - 1
+      - -1
+      type: integer
+      description: 'The customer''s status as defined by the following: -1: Closed,
+        0: Suspended, 1: Open.'
+      format: int32
+    CustomerDTO:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username which identifies the customer to be updated.
+          nullable: true
+        emailAddress:
+          type: string
+          description: The customer's email address.
+          nullable: true
+        firstName:
+          type: string
+          description: The customer's first name.
+          nullable: true
+        lastName:
+          type: string
+          description: The customer's last name.
+          nullable: true
+        companyName:
+          type: string
+          description: The customer's company name.
+          nullable: true
+        phoneNumber:
+          type: string
+          description: The customer's phone number.
+          nullable: true
+        cellPhoneNumber:
+          type: string
+          description: The customer's mobile phone number.
+          nullable: true
+        address:
+          type: string
+          description: The customer's address, line 1.
+          nullable: true
+        address2:
+          type: string
+          description: The customer's address, line 2.
+          nullable: true
+        state:
+          type: string
+          description: The customer's state.
+          nullable: true
+        city:
+          type: string
+          description: The customer's city.
+          nullable: true
+        zipcode:
+          type: string
+          description: The customer's ZIP or postal code.
+          nullable: true
+        country2xFormat:
+          type: string
+          description: The customer's two-letter country code (ISO 3166-1 alpha-2).
+            See <a target='_blank' href='https://i-payout.readme.io/reference/country-currency-support'
+            />Country / Currency Support </a>
+          nullable: true
+        dateOfBirth:
+          type: string
+          description: The customer's date of birth.
+          format: date-time
+        isBusiness:
+          type: boolean
+          description: Indicates if this customer is a business or not.
+        customerGuid:
+          type: string
+          description: The customer's unique i-payout identifier.
+          format: uuid
+        isVerified:
+          type: boolean
+          description: Indicates if this customer has been verified or not.
+        eWalletId:
+          type: string
+          description: The customer's i-payout eWallet id.
+          nullable: true
+        isSuspended:
+          type: boolean
+          description: Indicates if this customer is suspended.
+        isInfoVerified:
+          type: boolean
+          description: Indicates if this customer's information has been verified
+            by i-payout.
+        isClosed:
+          type: boolean
+          description: Indicates if this customer account has been closed by i-payout.
+        createdDate:
+          type: string
+          description: The created date of this customer account in the format YYYY-MM-DDThh:mm:ss.ms
+            as defined in ISO 8601.
+          format: date-time
+        isAgreedToFees:
+          type: boolean
+          description: Indicates if this customer has agreed to i-payout's commercial
+            fees.
+        preferredLanguage:
+          type: string
+          description: The customer's preferred two-letter language code as defined
+            in ISO 639-1.
+          nullable: true
+        svcShippingAddress:
+          type: string
+          description: The customer's service shipping address.
+          nullable: true
+      additionalProperties: false
+      description: Customer Information
+    CustomerKycVerificationStatusDTO:
+      type: object
+      properties:
+        isCustomerVerificationCompleted:
+          type: boolean
+          description: Indicates if this customer's verification has been completed
+            or not.
+        message:
+          type: string
+          description: A human readable message of the customer's current verification
+            completion status.
+          nullable: true
+      additionalProperties: false
+    CustomerStatusDto:
+      type: object
+      properties:
+        customerStatus:
+          "$ref": "#/components/schemas/CustomerAccountStatus"
+        isClosed:
+          type: boolean
+          description: Indicates if this customer's i-payout account is closed.
+        isSuspended:
+          type: boolean
+          description: Indicates if this customer's i-payout account is suspended.
+      additionalProperties: false
+      description: Retrieve Customer Status Response Data
+    DeclineMerchantPaymentViewModel:
+      required:
+      - merchantReferenceId
+      type: object
+      properties:
+        merchantReferenceId:
+          maxLength: 100
+          type: string
+          description: The merchant reference ID for which to cancel for a previously
+            created payment.
+      additionalProperties: false
+    EWalletLoadAccountsViewModel:
+      required:
+      - amount
+      - merchantReferenceId
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 300
+          type: string
+          description: The username of the customer for which funds will be loaded.
+        amount:
+          type: number
+          description: Payout amount.
+          format: double
+        comments:
+          maxLength: 500
+          type: string
+          description: Comments associated with this payout transaction.
+          nullable: true
+        merchantReferenceId:
+          maxLength: 50
+          type: string
+          description: Unique merchant reference id for this payout transaction.
+        lineItems:
+          type: array
+          items:
+            "$ref": "#/components/schemas/EWalletLoadLineItemViewModel"
+          description: A list of line items for this load transaction.
+          nullable: true
+      additionalProperties: false
+    EWalletLoadLineItemViewModel:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount for this line item.
+          format: double
+        description:
+          maxLength: 500
+          type: string
+          description: The description for this line item.
+          nullable: true
+        referenceId:
+          maxLength: 50
+          type: string
+          description: Merchant specified reference id for this line item.
+          nullable: true
+      additionalProperties: false
+    EWalletLoadServiceDTO:
+      type: object
+      properties:
+        batchId:
+          type: string
+          description: The unique iPayout batch identifier for this eWallet load.
+          nullable: true
+      additionalProperties: false
+    EWalletLoadViewModel:
+      required:
+      - allowDuplicates
+      - arrAccounts
+      - autoLoad
+      - currencyCode
+      - partnerBatchId
+      type: object
+      properties:
+        partnerBatchId:
+          maxLength: 100
+          type: string
+          description: It is a parameter that is used to group all loads into one
+            batch.You may call Wallet_Load multiple times, and as long as the PartnerBatchID
+            is the same. Please note that PartnerBatchID is used as a batch name in
+            the management console. .
+        poolId:
+          maxLength: 50
+          type: string
+          description: Payout pool/level/tier. If you do not use pools, just leave
+            it blank. This field is just for a reference.
+          nullable: true
+        allowDuplicates:
+          type: boolean
+          description: Specifies whether to allow duplicate transactions in this batch.
+            Duplicates are identified by username. Thus, if true, multiple payouts
+            can be made to the same username within this batch.
+        autoLoad:
+          type: boolean
+          description: If set to TRUE - automatically approve and load payout into
+            eWallets.A batch will be automatically closed, and no other loads can
+            be added into this batch.
+        currencyCode:
+          maxLength: 3
+          type: string
+          description: Payout currency code
+        arrAccounts:
+          type: array
+          items:
+            "$ref": "#/components/schemas/EWalletLoadAccountsViewModel"
+          description: An array of load transactions.
+      additionalProperties: false
+      description: Request model for e-wallet load api
+    EWalletRefundToCustomer:
+      type: object
+      properties:
+        logTransactionId:
+          type: integer
+          description: The i-payout transactionnID for the refund transaction.
+          format: int64
+      additionalProperties: false
+    MerchantPublicPaymentItemsViewModel:
+      required:
+      - amount
+      - quantity
+      type: object
+      properties:
+        amount:
+          minimum: 0.01
+          type: number
+          description: The item amount of this invoice item.
+          format: currency
+        description:
+          maxLength: 500
+          type: string
+          description: The item description of this invoice item.
+          nullable: true
+        quantity:
+          minimum: 1
+          type: integer
+          description: The item quantify of this invoice item.
+          format: int32
+      additionalProperties: false
+      description: Merchant public payment items view model class
+    PayoutRecordResponse:
+      type: object
+      properties:
+        recordNumber:
+          type: integer
+          format: int32
+        username:
+          type: string
+          nullable: true
+        merchantReferenceId:
+          type: string
+          nullable: true
+        amount:
+          type: number
+          format: double
+        isSuccess:
+          type: boolean
+        errorMessage:
+          type: string
+          nullable: true
+        confirmationId:
+          type: integer
+          format: int64
+      additionalProperties: false
+    RedeemVoucherCodeViewModel:
+      required:
+      - amount
+      - currencyCode
+      - merchantReferenceId
+      - voucherCode
+      type: object
+      properties:
+        voucherCode:
+          maxLength: 10
+          type: string
+          description: Voucher code which needs to be redeemded.
+        amount:
+          type: number
+          description: Amount to redeem. If submit as zero, full voucher amount will
+            be redeemed.If submitted amount is less than the voucher amount, remaining
+            balance will be credited back to the sender.
+          format: double
+        currencyCode:
+          maxLength: 3
+          type: string
+          description: The redeem currency code. If empty, system will take the voucher
+            currency code
+        merchantReferenceId:
+          maxLength: 100
+          type: string
+          description: Reference id for the redemption transaction
+        comments:
+          maxLength: 500
+          type: string
+          description: Comments for the transaction
+          nullable: true
+        redeemUserName:
+          maxLength: 300
+          type: string
+          description: If there is any eWallet account for the person that is redeeming,
+            then you can submit the username of that account
+          nullable: true
+      additionalProperties: false
+      description: ''
+    RefundPaymentToMerchantData:
+      type: object
+      properties:
+        logTransactionId:
+          type: integer
+          description: The i-payout transaction id for the refund transaction.
+          format: int64
+      additionalProperties: false
+    RefundPaymentToMerchantViewModel:
+      required:
+      - logTransactionId
+      - merchantReferenceId
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 300
+          type: string
+          description: The username of the customer whose payment will be refunded.
+        logTransactionId:
+          type: integer
+          description: The i-payout logTransactionId associated with the checkout
+            transaction.
+          format: int64
+        refundFundingTransactionFee:
+          type: boolean
+          description: Indicates if the funding transaction fees will be refunded
+            or not.
+          nullable: true
+        refundEwalletToMerchantFee:
+          type: boolean
+          description: Indicates if the eWallet to merchant fees will be refunded
+            or not.
+          nullable: true
+        amount:
+          minimum: 0
+          type: number
+          description: The amount of the refund. If amount is zero then full payment
+            amount will be refunded otherwise submitted amount will be refunded.
+          format: double
+          nullable: true
+        comments:
+          maxLength: 500
+          type: string
+          description: Optional comments associated with the refund.
+          nullable: true
+        merchantReferenceId:
+          maxLength: 100
+          type: string
+          description: The merchant reference id for the refund transaction.
+      additionalProperties: false
+    RefundToCustomerViewModel:
+      required:
+      - amount
+      - currencyCode
+      - merchantReferenceId
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 300
+          type: string
+          description: The username of the customer whose account will be refunded.
+        amount:
+          type: number
+          description: The amount of the refund.
+          format: double
+        comments:
+          maxLength: 500
+          type: string
+          description: Optional comments associated with the refund.
+          nullable: true
+        merchantReferenceId:
+          maxLength: 100
+          type: string
+          description: The merchantReferenceId for the transaction in which to refund.
+        currencyCode:
+          maxLength: 3
+          type: string
+          description: The currency code for this refund. See <a target='_blank' href='https://i-payout.readme.io/reference/country-currency-support'
+            />Country / Currency Support </a>
+      additionalProperties: false
+    RefundVoucherPaymentViewModel:
+      required:
+      - refundAmount
+      - refundCurrencyCode
+      type: object
+      properties:
+        logTransactionID:
+          type: integer
+          description: LogTransactionID of the redeem transaction. Either MerchantReferenceID
+            or LogTransactionID is required.
+          format: int64
+        redeemMerchantReferenceId:
+          maxLength: 100
+          type: string
+          description: MerchantReferenceID of the redeem transaction.Either MerchantReferenceID
+            or LogTransactionID is required.
+          nullable: true
+        refundAmount:
+          type: number
+          description: Refund amount.
+          format: double
+        refundCurrencyCode:
+          maxLength: 3
+          type: string
+          description: Refund currency code
+        refundMerchantReferenceId:
+          maxLength: 100
+          type: string
+          description: Reference id for the refund transaction
+          nullable: true
+        comments:
+          maxLength: 500
+          type: string
+          description: Comments for the transaction
+          nullable: true
+      additionalProperties: false
+    RegisterUserViewModel:
+      required:
+      - emailAddress
+      - firstName
+      - lastName
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 300
+          type: string
+          description: The unique username for the new customer.
+        firstName:
+          maxLength: 50
+          type: string
+          description: The customer's first name.
+        lastName:
+          maxLength: 50
+          type: string
+          description: The customer's last name.
+        companyName:
+          maxLength: 150
+          type: string
+          description: The customer's company name.
+          nullable: true
+        address:
+          maxLength: 250
+          type: string
+          description: The customer's address, line 1.
+          nullable: true
+        address2:
+          maxLength: 250
+          type: string
+          description: The customer's address, line 2.
+          nullable: true
+        city:
+          maxLength: 150
+          type: string
+          description: The customer's city.
+          nullable: true
+        state:
+          maxLength: 150
+          type: string
+          description: The customer's state. For US users state should be in 2 character
+            format like FL, TX.
+          nullable: true
+        zipcode:
+          maxLength: 25
+          type: string
+          description: The customer's ZIP or postal code. For US users ZIP code should
+            be in numeric format.
+          nullable: true
+        country2xFormat:
+          maxLength: 2
+          type: string
+          description: The customer's two-letter country code (ISO 3166-1 alpha-2).
+            If not specified, default country is US.
+          nullable: true
+        phoneNumber:
+          maxLength: 50
+          type: string
+          description: The customer's phone number.
+          nullable: true
+        cellPhoneNumber:
+          maxLength: 50
+          type: string
+          description: The customer's mobile phone number.  This number can be used
+            for SMS notifications.
+          nullable: true
+        emailAddress:
+          maxLength: 300
+          type: string
+          description: The customer's email address.
+        ssn:
+          maxLength: 150
+          type: string
+          description: The customer's social security number (US only).
+          nullable: true
+        companyTaxId:
+          maxLength: 150
+          type: string
+          description: The customer's company tax id (US only).
+          nullable: true
+        governmentId:
+          maxLength: 150
+          type: string
+          description: The customer's government issued id number.
+          nullable: true
+        militaryId:
+          maxLength: 150
+          type: string
+          description: The customer's military issued id number.
+          nullable: true
+        passport:
+          maxLength: 150
+          type: string
+          description: The customer's government issued passport number.
+          nullable: true
+        driversLicense:
+          maxLength: 150
+          type: string
+          description: The customer's state issued driver's license number.
+          nullable: true
+        dateOfBirth:
+          type: string
+          description: 'The customer''s date of birth. If date of birth is not known,
+            please set it to: 1/1/1900. It will be asked on a first user login.'
+          format: date-time
+          nullable: true
+        websitePassword:
+          maxLength: 100
+          type: string
+          description: Login password to eWallet. If not specified a random password
+            will be generated and email will be sent to the user.
+          nullable: true
+        defaultCurrency:
+          maxLength: 3
+          type: string
+          description: 'The customer''s default currency. Defaults to US Dollar: "USD".'
+          nullable: true
+        skipAutoSvcOrder:
+          type: boolean
+          description: The customer's preference on whether or not to skip auto SVC
+            orders.
+        preferredLanguage:
+          maxLength: 2
+          type: string
+          description: 'The customer''s preferred language code that will be used
+            for email communications: EN – English, DE – German, and so on. If not
+            specified, it will be EN.'
+          nullable: true
+        isBusinessUser:
+          type: boolean
+          description: Indicates if the customer is a business.
+        businessUsername:
+          maxLength: 300
+          type: string
+          description: The customer's business name.  Required if isBusinessUser is
+            true.
+          nullable: true
+        secondaryEmail:
+          maxLength: 300
+          type: string
+          description: The customer's secondary email email address.
+          nullable: true
+      additionalProperties: false
+      description: Request model for creating new user
+    StatusConstants:
+      enum:
+      - 0
+      - -100
+      - -99
+      - -98
+      - -97
+      - -96
+      - -95
+      - -94
+      - -93
+      - -92
+      - -90
+      - -89
+      - -88
+      - -87
+      - -86
+      - -85
+      - -84
+      - -83
+      - -82
+      - -80
+      - -79
+      - -78
+      - -77
+      - -76
+      - -75
+      - -74
+      - -73
+      - -72
+      - -71
+      - -68
+      - -67
+      - -66
+      - -65
+      - -64
+      - -63
+      - -62
+      - -61
+      - -60
+      - -58
+      - -57
+      - -56
+      - -53
+      - -37
+      - -26
+      - -15
+      - -12
+      - -7
+      - -5
+      - -3
+      - -2
+      - -1
+      type: integer
+      description: Api response status code. For possible values, see <a target='_blank'
+        href='https://i-payout.readme.io/reference/status-code-values' />Status Code
+        Values </a>.
+      format: int32
+    StopPaymentOnCheckStatus:
+      enum:
+      - 0
+      - 1
+      - 10
+      - -1
+      type: integer
+      format: int32
+    TransactionInfoDTO:
+      type: object
+      properties:
+        logTransactionId:
+          type: integer
+          description: The i-payout logging transaction id which may be utilized for
+            debugging purposes.
+          format: int64
+        currencyCode:
+          type: string
+          description: The currency code of this transaction.
+          nullable: true
+        amount:
+          type: number
+          description: The amount of this transaction.
+          format: double
+        toUsername:
+          type: string
+          description: The username of the recipient of this transaction.
+          nullable: true
+        fromUsername:
+          type: string
+          description: The username of the sender of this transaction.
+          nullable: true
+        tranDescription:
+          type: string
+          description: The transaction description.
+          nullable: true
+        tranType:
+          "$ref": "#/components/schemas/TransactionType"
+        feeType:
+          "$ref": "#/components/schemas/CommonFeeType"
+        tranStatus:
+          "$ref": "#/components/schemas/TransactionStatusType"
+        customerFeeAmount:
+          type: number
+          description: The fees that are to be paid by the customer for this transaction.
+          format: double
+        merchantFeeAmount:
+          type: number
+          description: The fees that are to be paid by the merchant for this transaction.
+          format: double
+        merchantReferenceId:
+          type: string
+          description: The merchant specified merchant reference id, as specified
+            in the original transaction.
+          nullable: true
+        merchantBatchId:
+          type: string
+          description: For PayOut transactions, the merchant specified merchant batch
+            id.
+          nullable: true
+        userMemo:
+          type: string
+          description: A user speicified memo for this transaction.
+          nullable: true
+        managerComments:
+          type: string
+          description: If specified, manager comments that have been attributed to
+            this transaction.
+          nullable: true
+        transactionTime:
+          type: string
+          description: 'The date and time of this transaction.  TBD: Add format.'
+          format: date-time
+        lastUpdatedTime:
+          type: string
+          description: The date and time of the last update of this transaction in
+            the format YYYY-MM-DDThh:mm:ss.ms as defined in ISO 8601.
+          format: date-time
+        other:
+          type: string
+          description: Comments associated with this transaction.
+          nullable: true
+        globalProfileId:
+          type: integer
+          description: The i-payout global profile id associated with this transaction.
+          format: int64
+        globalProfileName:
+          type: string
+          description: The global profile name associated with this transaction.
+          nullable: true
+        stopPayOnCheckStatus:
+          "$ref": "#/components/schemas/StopPaymentOnCheckStatus"
+        stopPaymentOnCheckInitiatedBy:
+          type: integer
+          description: If a stop payment has been initiated on this transaction, the
+            initiator of the stop payment request.
+          format: int64
+        stopPaymentOnCheckInitiatedtime:
+          type: string
+          description: 'If a stop payment has been initiated on this transaction,
+            the date and time of the stop payment initiation.  TBD: Add format.'
+          format: date-time
+        achSubmitDate:
+          type: string
+          description: The ACH submittal date in the format YYYY-MM-DDThh:mm:ss.ms
+            as defined in ISO 8601.
+          format: date-time
+      additionalProperties: false
+    TransactionStatusType:
+      enum:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - -100
+      - -1
+      type: integer
+      description: The transaction status. For possible values, see <a target='_blank'
+        href='https://i-payout.readme.io/reference/transaction-status-code-values'/>Status
+        Code Details </a>.
+      format: int32
+    TransactionType:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+      - 18
+      - 19
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 26
+      - 27
+      - 30
+      - 31
+      - 32
+      - 33
+      - 34
+      - 35
+      - 36
+      - 37
+      - 40
+      - 41
+      - 42
+      - 45
+      - 46
+      - 47
+      - 48
+      - 49
+      - 50
+      - 51
+      - 52
+      - 53
+      - 54
+      - 55
+      - 56
+      - 57
+      - 58
+      - 59
+      - 60
+      - 61
+      - 62
+      - 63
+      - 64
+      - 65
+      - 66
+      - 67
+      - 68
+      - 69
+      - 70
+      - 71
+      - 72
+      - 73
+      - 74
+      - 75
+      - 76
+      - 77
+      - 78
+      - 79
+      - 80
+      - 81
+      - 82
+      - 83
+      - 84
+      - 85
+      - 86
+      - 87
+      - 88
+      - 89
+      - 90
+      - 91
+      - 92
+      - 93
+      - 94
+      - 95
+      - 96
+      - 97
+      - 98
+      - 99
+      - 100
+      - 101
+      - 102
+      - 103
+      - 104
+      - -1
+      type: integer
+      description: The transaction type. For possible values, see <a target='_blank'
+        href='https://i-payout.readme.io/reference/transaction-type-code-values' />Transaction
+        Type Code Details </a>.
+      format: int32
+    UpdateCustomerViewModel:
+      required:
+      - username
+      type: object
+      properties:
+        username:
+          maxLength: 300
+          type: string
+          description: The username which identifies the customer to be updated.
+        firstName:
+          maxLength: 100
+          type: string
+          description: The customer's updated first name.
+          nullable: true
+        lastName:
+          maxLength: 100
+          type: string
+          description: The customer's updated last name.
+          nullable: true
+        companyName:
+          maxLength: 300
+          type: string
+          description: The customer's updated company name.
+          nullable: true
+        address:
+          maxLength: 500
+          type: string
+          description: The customer's updated address, line 1.
+          nullable: true
+        address2:
+          maxLength: 500
+          type: string
+          description: The customer's updated address, line 2.
+          nullable: true
+        city:
+          maxLength: 300
+          type: string
+          description: The customer's updated city.
+          nullable: true
+        state:
+          maxLength: 500
+          type: string
+          description: The customer's updated state.
+          nullable: true
+        zipcode:
+          maxLength: 25
+          type: string
+          description: The customer's updated ZIP or postal code.
+          nullable: true
+        country2xFormat:
+          minLength: 2
+          type: string
+          description: The customer's two-letter country code (ISO 3166-1 alpha-2).
+            See <a target='_blank' href='https://i-payout.readme.io/reference/country-currency-support'
+            />Country / Currency Support </a>
+          nullable: true
+        phoneNumber:
+          maxLength: 50
+          type: string
+          description: The customer's updated phone number.
+          nullable: true
+        cellPhoneNumber:
+          maxLength: 50
+          type: string
+          description: The customer's updated mobile phone number.
+          nullable: true
+        ssn:
+          maxLength: 150
+          type: string
+          description: The customers updated social security number.
+          nullable: true
+        companyTaxId:
+          maxLength: 150
+          type: string
+          description: The customer's updated company Tax ID.
+          nullable: true
+        governmentId:
+          maxLength: 150
+          type: string
+          description: The customer's updated government issued ID number.
+          nullable: true
+        militaryId:
+          maxLength: 150
+          type: string
+          description: The customer's updated military issued ID number.
+          nullable: true
+        passport:
+          maxLength: 150
+          type: string
+          description: The customer's updated government issued Passpord number.
+          nullable: true
+        driversLicense:
+          maxLength: 150
+          type: string
+          description: The customer's updated state issued driver's license number.
+          nullable: true
+        dateOfBirth:
+          type: string
+          description: The customer's updated date of birth.
+          format: date-time
+      additionalProperties: false
+      description: Request model for customer updation.
+    UpdateUserNameViewModel:
+      required:
+      - currentUsername
+      - newUsername
+      type: object
+      properties:
+        currentUsername:
+          maxLength: 300
+          type: string
+          description: The current username of the customer whose username will be
+            updated.
+        newUsername:
+          maxLength: 300
+          type: string
+          description: The new username which will be assigned to the customer.
+        comments:
+          maxLength: 500
+          type: string
+          description: The reason for the username change.
+          nullable: true
+      additionalProperties: false
+      description: Request model for user name updation.
+    ValidateVoucherCodeResponseDTO:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Voucher amount
+          format: double
+        currencyCode:
+          type: string
+          description: Voucher currency code
+          nullable: true
+        isPendingToRedeem:
+          type: boolean
+          description: If voucher is pending to redeem or not.
+        fxRates:
+          type: array
+          items:
+            "$ref": "#/components/schemas/ValidateVoucherCodeResponseFxRateDTO"
+          nullable: true
+      additionalProperties: false
+    ValidateVoucherCodeResponseFxRateDTO:
+      type: object
+      properties:
+        fxAmount:
+          type: number
+          description: Fx Amount.
+          format: double
+        fxCurrencyCode:
+          type: string
+          description: Fx Currency code.
+          nullable: true
+      additionalProperties: false
+    ValidateVoucherCodeViewModel:
+      required:
+      - voucherCode
+      type: object
+      properties:
+        voucherCode:
+          maxLength: 10
+          type: string
+          description: Voucher code which needs to be validated.
+        currencyCode:
+          maxLength: 3
+          type: string
+          description: The voucher currency code.
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Basic:
+      type: http
+      description: 'Use API username and password to get the dynamic bearer token
+        which can be used to access all other API, Example: ''Basic 12345adfad'''
+      scheme: Basic
+    Bearer:
+      type: apiKey
+      description: 'JWT Authorization header using the Bearer scheme.Enter ''Bearer''
+        [space] and then your token in the text input below. Example: ''Bearer 12345abcdef'''
+      name: Authorization
+      in: header
+security:
+- Bearer: []
+  Basic: []
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

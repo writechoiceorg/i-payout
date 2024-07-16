@@ -1,0 +1,81 @@
+openapi: '3.0.3'
+info:
+  title: Payout Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Payout
+security:
+  - apikeyAuth: []
+    XMerchantId: []
+paths:
+  /api/v{version}/PayOut/create:
+    post:
+      tags:
+        - Payout
+      summary: Make a Payout
+      description: |
+        This API loads funds into customer accounts. You can submit an array of accounts in one API call.
+        We suggest not to use more than 1000 accounts in one API call. With this API, if one record fails
+        to load, then all the records in the API also will fail. You will need to resubmit all records in
+        the API again once you fixed the failed record.
+      operationId: make-payout
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payout_schemas.yml#/schemas/MakePayoutRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          batchId:
+                            type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+ 
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
+      
