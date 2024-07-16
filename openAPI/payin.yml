@@ -96,6 +96,7 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          
 components:
   securitySchemes:
     apikeyAuth:

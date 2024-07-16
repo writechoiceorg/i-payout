@@ -113,7 +113,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/DefaultResponse'
+          $ref: '#/schemas/DefaultResponse'
         example:
           isSuccess: false
           message: Invalid request
@@ -124,7 +124,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '#/components/schemas/DefaultResponse'
+          $ref: '#/schemas/DefaultResponse'
         example:
           isSuccess: false
           message: Internal server error
