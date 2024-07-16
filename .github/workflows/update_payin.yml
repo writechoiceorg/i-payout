@@ -6,6 +6,7 @@ on:
     paths:
       - "openAPI/payin.yml"
       - "openAPI/schemas/payin_schemas.yml"
+      - "openAPI/schemas/index.yml"
 
 jobs:
   sync-readme-api-definition:

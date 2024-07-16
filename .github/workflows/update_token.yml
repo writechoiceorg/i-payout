@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - "openAPI/token.yml"
+      - "openAPI/schemas/index.yml"
 
 jobs:
   sync-readme-api-definition:

@@ -4,9 +4,11 @@ name: Sync API definition to ReadMe
 on:
   push:
     paths:
-      - 'openAPI/webhooks.yml'
+      - "openAPI/webhooks.yml"
+      - "openAPI/schemas/index.yml"
+      - "openAPI/schemas/webhook_schemas.yml"
 
-jobs:  
+jobs:
   sync-readme-api-definition:
     runs-on: ubuntu-latest
     steps:
@@ -20,5 +22,3 @@ jobs:
         uses: readmeio/rdme@v8
         with:
           rdme: openapi ./openAPI/webhooks.yml --key=${{ secrets.README_API_KEY }} --id=${{ secrets.WEBHOOK_ID }}
-
-          

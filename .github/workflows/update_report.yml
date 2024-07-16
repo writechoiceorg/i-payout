@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - "openAPI/report.yml"
+      - "openAPI/schemas/index.yml"
+      - "openAPI/schemas/report_schemas.yml"
 
 jobs:
   sync-readme-api-definition:

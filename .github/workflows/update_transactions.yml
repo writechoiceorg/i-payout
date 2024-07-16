@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - "openAPI/transactions.yml"
+      - "openAPI/schemas/index.yml"
+      - "openAPI/schemas/transaction_schemas.yml"
 
 jobs:
   sync-readme-api-definition:
