@@ -93,7 +93,7 @@ schemas:
     properties:
       username:
         type: string
-        description: The username of the customer account.
+        description: The username of the beneficiary account.
       autoChargeAccount:
         type: boolean
         description: Specifies if i-payout should automatically charge the account.
@@ -101,7 +101,7 @@ schemas:
         type: array
         items:
           $ref: '#/schemas/CheckoutItem'
-        description: List of checkout items to be associated with the customer.
+        description: List of checkout items to be associated with the beneficiary.
   CreatePayinItem:
     type: object
     properties:
@@ -189,7 +189,7 @@ schemas:
     properties:
       username:
         type: string
-        description: The username of the customer whose payment will be refunded.
+        description: The username of the beneficiary whose payment will be refunded.
       logTransactionId:
         type: integer
         format: int64
@@ -285,3 +285,28 @@ schemas:
         type: integer
         format: int64
         description: Restricts the payment types which can be utilized to pay for this invoice.
+  RefundRequest:
+    type: object
+    required:
+      - username
+      - amount
+      - merchantReferenceId
+      - currencyCode
+    properties:
+      username:
+        type: string
+        description: The username of the beneficiary whose account will be refunded.
+      amount:
+        type: number
+        format: double
+        description: The amount of the refund.
+      comments:
+        type: string
+        nullable: true
+        description: Optional comments associated with the refund.
+      merchantReferenceId:
+        type: string
+        description: The merchantReferenceId for the transaction in which to refund.
+      currencyCode:
+        type: string
+        description: The currency code for the refund. Refer to the [ISO Country and Currency Codes](/reference/country-currency-support) page for more details.

@@ -189,7 +189,39 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
-
+  /api/v{version}/PayIn/refundToCustomer:
+    post:
+      tags:
+        - Payins
+      summary: Refund to Beneficiary
+      description: This API will refund a beneficiary without any prior payment made by beneficiary's eWallet account.
+      operationId: refund-beneficiary
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          logTransactionId:
+                            type: integer
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:
