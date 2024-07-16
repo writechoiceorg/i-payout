@@ -17,7 +17,7 @@ paths:
       description: This API will return bank address details based on Routing Number
       operationId: get-bank-address-by-routing-number
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        # - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/RoutingNumber'
       responses:
@@ -64,7 +64,7 @@ paths:
         Country Code
       operationId: get-bank-address-by-swift-code
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        # - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/SwiftCode'
         - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/CountryCode'
@@ -110,7 +110,7 @@ paths:
       description: This API validate IBAN provided
       operationId: validate-iban
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
+        # - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/IBAN'
         - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/CountryCode'
