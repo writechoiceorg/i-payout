@@ -167,9 +167,8 @@ schemas:
         description: The return URL for the transaction.
         example: "string"
   GetPaymentItemResponseData:
-    data:
-      type: array
-      items:
-        $ref: '#/schemas/GetPaymentItem'
-      description: List of payment items.
+    type: array
+    items:
+      $ref: '#/schemas/GetPaymentItem'
+    description: List of payment items.
 
