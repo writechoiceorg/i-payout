@@ -129,6 +129,36 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/PayIn/spendback:
+    post:
+      tags:
+        - Payins
+      summary: Make Spendback Payment
+      description: This API will make a spendback payment. This function will debit the eWallet account for the spendback amount.
+      operationId: make-spendback-payment
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/CheckoutRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/CreatePayinResponseData'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:
