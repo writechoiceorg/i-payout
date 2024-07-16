@@ -8,6 +8,7 @@ tags:
   - name: Transfers
 security:
   - apikeyAuth: []
+    XMerchantId: []
 paths:
   /api/v{version}/transfer/create:
     post:
@@ -30,7 +31,6 @@ paths:
                 - destinationType
               $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/CreateTransferRequest'
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       responses:
         '200':
@@ -97,7 +97,6 @@ paths:
       summary: Cancel Transfer
       operationId: cancel-transfer
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/Token'
       responses:
@@ -136,7 +135,6 @@ paths:
       summary: Approve Transfer
       operationId: approve-transfer
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/Token'
       responses:
@@ -180,7 +178,6 @@ paths:
             schema:
               $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/CreateTransferRequest'
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/Token'
       responses:
@@ -248,4 +245,12 @@ components:
       type: apiKey
       in: header
       name: Authorization
+      x-default: "<Your api-key>"
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      x-default: "<Your Merchant Identifier (GUID)>"
+      description: Your Merchant Identifier (GUID).
       

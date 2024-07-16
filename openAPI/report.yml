@@ -8,6 +8,7 @@ tags:
   - name: Report
 security:
   - apikeyAuth: []
+    XMerchantId: []
 paths:
   /api/v{version}/report/customers:
     get:
@@ -17,7 +18,6 @@ paths:
       description: This API returns matching beneficiary details based on filters applied
       operationId: get-beneficiary-report
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Country'
         - $ref: 'openAPI/schemas/index.yml#/parameters/FirstName'
@@ -69,7 +69,6 @@ paths:
       description: This API returns matching transfers details based on filters applied.
       operationId: get-transfer-report
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryTokenQuery'
         - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/TransferToken'
@@ -117,7 +116,6 @@ paths:
       description: This API returns matching transfers details filtered by the beneficiary's token.
       operationId: get-transfer-report-data
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
@@ -160,4 +158,12 @@ components:
       type: apiKey
       in: header
       name: Authorization
+      x-default: "<Your api-key>"
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      x-default: "<Your Merchant Identifier (GUID)>"
+      description: Your Merchant Identifier (GUID).
       

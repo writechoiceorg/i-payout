@@ -8,6 +8,7 @@ tags:
   - name: Beneficiary
 security:
   - apikeyAuth: []
+    XMerchantId: []
 paths:
   /api/v{version}/beneficiary/create:
     post:
@@ -19,7 +20,6 @@ paths:
         This API will create a new beneficiary. Once the account has been created,
         the system will send an email with the credentials to the beneficiary.
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       requestBody:
         content:
@@ -84,7 +84,6 @@ paths:
         customer. This token is valid for 10 minutes. This token can be used to
         automatically login the beneficiary to eWallet system.
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
@@ -147,7 +146,6 @@ paths:
         This API will return the balance for a given beneficiary for a specified
         currency.
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
         - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
@@ -211,7 +209,6 @@ paths:
       summary: Get Account Status
       description: This API will return the account status for a given beneficiary.
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
@@ -277,7 +274,6 @@ paths:
       summary: Get KYC Status
       description: This API will return the KYC verification status for a given beneficiary.
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
@@ -339,7 +335,6 @@ paths:
       summary: Get Beneficiary
       description: This API will return the beneficiary profile information.
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
         - name: Accept
@@ -419,7 +414,6 @@ paths:
       security:
         - apikeyAuth: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - name: userName
           in: query
@@ -498,7 +492,6 @@ paths:
       security:
         - apikeyAuth: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       responses:
         '200':
@@ -557,3 +550,11 @@ components:
       type: apiKey
       in: header
       name: Authorization
+      x-default: "<Your api-key>"
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      x-default: "<Your Merchant Identifier (GUID)>"
+      description: Your Merchant Identifier (GUID).
