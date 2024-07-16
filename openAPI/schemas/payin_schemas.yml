@@ -171,4 +171,3 @@ schemas:
     items:
       $ref: '#/schemas/GetPaymentItem'
     description: List of payment items.
-
