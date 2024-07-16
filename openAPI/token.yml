@@ -1,0 +1,75 @@
+openapi: '3.0.3'
+info:
+  title: Token Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Token
+security:
+  - Basic: []
+    XMerchantId: []
+paths:
+  /api/v{version}/Authentication/Login:
+    get:
+      tags:
+        - Token
+      summary: Get API Token
+      description: This function will validate the API username and password and provide a bearer token which can be used for all other API calls. This bearer token will be valid for 24 hours.
+      operationId: get-api-token
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          merchantId:
+                            type: string
+                          token:
+                            type: string
+                          expireInMinutes:
+                            type: integer
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+components:
+  securitySchemes:
+    Basic:
+      type: http
+      scheme: basic
+      description: |
+        Use API username and password to get the dynamic bearer token which can be used to access all other APIs.
+        Example: 'Basic 12345adfad'
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
