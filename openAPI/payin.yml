@@ -159,6 +159,37 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/PayIn/createPublicInvoice:
+    post:
+      tags:
+        - Payins
+      summary: Create Public Invoice
+      description: This API will create a payment item for a non-registered eWallet customer.
+      operationId: create-public-invoice
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/InvoiceRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: string
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+
 components:
   securitySchemes:
     apikeyAuth:

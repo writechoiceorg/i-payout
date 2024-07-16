@@ -215,3 +215,73 @@ schemas:
       merchantReferenceId:
         type: string
         description: The merchant reference ID for the refund transaction.
+  InvoiceItem:
+    type: object
+    required:
+      - amount
+      - quantity
+    properties:
+      amount:
+        type: number
+        format: double
+        minimum: 0.01
+        description: The item amount of this invoice item.
+      description:
+        type: string
+        nullable: true
+        description: The item description of this invoice item.
+      quantity:
+        type: integer
+        format: int32
+        minimum: 1
+        description: The item quantity of this invoice item.
+  InvoiceRequest:
+    type: object
+    required:
+      - currencyCode
+      - merchantReferenceId
+      - arrItems
+    properties:
+      currencyCode:
+        type: string
+        description: The currency code of this invoice. See Country / Currency Support.
+      merchantReferenceId:
+        type: string
+        description: The merchant specified merchant reference ID for this invoice.
+      arrItems:
+        type: array
+        items:
+          $ref: '#/schemas/InvoiceItem'
+        description: A list of items which are to be included in the invoice.
+      notificationUrl:
+        type: string
+        nullable: true
+        description: The webhook notification URL to send updates for this invoice.
+      notificationReturnParams:
+        type: string
+        nullable: true
+        description: The return parameters to be added to the notificationUrl when updates are sent for this invoice.
+      userReturnUrl:
+        type: string
+        nullable: true
+        description: The URL to send a user once the user has successfully paid for this invoice.
+      userReturnUrlParameters:
+        type: string
+        nullable: true
+        description: The return parameters to be added to the userReturnUrl when a user is redirected once the user has successfully paid for this invoice.
+      userCancelUrl:
+        type: string
+        nullable: true
+        description: The URL to send a user if the user does not complete payment for this invoice.
+      userCancelUrlParameters:
+        type: string
+        nullable: true
+        description: The return parameters to be added to the userCancelUrl when a user is redirected if the user does not complete payment for this invoice.
+      notificationEmail:
+        type: string
+        nullable: true
+        description: An email address to send notifications to when updates are made to this invoice.
+      restrictPaymentTypeId:
+        type: integer
+        format: int64
+        description: Restricts the payment types which can be utilized to pay for this invoice.
