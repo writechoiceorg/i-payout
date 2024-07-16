@@ -65,7 +65,62 @@ paths:
                 message: Internal server error
                 statusCode: 500
                 logIdentifier: def456
- 
+  /api/v{version}/PayOut/createSpecial:
+    post:
+      tags:
+        - Payout
+      summary: Make Payout Special Case
+      description: |
+        This API will loads funds into customer accounts. You can submit array of accounts
+        in one API call. We suggest not to use more than 1000 accounts in one API call. 
+        With this API, all records in the API will not be rejected if one payout record is 
+        failed.API response will show what records were failed so that you can only resubmit 
+        the failed records instead of all records in the API.
+      operationId: make-payout-special-case
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payout_schemas.yml#/schemas/MakePayoutRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          batchId:
+                            type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
 components:
   securitySchemes:
     apikeyAuth:
