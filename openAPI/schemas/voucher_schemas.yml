@@ -1,0 +1,75 @@
+schemas:
+  ValidateVoucherRequest:
+    required:
+      - voucherCode
+    type: object
+    properties:
+      voucherCode:
+        type: string
+        description: Voucher code which needs to be validated.
+      currencyCode:
+        type: string
+        nullable: true
+        description: The voucher currency code.
+  ValidateVoucherResponseData:
+    type: object
+    properties:
+      amount:
+        type: number
+        format: double
+        example: 0
+        description: The amount associated with the transaction.
+      currencyCode:
+        type: string
+        example: "string"
+        description: The currency code for the amount.
+      isPendingToRedeem:
+        type: boolean
+        example: true
+        description: Indicates if the amount is pending to be redeemed.
+      fxRates:
+        type: array
+        description: Foreign exchange rates applicable to the transaction.
+        items:
+          type: object
+          properties:
+            fxAmount:
+              type: number
+              format: double
+              example: 0
+              description: The foreign exchange amount.
+            fxCurrencyCode:
+              type: string
+              example: "string"
+              description: The currency code for the foreign exchange amount.
+  VoucherRedemptionRequest:
+    type: object
+    required:
+      - voucherCode
+      - amount
+      - currencyCode
+      - merchantReferenceId
+    allOf:
+      - $ref: '#schemas/ValidateVoucherRequest'
+    properties:
+      # voucherCode:
+      #   type: string
+      #   description: Voucher code which needs to be redeemed.
+      amount:
+        type: number
+        format: double
+        description: Amount to redeem. If submitted as zero, the full voucher amount will be redeemed. If submitted amount is less than the voucher amount, the remaining balance will be credited back to the sender.
+      # currencyCode:
+      #   type: string
+      #   description: The redeem currency code. If empty, the system will take the voucher currency code.
+      merchantReferenceId:
+        type: string
+        description: Reference ID for the redemption transaction.
+      comments:
+        type: string
+        nullable: true
+        description: Comments for the transaction.
+      redeemUserName:
+        type: string
+        nullable: true
+        description: If there is any eWallet account for the person that is redeeming, then you can submit the username of that account.
