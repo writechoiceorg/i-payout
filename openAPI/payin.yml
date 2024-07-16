@@ -74,9 +74,9 @@ paths:
     post:
       tags:
         - Payins
-      summary: Get Payment Items
-      description: This API will return the payment item(s) of a customer. You can use the filters like payment status, merchant reference number and date range to filter the result data set.
-      operationId: get-payment-items
+      summary: Decline Payment Items
+      description: This API will decline a payment item if it was not paid already.
+      operationId: decline-payment-items
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
       requestBody:
