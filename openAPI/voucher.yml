@@ -114,7 +114,7 @@ paths:
       tags:
         - Voucher
       summary: Refund Voucher
-      description: This API will refund the customer for a redeemed voucher payment.
+      description: This API will refund the beneficiary for a redeemed voucher payment.
       operationId: refund-voucher
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
