@@ -10,7 +10,7 @@ security:
   - apikeyAuth: []
     XMerchantId: []
 paths:
-  /api/v{version}/report/customers:
+  /api/v{version}/Transaction/get:
     get:
       tags:
         - Transactions
