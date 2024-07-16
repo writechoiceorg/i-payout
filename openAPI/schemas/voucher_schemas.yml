@@ -49,19 +49,17 @@ schemas:
       - amount
       - currencyCode
       - merchantReferenceId
-    allOf:
-      - $ref: '#/schemas/ValidateVoucherRequest'
     properties:
-      # voucherCode:
-      #   type: string
-      #   description: Voucher code which needs to be redeemed.
+      voucherCode:
+        type: string
+        description: Voucher code to be redeemed.
       amount:
         type: number
         format: double
         description: Amount to redeem. If submitted as zero, the full voucher amount will be redeemed. If submitted amount is less than the voucher amount, the remaining balance will be credited back to the sender.
-      # currencyCode:
-      #   type: string
-      #   description: The redeem currency code. If empty, the system will take the voucher currency code.
+      currencyCode:
+        type: string
+        description: The redeem currency code. If empty, the system will take the voucher currency code.
       merchantReferenceId:
         type: string
         description: Reference ID for the redemption transaction.
@@ -73,3 +71,32 @@ schemas:
         type: string
         nullable: true
         description: If there is any eWallet account for the person that is redeeming, then you can submit the username of that account.
+  RefundVoucherRequest:
+    type: object
+    required:
+      - refundAmount
+      - refundCurrencyCode
+    properties:
+      logTransactionID:
+        type: integer
+        format: int64
+        description: LogTransactionID of the redeem transaction. Either MerchantReferenceID or LogTransactionID is required.
+      redeemMerchantReferenceId:
+        type: string
+        nullable: true
+        description: MerchantReferenceID of the redeem transaction. Either MerchantReferenceID or LogTransactionID is required.
+      refundAmount:
+        type: number
+        format: double
+        description: Refund amount.
+      refundCurrencyCode:
+        type: string
+        description: Refund currency code.
+      refundMerchantReferenceId:
+        type: string
+        nullable: true
+        description: Reference ID for the refund transaction.
+      comments:
+        type: string
+        nullable: true
+        description: Comments for the transaction.
