@@ -154,4 +154,8 @@ components:
       type: apiKey
       in: header
       name: Authorization
-      
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
