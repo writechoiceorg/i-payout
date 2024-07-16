@@ -1,0 +1,121 @@
+openapi: '3.0.3'
+info:
+  title: Payins Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Payins
+security:
+  - apikeyAuth: []
+    XMerchantId: []
+paths:
+  /api/v{version}/PayIn/create:
+    post:
+      tags:
+        - Payins
+      summary: Create Payment Items
+      description: This API will add payment item(s) for a beneficiary's account.
+      operationId: create-payment-items
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/CheckoutRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/CreatePayinResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+  /api/v{version}/PayIn/get:
+    get:
+      tags:
+        - Payins
+      summary: Get Payment Items
+      description: This API will return the payment item(s) of a customer. You can use the filters like payment status, merchant reference number and date range to filter the result data set.
+      operationId: get-payment-items
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/payin_schemas.yml#/parameters/UserName'
+        - $ref: 'openAPI/schemas/payin_schemas.yml#/parameters/MerchantReferenceId'
+        - $ref: 'openAPI/schemas/payin_schemas.yml#/parameters/DateFrom'
+        - $ref: 'openAPI/schemas/payin_schemas.yml#/parameters/DateTo'
+        - $ref: 'openAPI/schemas/payin_schemas.yml#/parameters/Status'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/payin_schemas.yml#/schemas/GetPaymentItemResponseData'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Invalid request
+                statusCode: 400
+                logIdentifier: xyz789
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+              example:
+                isSuccess: false
+                message: Internal server error
+                statusCode: 500
+                logIdentifier: def456
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
+      
