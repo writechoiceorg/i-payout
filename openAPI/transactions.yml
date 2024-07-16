@@ -14,9 +14,9 @@ paths:
     get:
       tags:
         - Transactions
-      summary: Get Beneficiary Report
-      description: This API returns matching beneficiary details based on filters applied
-      operationId: get-beneficiary-report
+      summary: Get Transactions
+      description: This API will return list of transactions. You can use the filters like MerchantReferenceId, MerchantBatchId and LogTransactionId to filter the result data set. Atleast one parameter is required in the filter to search the data.
+      operationId: get-transactions
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/MerchantReferenceId'
