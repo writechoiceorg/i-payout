@@ -42,6 +42,38 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/DropinUiToken/GetToken:
+    get:
+      tags:
+        - Token
+      summary: Get Drop in UI Token
+      description: This function will validate the API username and password and provide a bearer token which can be used for all other API calls for DropIn UI Module(Embedded Solution). This token will be valid for 30 min.
+      operationId: get-api-token
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        type: object
+                        properties:
+                          merchantId:
+                            type: string
+                          token:
+                            type: string
+                          expireInMinutes:
+                            type: integer
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     Basic:
