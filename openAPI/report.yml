@@ -1,4 +1,4 @@
-openapi: '3.0.3'
+.: '3.0.3'
 info:
   title: Report Module
   version: '1.0'
@@ -17,16 +17,19 @@ paths:
       summary: Get Beneficiary Report
       description: This API returns matching beneficiary details based on filters applied
       operationId: get-beneficiary-report
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Country'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/FirstName'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/LastName'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/UserName'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Email'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryTokenQuery'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/PageNumber'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/PageSize'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Country'
+        - $ref: './schemas/index.yml#/parameters/FirstName'
+        - $ref: './schemas/index.yml#/parameters/LastName'
+        - $ref: './schemas/index.yml#/parameters/UserName'
+        - $ref: './schemas/index.yml#/parameters/Email'
+        - $ref: './schemas/index.yml#/parameters/BeneficiaryTokenQuery'
+        - $ref: './schemas/index.yml#/parameters/PageNumber'
+        - $ref: './schemas/index.yml#/parameters/PageSize'
       responses:
         '200':
           description: Success
@@ -34,28 +37,31 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/report_schemas.yml#/schemas/BeneficiaryReport'
+                        $ref: './schemas/report_schemas.yml#/schemas/BeneficiaryReport'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/report/transfers:
     get:
       tags:
         - Report
       summary: Get Transfer Report
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       description: This API returns matching transfers details based on filters applied.
       operationId: get-transfer-report
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryTokenQuery'
-        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/TransferToken'
-        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/MerchantTransactionId'
-        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/SourceCurrency'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/BeneficiaryTokenQuery'
+        - $ref: './schemas/transfer_schemas.yml#/parameters/TransferToken'
+        - $ref: './schemas/transfer_schemas.yml#/parameters/MerchantTransactionId'
+        - $ref: './schemas/transfer_schemas.yml#/parameters/SourceCurrency'
       responses:
         '200':
           description: Success
@@ -63,15 +69,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/report_schemas.yml#/schemas/TransferReport'
+                        $ref: './schemas/report_schemas.yml#/schemas/TransferReport'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/report/{beneficiaryToken}/transfers:
     get:
       tags:
@@ -79,9 +85,12 @@ paths:
       summary: Get Transfers Report By Beneficiary
       description: This API returns matching transfers details filtered by the beneficiary's token.
       operationId: get-transfer-report-data
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
       responses:
         '200':
           description: Success
@@ -89,15 +98,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/report_schemas.yml#/schemas/TransferReport'
+                        $ref: './schemas/report_schemas.yml#/schemas/TransferReport'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

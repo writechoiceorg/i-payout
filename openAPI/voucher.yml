@@ -1,4 +1,4 @@
-openapi: '3.0.3'
+.: '3.0.3'
 info:
   title: Voucher Module
   version: '1.0'
@@ -17,13 +17,16 @@ paths:
       summary: Validate Voucher
       description: This API will validate the voucher code.
       operationId: validate-voucher
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Version'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'openAPI/schemas/voucher_schemas.yml#/schemas/ValidateVoucherRequest'
+              $ref: './schemas/voucher_schemas.yml#/schemas/ValidateVoucherRequest'
       responses:
         '200':
           description: Success
@@ -31,15 +34,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/voucher_schemas.yml#/schemas/ValidateVoucherResponseData'
+                        $ref: './schemas/voucher_schemas.yml#/schemas/ValidateVoucherResponseData'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/Voucher/redeem:
     post:
       tags:
@@ -47,13 +50,16 @@ paths:
       summary: Redeem Voucher
       description: This API will redeem the provided voucher.
       operationId: redeem-voucher
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Version'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'openAPI/schemas/voucher_schemas.yml#/schemas/VoucherRedemptionRequest'
+              $ref: './schemas/voucher_schemas.yml#/schemas/VoucherRedemptionRequest'
       responses:
         '200':
           description: Success
@@ -61,7 +67,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -70,9 +76,9 @@ paths:
                           transactionIdentifer:
                             type: integer
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/Voucher/refund:
     post:
       tags:
@@ -80,13 +86,16 @@ paths:
       summary: Refund Voucher
       description: This API will refund the beneficiary for a redeemed voucher payment.
       operationId: refund-voucher
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Version'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'openAPI/schemas/voucher_schemas.yml#/schemas/RefundVoucherRequest'
+              $ref: './schemas/voucher_schemas.yml#/schemas/RefundVoucherRequest'
       responses:
         '200':
           description: Success
@@ -94,7 +103,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -103,9 +112,9 @@ paths:
                           transactionIdentifer:
                             type: integer
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

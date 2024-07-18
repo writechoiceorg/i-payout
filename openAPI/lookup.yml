@@ -1,4 +1,4 @@
-openapi: '3.0.3'
+.: '3.0.3'
 info:
   title: Lookup Module
   version: '1.0'
@@ -17,10 +17,12 @@ paths:
       summary: Get Bank Address Details by Routing Number
       description: This API will return bank address details based on Routing Number
       operationId: get-bank-address-by-routing-number
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        # - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/RoutingNumber'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/lookup_schemas.yml#/parameters/RoutingNumber'
       responses:
         '200':
           description: Success
@@ -28,29 +30,31 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/lookup_schemas.yml#/schemas/BankDetailsByRoutingNumber'
+                        $ref: './schemas/lookup_schemas.yml#/schemas/BankDetailsByRoutingNumber'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/lookup/swift-code/{CountryCode}/{SwiftCode}:
     get:
       tags:
         - Lookup
-      summary: Get Bank Address Details by Swift Code
+      summary: Get Bank Address Details by Swift Code,
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       description: >-
         This API will return bank and branch details based on Swift Code and
         Country Code
       operationId: get-bank-address-by-swift-code
       parameters:
-        # - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/SwiftCode'
-        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/CountryCode'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/lookup_schemas.yml#/parameters/SwiftCode'
+        - $ref: './schemas/lookup_schemas.yml#/parameters/CountryCode'
       responses:
         '200':
           description: Success
@@ -58,15 +62,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/lookup_schemas.yml#/schemas/BankDetailsBySwiftCode'
+                        $ref: './schemas/lookup_schemas.yml#/schemas/BankDetailsBySwiftCode'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/lookup/iban/{CountryCode}/{IBAN}:
     get:
       tags:
@@ -74,11 +78,13 @@ paths:
       summary: Validate IBAN
       description: This API validate IBAN provided
       operationId: validate-iban
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        # - $ref: 'openAPI/schemas/index.yml#/parameters/XMerchantId'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/IBAN'
-        - $ref: 'openAPI/schemas/lookup_schemas.yml#/parameters/CountryCode'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/lookup_schemas.yml#/parameters/IBAN'
+        - $ref: './schemas/lookup_schemas.yml#/parameters/CountryCode'
       responses:
         '200':
           description: Success
@@ -86,15 +92,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/lookup_schemas.yml#/schemas/IbanDetails'
+                        $ref: './schemas/lookup_schemas.yml#/schemas/IbanDetails'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

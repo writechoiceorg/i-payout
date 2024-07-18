@@ -65,9 +65,71 @@ paths:
   /api/v{version}/Transaction/get:
     $ref: "openAPI/transactions.yml#/paths/~1api~1v{version}~1Transaction~1get"
 
-  # XXX MODULE
-  # /api/v{version}/PayIn/:
-  #   $ref: "openAPI/transactions.yml#/paths/~1api~1v{version}~1PayIn~1"
+  # LOOKUP MODULE
+  /api/v{version}/lookup/usa-routing-number/{RoutingNumber}:
+    $ref: "openAPI/lookup.yml#/paths/~1api~1v{version}~1lookup~1usa-routing-number~1{RoutingNumber}"
+  /api/v{version}/lookup/swift-code/{CountryCode}/{SwiftCode}:
+    $ref: "openAPI/lookup.yml#/paths/~1api~1v{version}~1lookup~1swift-code~1{CountryCode}~1{SwiftCode}"
+  /api/v{version}/lookup/iban/{CountryCode}/{IBAN}:
+    $ref: "openAPI/lookup.yml#/paths/~1api~1v{version}~1lookup~1iban~1{CountryCode}~1{IBAN}"
+
+  # REPORT MODULE
+  /api/v{version}/report/customers:
+    $ref: "openAPI/report.yml#/paths/~1api~1v{version}~1report~1customers"
+  /api/v{version}/report/transfers:
+    $ref: "openAPI/report.yml#/paths/~1api~1v{version}~1report~1transfers"
+  /api/v{version}/report/{beneficiaryToken}/transfers:
+    $ref: "openAPI/report.yml#/paths/~1api~1v{version}~1report~1{beneficiaryToken}~1transfers"
+
+  # TRANSFER MODULE
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/bankaccount:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1bankaccount
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/bankaccount-required-fields:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1bankaccount-required-fields
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/bankaccount/{bankAccountToken}:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1bankaccount~1{bankAccountToken}
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/creditcard:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1creditcard
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/creditcard-required-fields:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1creditcard-required-fields
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/creditcard/{creditCardToken}:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1creditcard~1{creditCardToken}
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/wire:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1wire
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/wire-required-fields:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1wire-required-fields
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/wire/{wireToken}:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1beneficiary~1{beneficiaryToken}~1wire~1{wireToken}
+  /api/v{version}/transfer/create:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1create
+  /api/v{version}/transfer/{token}:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1{token}
+  /api/v{version}/transfer/{token}/approve:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1{token}~1approve
+  /api/v{version}/transfer/{token}/cancel:
+    $ref: openAPI/transfers.yml#/paths/~1api~1v{version}~1transfer~1{token}~1cancel
+  
+  # VOUCHER MODULE
+  /api/v{version}/Voucher/redeem:
+    $ref: openAPI/voucher.yml#/paths/~1api~1v{version}~1Voucher~1redeem
+  /api/v{version}/Voucher/refund:
+    $ref: openAPI/voucher.yml#/paths/~1api~1v{version}~1Voucher~1refund
+  /api/v{version}/Voucher/validate:
+    $ref: openAPI/voucher.yml#/paths/~1api~1v{version}~1Voucher~1validate
+
+  # WEBHOOK MODULE
+  /api/v{version}/webhook/Create:
+    $ref: openAPI/webhooks.yml#/paths/~1api~1v{version}~1webhook~1Create
+  /api/v{version}/webhook/GetAllEvents:
+    $ref: openAPI/webhooks.yml#/paths/~1api~1v{version}~1webhook~1GetAllEvents
+  /api/v{version}/webhook/search:
+    $ref: openAPI/webhooks.yml#/paths/~1api~1v{version}~1webhook~1search
+  /api/v{version}/webhook/{token}:
+    $ref: openAPI/webhooks.yml#/paths/~1api~1v{version}~1webhook~1{token}
+  /api/v{version}/webhook/{token}/activate:
+    $ref: openAPI/webhooks.yml#/paths/~1api~1v{version}~1webhook~1{token}~1activate
+  /api/v{version}/webhook/{token}/deactivate:
+    $ref: openAPI/webhooks.yml#/paths/~1api~1v{version}~1webhook~1{token}~1deactivate
 components:
   securitySchemes:
     apikeyAuth:
