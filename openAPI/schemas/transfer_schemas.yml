@@ -45,6 +45,13 @@ parameters:
     schema:
       type: string
     description: The type of the account.
+  CreditCardToken:
+    name: creditCardToken
+    in: path
+    required: true
+    schema:
+      type: string
+    description: Unique token for the credit card profile.
 schemas:
   CreateTransferRequest:
     type: object
@@ -437,5 +444,35 @@ schemas:
             validationFailedMessage:
               type: string
               description: Validation failure message.
-
+  GetCreditCardDataResponse:
+    type: object
+    properties:
+      creditCardNumber:
+        type: string
+        description: Credit card number.
+      creditCardExpirationDateMonth:
+        type: string
+        description: Credit card expiration date month.
+      creditCardExpirationDateYear:
+        type: string
+        description: Credit card expiration date year.
+      customerAddress1:
+        type: string
+        description: Customer's primary address.
+      customerAddress2:
+        type: string
+        description: Customer's secondary address.
+      customerCity:
+        type: string
+        description: City of the customer's address.
+      customerState:
+        type: string
+        description: State of the customer's address.
+      customerZipCode:
+        type: string
+        description: ZIP code of the customer's address.
+      token:
+        type: string
+        format: uuid
+        description: Unique token for the credit card profile.
 
