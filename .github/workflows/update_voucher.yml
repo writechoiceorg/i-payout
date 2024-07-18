@@ -3,6 +3,8 @@ name: Sync API definition to ReadMe
 # Run workflow for every push to the openapi.yml file
 on:
   push:
+    branches:
+      - main
     paths:
       - "openAPI/voucher.yml"
       - "openAPI/schemas/index.yml"
