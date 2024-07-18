@@ -1,0 +1,57 @@
+schemas:
+  GetMerchantInfoDataResponse:
+    type: object
+    properties:
+      merchantID:
+        type: integer
+        description: The unique identifier of the merchant.
+      merchantName:
+        type: string
+        description: The name of the merchant.
+      merchantAddress:
+        type: string
+        description: The address of the merchant.
+      merchantCity:
+        type: string
+        description: The city where the merchant is located.
+      merchantState:
+        type: string
+        description: The state where the merchant is located.
+      merchantZIP:
+        type: string
+        description: The ZIP code of the merchant's location.
+      merchantCountry:
+        type: string
+        description: The country where the merchant is located.
+      eWalletSupportPhoneNumber:
+        type: string
+        description: The support phone number for the e-wallet.
+      eWalletSupportEmail:
+        type: string
+        description: The support email address for the e-wallet.
+      acceptedCurrenciesList:
+        type: array
+        description: The list of currencies accepted by the merchant.
+        items:
+          type: string
+      eWalletURL:
+        type: string
+        description: The URL of the e-wallet.
+  MerchantBalanceDataResponse:
+    type: array
+    description: The balance information for the merchant.
+    items:
+      type: object
+      properties:
+        balance_type:
+          type: string
+          description: The type of balance.
+        balance:
+          type: object
+          properties:
+            available_balance:
+              type: number
+              description: The available balance for the merchant.
+            hold_balance:
+              type: number
+              description: The balance on hold for the merchant.
