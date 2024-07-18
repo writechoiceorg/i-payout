@@ -26,6 +26,13 @@ parameters:
     schema:
       type: string
     description: The currency code of the source from which the transfer is initiated (e.g., USD, EUR).
+  WireToken:
+    name: wireToken
+    in: path
+    required: true
+    schema:
+      type: string
+    description: Unique token for the wire profile.
 schemas:
   CreateTransferRequest:
     type: object
