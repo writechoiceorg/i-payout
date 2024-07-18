@@ -39,9 +39,9 @@ paths:
     get:
       tags:
         - Merchant
-      summary: Get Merchant's Information
-      description: This api returns merchant's information.
-      operationId: get-merchant-info
+      summary: Get Merchant's Balance Information
+      description: The API provides information about the merchant's balance.
+      operationId: get-merchant-balance
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
