@@ -222,6 +222,31 @@ paths:
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/transfer/beneficiary/{beneficiaryToken}/wire/{wireToken}:
+    get:
+      tags:
+        - Transfers
+      summary: Get Wire Profile
+      operationId: get-wire-profile
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/WireToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/GetWireProfileDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
     put:
       tags:
         - Transfers
@@ -252,7 +277,6 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
-
 components:
   securitySchemes:
     apikeyAuth:

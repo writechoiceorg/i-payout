@@ -241,3 +241,82 @@ schemas:
             validationFailedMessage:
               type: string
               description: Validation failure message.
+  GetWireProfileDataResponse:
+    type: object
+    properties:
+      accountNickName:
+        type: string
+        description: Nickname for the account.
+      customerFirstName:
+        type: string
+        description: Customer's first name.
+      customerLastName:
+        type: string
+        description: Customer's last name.
+      customerCompanyName:
+        type: string
+        description: Name of the customer's company.
+      accountNumber:
+        type: string
+        description: Account number.
+      customerAddress1:
+        type: string
+        description: Customer's primary address.
+      customerAddress2:
+        type: string
+        description: Customer's secondary address.
+      customerCity:
+        type: string
+        description: City of the customer's address.
+      customerState:
+        type: string
+        description: State of the customer's address.
+      customerZipCode:
+        type: string
+        description: ZIP code of the customer's address.
+      customerCountry:
+        type: string
+        description: Country of the customer's address.
+      bankName:
+        type: string
+        description: Name of the bank.
+      bankAddress1:
+        type: string
+        description: Bank's primary address.
+      bankAddress2:
+        type: string
+        description: Bank's secondary address.
+      bankCity:
+        type: string
+        description: City of the bank's address.
+      bankState:
+        type: string
+        description: State of the bank's address.
+      bankZipCode:
+        type: string
+        description: ZIP code of the bank's address.
+      bankCountry:
+        type: string
+        description: Country of the bank's address.
+      routingNumber:
+        type: string
+        description: Routing number of the bank.
+      swiftCode:
+        type: string
+        description: SWIFT code of the bank.
+      transitNumber:
+        type: string
+        description: Transit number of the bank.
+      financialInstitutionNumber:
+        type: string
+        description: Financial institution number of the bank.
+      bankCode:
+        type: string
+        description: Bank code.
+      branchCode:
+        type: string
+        description: Branch code.
+      token:
+        type: string
+        format: uuid
+        description: Unique token for the wire profile.
