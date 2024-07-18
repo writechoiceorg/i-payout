@@ -7,7 +7,7 @@ parameters:
       type: integer
       format: int32
     description: Specifies the balance type.
-  schemas:
+schemas:
   GetMerchantInfoDataResponse:
     type: object
     properties:
