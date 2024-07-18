@@ -277,6 +277,33 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/wire-required-fields:
+    get:
+      tags:
+        - Transfers
+      summary: Get Wire Required Fields
+      operationId: get-wire-required-fields
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/BankCountryCode'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/AccountType'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/WireRequiredFieldsDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:
