@@ -528,5 +528,82 @@ schemas:
             validationFailedMessage:
               type: string
               description: The validation failure message.
-
-
+  AddBankAccountRequest:
+    type: object
+    properties:
+      accountNickName:
+        type: string
+        description: Nickname for the account.
+      beneficiaryFirstName:
+        type: string
+        description: Beneficiary's first name.
+      beneficiaryLastName:
+        type: string
+        description: Beneficiary's last name.
+      accountNumber:
+        type: string
+        description: Account number.
+      repeatAccountNumber:
+        type: string
+        description: Repeated account number for confirmation.
+      accountType1:
+        type: string
+        description: Primary account type.
+      accountType2:
+        type: string
+        description: Secondary account type.
+      beneficiaryAddress1:
+        type: string
+        description: Beneficiary's primary address.
+      beneficiaryAddress2:
+        type: string
+        description: Beneficiary's secondary address.
+      beneficiaryCity:
+        type: string
+        description: City of the beneficiary's address.
+      beneficiaryState:
+        type: string
+        description: State of the beneficiary's address.
+      beneficiaryZipCode:
+        type: string
+        description: ZIP code of the beneficiary's address.
+      beneficiaryCountry:
+        type: string
+        description: Country of the beneficiary's address.
+      bankName:
+        type: string
+        description: Name of the bank.
+      bankCountry:
+        type: string
+        description: Country of the bank.
+      routingNumber:
+        type: string
+        description: Routing number of the bank.
+      branchAddress:
+        type: string
+        description: Address of the bank branch.
+  AddBankAccountDataResponse:
+    type: object
+    properties:
+      token:
+        type: string
+        format: uuid
+        description: Unique token for the added bank account.
+      isDocumentVerificationRequired:
+        type: boolean
+        description: Indicates if document verification is required.
+      lstErrMessagesReqFields:
+        type: array
+        description: List of error messages for required fields.
+        items:
+          type: object
+          properties:
+            accountSectionType:
+              type: string
+              description: Type of the account section.
+            accountFieldType:
+              type: string
+              description: Type of the account field.
+            validationFailedMessage:
+              type: string
+              description: Validation failure message.
