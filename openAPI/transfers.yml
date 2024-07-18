@@ -113,7 +113,36 @@ paths:
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/transfer/{token}:
-    post:
+    get:
+      tags:
+        - Transfers
+      summary: Get Transfer Details By Identifier
+      operationId: get-transfer-by-identifier
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/CreateTransferRequest'
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/Token'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/GetTransferByIdDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+    put:
       tags:
         - Transfers
       summary: Update a Transfer
@@ -166,7 +195,6 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
-  
 components:
   securitySchemes:
     apikeyAuth:

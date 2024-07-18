@@ -39,6 +39,67 @@ schemas:
       destinationType:
         type: integer
         description: The type of destination for the transfer.
+  GetTransferByIdDataResponse:
+    type: object
+    properties:
+      merchantTransactionID:
+        type: string
+        description: The unique identifier of the merchant transfer.
+      customerGuid:
+        type: string
+        description: The unique identifier of the customer.
+      destinationTypeID:
+        type: integer
+        description: The type ID of the destination.
+      sourceAmount:
+        type: number
+        description: The amount in the source currency.
+      sourceCurrency:
+        type: string
+        description: The currency code of the source amount.
+      destinationAmount:
+        type: number
+        description: The amount in the destination currency.
+      destinationCurrency:
+        type: string
+        description: The currency code of the destination amount.
+      statusID:
+        type: integer
+        description: The status ID of the transfer.
+      subStatusID:
+        type: integer
+        description: The sub-status ID of the transfer.
+      createdDateUTC:
+        type: string
+        format: date-time
+        description: The UTC date and time when the transfer was created.
+      updatedDateUTC:
+        type: string
+        format: date-time
+        description: The UTC date and time when the transfer was last updated.
+      expiryDateUTC:
+        type: string
+        format: date-time
+        description: The UTC date and time when the transfer expires.
+      comments:
+        type: string
+        description: Additional comments about the transfer.
+      token:
+        type: string
+        description: The token associated with the transfer.
+      fxRate:
+        type: number
+        description: The foreign exchange rate applied to the transfer.
+      totalCustomerFee:
+        type: number
+        description: The total fee charged to the customer.
+      totalMerchantFee:
+        type: number
+        description: The total fee charged to the merchant.
+      destinationToken:
+        type: string
+        format: uuid
+        description: The token associated with the destination.
 parameters:
   Token:
     name: token
