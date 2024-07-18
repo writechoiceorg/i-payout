@@ -1,7 +1,7 @@
-openapi: '3.0.3'
+openapi: "3.0.3"
 info:
   title: Token Module
-  version: '1.0'
+  version: "1.0"
 servers:
   - url: https://merchantapi.testewallet.com
 tags:
@@ -18,15 +18,15 @@ paths:
       description: This function will validate the API username and password and provide a bearer token which can be used for all other API calls. This bearer token will be valid for 24 hours.
       operationId: get-api-token
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: "openAPI/schemas/index.yml#/parameters/Version"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: "openAPI/schemas/index.yml#/schemas/DefaultResponse"
                   - type: object
                     properties:
                       data:
@@ -38,10 +38,10 @@ paths:
                             type: string
                           expireInMinutes:
                             type: integer
-        '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
-        '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+        "400":
+          $ref: "openAPI/schemas/index.yml#/responses/BadRequest"
+        "500":
+          $ref: "openAPI/schemas/index.yml#/responses/InternalServerError"
   /api/v{version}/DropinUiToken/GetToken:
     get:
       tags:
@@ -50,15 +50,15 @@ paths:
       description: This function will validate the API username and password and provide a bearer token which can be used for all other API calls for DropIn UI Module(Embedded Solution). This token will be valid for 30 min.
       operationId: get-dropin-ui-token
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: "openAPI/schemas/index.yml#/parameters/Version"
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: "openAPI/schemas/index.yml#/schemas/DefaultResponse"
                   - type: object
                     properties:
                       data:
@@ -70,10 +70,10 @@ paths:
                             type: string
                           expireInMinutes:
                             type: integer
-        '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
-        '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+        "400":
+          $ref: "openAPI/schemas/index.yml#/responses/BadRequest"
+        "500":
+          $ref: "openAPI/schemas/index.yml#/responses/InternalServerError"
 components:
   securitySchemes:
     Basic:
