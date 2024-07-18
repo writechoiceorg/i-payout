@@ -117,6 +117,7 @@ paths:
       tags:
         - Transfers
       summary: Get Transfer By ID
+      description: Retrieve transfer details by its unique identifier
       operationId: get-transfer-by-identifier
       requestBody:
         content:
