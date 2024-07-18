@@ -92,6 +92,30 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/merchant/statement/{year}/{month}/{currencyCode}:
+    get:
+      tags:
+        - Merchant
+      summary: Get Merchant's Monthly Statement PDF
+      description: The API provides a monthly statement in PDF format.
+      operationId: get-merchant-statement
+      parameters:
+        - $ref: 'openAPI/schemas/merchant_schemas.yml#/parameters/Year'
+        - $ref: 'openAPI/schemas/merchant_schemas.yml#/parameters/Month'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: PDF file
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

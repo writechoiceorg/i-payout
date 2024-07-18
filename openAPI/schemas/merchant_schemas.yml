@@ -7,6 +7,22 @@ parameters:
       type: integer
       format: int32
     description: Specifies the balance type.
+  Year:
+    name: year
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int32
+    description: Year for the statement
+  Month:
+    name: month
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int32
+    description: Month for the statement
 schemas:
   GetMerchantInfoDataResponse:
     type: object
