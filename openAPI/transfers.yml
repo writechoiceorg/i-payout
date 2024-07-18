@@ -119,11 +119,6 @@ paths:
       summary: Get Transfer By ID
       description: Retrieve transfer details by its unique identifier
       operationId: get-transfer-by-identifier
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/CreateTransferRequest'
       parameters:
         - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
         - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/Token'
