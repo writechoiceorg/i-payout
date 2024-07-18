@@ -1,4 +1,13 @@
-schemas:
+parameters:
+  Type:
+    name: type
+    in: path
+    required: true
+    schema:
+      type: integer
+      format: int32
+    description: Specifies the balance type.
+  schemas:
   GetMerchantInfoDataResponse:
     type: object
     properties:
@@ -55,3 +64,91 @@ schemas:
             hold_balance:
               type: number
               description: The balance on hold for the merchant.
+  MerchantBalanceHistoryDataResponse:
+    type: object
+    properties:
+      totalCount:
+        type: integer
+        description: The total number of records.
+      pageNumber:
+        type: integer
+        description: The current page number.
+      pageSize:
+        type: integer
+        description: The number of records per page.
+      pageCount:
+        type: integer
+        description: The total number of pages.
+      merchantHistory:
+        type: array
+        description: The history of merchant transactions.
+        items:
+          type: object
+          properties:
+            amount:
+              type: number
+              description: The transaction amount.
+            balance:
+              type: number
+              description: The balance after the transaction.
+            balanceType:
+              type: string
+              description: The type of balance.
+            comments:
+              type: string
+              description: Comments on the transaction.
+            currency:
+              type: string
+              description: The currency used in the transaction.
+            date:
+              type: string
+              format: date-time
+              description: The date and time of the transaction.
+            holdAmount:
+              type: number
+              description: The amount on hold.
+            holdBalance:
+              type: number
+              description: The balance on hold after the transaction.
+            holdExpirationDate:
+              type: string
+              format: date-time
+              description: The date and time when the hold expires.
+            holdReleasedDate:
+              type: string
+              format: date-time
+              description: The date and time when the hold is released.
+            entity:
+              type: string
+              description: The entity involved in the transaction.
+            fee:
+              type: number
+              description: The fee associated with the transaction.
+            isDebited:
+              type: boolean
+              description: Indicates if the transaction is debited.
+            isHoldReleased:
+              type: boolean
+              description: Indicates if the hold is released.
+            runningBalance:
+              type: number
+              description: The running balance after the transaction.
+            status:
+              type: string
+              description: The status of the transaction.
+            transactionID:
+              type: integer
+              description: The unique identifier of the transaction.
+            transactionType:
+              type: string
+              description: The type of transaction.
+            userName:
+              type: string
+              description: The user involved in the transaction.
+            recordID:
+              type: integer
+              description: The unique identifier of the record.
+            transactionGUID:
+              type: string
+              format: uuid
+              description: The unique GUID of the transaction.

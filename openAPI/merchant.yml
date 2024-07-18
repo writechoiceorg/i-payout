@@ -61,6 +61,37 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/merchant/balancehistory/{type}/{currencyCode}:
+    get:
+      tags:
+        - Merchant
+      summary: Get Merchant's Balance History
+      description: The API provides information about the merchant's balance history
+      operationId: get-merchant-balance-history
+      parameters:
+        - $ref: 'openAPI/schemas/merchant_schemas.yml#/parameters/Type'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/StartDate'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/EndDate'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/PageNumber'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/PageSize'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/merchant_schemas.yml#/schemas/MerchantBalanceHistoryDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

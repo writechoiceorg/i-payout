@@ -91,6 +91,20 @@ parameters:
       type: integer
     description: Number of records per page.
     example: '100'
+  StartDate:
+    name: startDate
+    in: query
+    schema:
+      type: string
+      format: date
+    description: The start date in the format `YYYY-MM-DD`, following [ISO 8601 standards](https://en.wikipedia.org/wiki/ISO_8601).
+  EndDate:
+    name: endDate
+    in: query
+    schema:
+      type: string
+      format: date
+    description: The end date in the format `YYYY-MM-DD`, following [ISO 8601 standards](https://en.wikipedia.org/wiki/ISO_8601).
 schemas:
   DefaultResponse:
     type: object
