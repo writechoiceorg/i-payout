@@ -17,11 +17,14 @@ paths:
       summary: Get Transactions
       description: This API will return list of transactions. You can use the filters like MerchantReferenceId, MerchantBatchId and LogTransactionId to filter the result data set. Atleast one parameter is required in the filter to search the data.
       operationId: get-transactions
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/MerchantReferenceId'
-        - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/MerchantBatchId'
-        - $ref: 'openAPI/schemas/transaction_schemas.yml#/parameters/LogTransactionId'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/transaction_schemas.yml#/parameters/MerchantReferenceId'
+        - $ref: './schemas/transaction_schemas.yml#/parameters/MerchantBatchId'
+        - $ref: './schemas/transaction_schemas.yml#/parameters/LogTransactionId'
       responses:
         '200':
           description: Success
@@ -29,15 +32,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/transaction_schemas.yml#/schemas/GetTransactionResponseData'
+                        $ref: './schemas/transaction_schemas.yml#/schemas/GetTransactionResponseData'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   
 components:
   securitySchemes:

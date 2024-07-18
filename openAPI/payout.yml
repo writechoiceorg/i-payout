@@ -1,4 +1,4 @@
-openapi: '3.0.3'
+.: '3.0.3'
 info:
   title: Payout Module
   version: '1.0'
@@ -17,13 +17,16 @@ paths:
       summary: Make a Payout
       description: This API loads funds into customer accounts. You can submit an array of accounts in one API call. We suggest not to use more than 1000 accounts in one API call. With this API, if one record fails to load, then all the records in the API also will fail. You will need to resubmit all records in the API again once you fixed the failed record.
       operationId: make-payout
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Version'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'openAPI/schemas/payout_schemas.yml#/schemas/MakePayoutRequest'
+              $ref: './schemas/payout_schemas.yml#/schemas/MakePayoutRequest'
       responses:
         '200':
           description: Success
@@ -31,7 +34,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -40,28 +43,31 @@ paths:
                           batchId:
                             type: string
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/PayOut/createSpecial:
     post:
       tags:
         - Payout
       summary: Make Payout Special Case
+      operationId: make-payout-special-case
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       description: |
         This API will loads funds into customer accounts. You can submit array of accounts
         in one API call. We suggest not to use more than 1000 accounts in one API call. 
         With this API, all records in the API will not be rejected if one payout record is 
         failed.API response will show what records were failed so that you can only resubmit 
         the failed records instead of all records in the API.
-      operationId: make-payout-special-case
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Version'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: 'openAPI/schemas/payout_schemas.yml#/schemas/MakePayoutRequest'
+              $ref: './schemas/payout_schemas.yml#/schemas/MakePayoutRequest'
       responses:
         '200':
           description: Success
@@ -69,7 +75,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
@@ -78,9 +84,9 @@ paths:
                           batchId:
                             type: string
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

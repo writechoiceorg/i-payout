@@ -1,4 +1,4 @@
-openapi: '3.0.3'
+.: '3.0.3'
 info:
   title: Merchant Module
   version: '1.0'
@@ -17,8 +17,11 @@ paths:
       summary: Get Merchant's Information
       description: This api returns merchant's information.
       operationId: get-merchant-info
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/Version'
       responses:
         '200':
           description: Success
@@ -26,15 +29,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/merchant_schemas.yml#/schemas/GetMerchantInfoDataResponse'
+                        $ref: './schemas/merchant_schemas.yml#/schemas/GetMerchantInfoDataResponse'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/merchant/balance/{currencyCode}:
     get:
       tags:
@@ -42,9 +45,12 @@ paths:
       summary: Get Merchant's Balance Information
       description: The API provides information about the merchant's balance.
       operationId: get-merchant-balance
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/CurrencyCode'
       responses:
         '200':
           description: Success
@@ -52,15 +58,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       merchant_balance:
-                        $ref: 'openAPI/schemas/merchant_schemas.yml#/schemas/MerchantBalanceDataResponse'
+                        $ref: './schemas/merchant_schemas.yml#/schemas/MerchantBalanceDataResponse'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/merchant/balancehistory/{type}/{currencyCode}:
     get:
       tags:
@@ -68,14 +74,17 @@ paths:
       summary: Get Merchant's Balance History
       description: The API provides information about the merchant's balance history
       operationId: get-merchant-balance-history
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/merchant_schemas.yml#/parameters/Type'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/StartDate'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/EndDate'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/PageNumber'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/PageSize'
+        - $ref: './schemas/merchant_schemas.yml#/parameters/Type'
+        - $ref: './schemas/index.yml#/parameters/CurrencyCode'
+        - $ref: './schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/index.yml#/parameters/StartDate'
+        - $ref: './schemas/index.yml#/parameters/EndDate'
+        - $ref: './schemas/index.yml#/parameters/PageNumber'
+        - $ref: './schemas/index.yml#/parameters/PageSize'
       responses:
         '200':
           description: Success
@@ -83,15 +92,15 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - $ref: './schemas/index.yml#/schemas/DefaultResponse'
                   - type: object
                     properties:
                       data:
-                        $ref: 'openAPI/schemas/merchant_schemas.yml#/schemas/MerchantBalanceHistoryDataResponse'
+                        $ref: './schemas/merchant_schemas.yml#/schemas/MerchantBalanceHistoryDataResponse'
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
   /api/v{version}/merchant/statement/{year}/{month}/{currencyCode}:
     get:
       tags:
@@ -99,11 +108,14 @@ paths:
       summary: Get Merchant's Monthly Statement PDF
       description: The API provides a monthly statement in PDF format.
       operationId: get-merchant-statement
+      security:
+        - apikeyAuth: []
+          XMerchantId: []
       parameters:
-        - $ref: 'openAPI/schemas/merchant_schemas.yml#/parameters/Year'
-        - $ref: 'openAPI/schemas/merchant_schemas.yml#/parameters/Month'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
-        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: './schemas/merchant_schemas.yml#/parameters/Year'
+        - $ref: './schemas/merchant_schemas.yml#/parameters/Month'
+        - $ref: './schemas/index.yml#/parameters/CurrencyCode'
+        - $ref: './schemas/index.yml#/parameters/Version'
       responses:
         '200':
           description: PDF file
@@ -113,9 +125,9 @@ paths:
                 type: string
                 format: binary
         '400':
-          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+          $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
-          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+          $ref: './schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:

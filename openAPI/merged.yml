@@ -1,0 +1,88 @@
+openapi: "3.0.3"
+info:
+  title: i-payout API
+  version: "1.0"
+servers:
+  - url: https://merchantapi.testewallet.com
+paths:
+  # TOKEN MODULE
+  /api/v{version}/Authentication/Login:
+    $ref: "openAPI/token.yml#/paths/~1api~1v{version}~1Authentication~1Login"
+  /api/v{version}/DropinUiToken/GetToken:
+    $ref: "openAPI/token.yml#/paths/~1api~1v{version}~1DropinUiToken~1GetToken"
+
+  # BENEFICIARY MODULE
+  /api/v{version}/beneficiary/create:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1create"
+  /api/v{version}/beneficiary/{beneficiaryToken}/getSSOToken:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1{beneficiaryToken}~1getSSOToken"
+  /api/v{version}/beneficiary/{beneficiaryToken}/balance/{currencyCode}:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1{beneficiaryToken}~1balance~1{currencyCode}"
+  /api/v{version}/beneficiary/{beneficiaryToken}/status:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1{beneficiaryToken}~1status"
+  /api/v{version}/beneficiary/{beneficiaryToken}/verificationstatus:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1{beneficiaryToken}~1verificationstatus"
+  /api/v{version}/beneficiary/{beneficiaryToken}:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1{beneficiaryToken}"
+  /api/v{version}/beneficiary/exists:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1exists"
+  /api/v{version}/beneficiary/update/username:
+    $ref: "openAPI/beneficiary.yml#/paths/~1api~1v{version}~1beneficiary~1update~1username"
+
+  # PAYOUT MODULE
+  /api/v{version}/PayOut/create:
+    $ref: "openAPI/payout.yml#/paths/~1api~1v{version}~1PayOut~1create"
+  /api/v{version}/PayOut/createSpecial:
+    $ref: "openAPI/payout.yml#/paths/~1api~1v{version}~1PayOut~1createSpecial"
+
+  # PAYIN MODULE
+  /api/v{version}/PayIn/create:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1create"
+  /api/v{version}/PayIn/get:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1get"
+  /api/v{version}/PayIn/decline:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1decline"
+  /api/v{version}/PayIn/refund:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1refund"
+  /api/v{version}/PayIn/spendback:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1spendback"
+  /api/v{version}/PayIn/createPublicInvoice:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1createPublicInvoice"
+  /api/v{version}/PayIn/refundToCustomer:
+    $ref: "openAPI/payin.yml#/paths/~1api~1v{version}~1PayIn~1refundToCustomer"
+
+  # MERCHANT MODULE
+  /api/v{version}/merchant/getinfo:
+    $ref: "openAPI/merchant.yml#/paths/~1api~1v{version}~1merchant~1getinfo"
+  /api/v{version}/merchant/balance/{currencyCode}:
+    $ref: "openAPI/merchant.yml#/paths/~1api~1v{version}~1merchant~1balance~1{currencyCode}"
+  /api/v{version}/merchant/balancehistory/{type}/{currencyCode}:
+    $ref: "openAPI/merchant.yml#/paths/~1api~1v{version}~1merchant~1balancehistory~1{type}~1{currencyCode}"
+  /api/v{version}/merchant/statement/{year}/{month}/{currencyCode}:
+    $ref: "openAPI/merchant.yml#/paths/~1api~1v{version}~1merchant~1statement~1{year}~1{month}~1{currencyCode}"
+
+  # TRANSACTIONS MODULE
+  /api/v{version}/Transaction/get:
+    $ref: "openAPI/transactions.yml#/paths/~1api~1v{version}~1Transaction~1get"
+
+  # XXX MODULE
+  # /api/v{version}/PayIn/:
+  #   $ref: "openAPI/transactions.yml#/paths/~1api~1v{version}~1PayIn~1"
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
+    Basic:
+      type: http
+      scheme: basic
+      description: |
+        Use API username and password to get the dynamic bearer token which can be used to access all other APIs.
+        Example: 'Basic 12345adfad'
