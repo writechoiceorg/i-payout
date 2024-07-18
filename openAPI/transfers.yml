@@ -116,7 +116,7 @@ paths:
     get:
       tags:
         - Transfers
-      summary: Get Transfer Details By Identifier
+      summary: Get Transfer By ID
       operationId: get-transfer-by-identifier
       requestBody:
         content:
