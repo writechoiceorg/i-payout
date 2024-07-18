@@ -476,7 +476,7 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
-    post:
+    put:
       tags:
         - Transfers
       summary: Update Bank Account
@@ -506,6 +506,34 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/bankaccount-required-fields:
+    get:
+      tags:
+        - Transfers
+      summary: Get Bank Account Required Fields
+      operationId: get-bank-account-required-fields
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/BankCountryCode'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/AccountType'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/BankAccountRequiredFieldsDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+    
 components:
   securitySchemes:
     apikeyAuth:

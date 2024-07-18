@@ -665,4 +665,56 @@ schemas:
       token:
         type: string
         description: Unique token for the bank account.
-
+  BankAccountRequiredFieldsDataResponse:
+    type: object
+    properties:
+      reqFields:
+        type: object
+        additionalProperties:
+          type: array
+          items:
+            type: object
+            properties:
+              fieldIdentifier:
+                type: string
+                description: The identifier of the field.
+              fieldDescription:
+                type: string
+                description: The description of the field.
+              fieldType:
+                type: string
+                description: The type of the field.
+              regularExpression:
+                type: string
+                description: The regular expression for validating the field.
+              lstDropdownValues:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: The name of the dropdown value.
+                    value:
+                      type: string
+                      description: The value of the dropdown item.
+              isRequiredField:
+                type: boolean
+                description: Indicates if the field is required.
+      canUseToWithdrawFunds:
+        type: boolean
+        description: Indicates if the account can be used to withdraw funds.
+      lstErrMessagesReqFields:
+        type: array
+        items:
+          type: object
+          properties:
+            accountSectionType:
+              type: string
+              description: The type of the account section.
+            accountFieldType:
+              type: string
+              description: The type of the account field.
+            validationFailedMessage:
+              type: string
+              description: The validation failure message.
