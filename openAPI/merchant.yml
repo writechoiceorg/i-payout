@@ -1,0 +1,76 @@
+openapi: '3.0.3'
+info:
+  title: Merchant Module
+  version: '1.0'
+servers:
+  - url: https://merchantapi.testewallet.com
+tags:
+  - name: Merchant
+security:
+  - apikeyAuth: []
+    XMerchantId: []
+paths:
+  /api/v{version}/merchant/getinfo:
+    get:
+      tags:
+        - Merchant
+      summary: Get Merchant's Information
+      description: This api returns merchant's information.
+      operationId: get-merchant-info
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/merchant_schemas.yml#/schemas/GetMerchantInfoDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+  /api/v{version}/merchant/balance/{currencyCode}:
+    get:
+      tags:
+        - Merchant
+      summary: Get Merchant's Information
+      description: This api returns merchant's information.
+      operationId: get-merchant-info
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/CurrencyCode'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      merchant_balance:
+                        $ref: 'openAPI/schemas/merchant_schemas.yml#/schemas/MerchantBalanceDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+components:
+  securitySchemes:
+    apikeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Your API Key.
+    XMerchantId:
+      type: apiKey
+      name: X-MerchantId
+      in: header
+      description: Your Merchant Identifier (GUID).
+      
