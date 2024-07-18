@@ -450,7 +450,62 @@ paths:
           $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
-
+  /api/v{version}/transfer/beneficiary/{beneficiaryToken}/bankaccount/{bankAccountToken}:
+    get:
+      tags:
+        - Transfers
+      summary: Get Bank Account
+      operationId: get-bank-account
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/BankAccountToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/GetBankAccountDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
+    post:
+      tags:
+        - Transfers
+      summary: Update Bank Account
+      operationId: update-bank-account
+      parameters:
+        - $ref: 'openAPI/schemas/index.yml#/parameters/BeneficiaryToken'
+        - $ref: 'openAPI/schemas/transfer_schemas.yml#/parameters/BankAccountToken'
+        - $ref: 'openAPI/schemas/index.yml#/parameters/Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/AddBankAccountRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: 'openAPI/schemas/index.yml#/schemas/DefaultResponse'
+                  - type: object
+                    properties:
+                      data:
+                        $ref: 'openAPI/schemas/transfer_schemas.yml#/schemas/AddBankAccountDataResponse'
+        '400':
+          $ref: 'openAPI/schemas/index.yml#/responses/BadRequest'
+        '500':
+          $ref: 'openAPI/schemas/index.yml#/responses/InternalServerError'
 components:
   securitySchemes:
     apikeyAuth:
