@@ -108,6 +108,7 @@ paths:
       tags:
         - Beneficiary
       summary: Get Account Balance
+      operationId: get-account-balance
       security:
         - bearerAuth: []
           XMerchantId: []
