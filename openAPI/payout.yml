@@ -15,7 +15,7 @@ paths:
       tags:
         - Payout
       summary: Make a Payout
-      description: This API loads funds into customer accounts. You can submit an array of accounts in one API call. We suggest not to use more than 1000 accounts in one API call. With this API, if one record fails to load, then all the records in the API also will fail. You will need to resubmit all records in the API again once you fixed the failed record.
+      description: This API loads funds into beneficiary accounts. You can submit an array of accounts in one API call. We suggest not to use more than 1000 accounts in one API call. With this API, if one record fails to load, then all the records in the API also will fail. You will need to resubmit all records in the API again once you fixed the failed record.
       operationId: make-payout
       security:
         - bearerAuth: []
@@ -56,7 +56,7 @@ paths:
         - bearerAuth: []
           XMerchantId: []
       description: |
-        This API will loads funds into customer accounts. You can submit array of accounts
+        This API will loads funds into beneficiary accounts. You can submit array of accounts
         in one API call. We suggest not to use more than 1000 accounts in one API call. 
         With this API, all records in the API will not be rejected if one payout record is 
         failed.API response will show what records were failed so that you can only resubmit 

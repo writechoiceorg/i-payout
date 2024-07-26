@@ -67,7 +67,7 @@ paths:
           XMerchantId: []
       description: >-
         This function will give a one time use Single Sign-On token for a
-        customer. This token is valid for 10 minutes. This token can be used to
+        beneficiary. This token is valid for 10 minutes. This token can be used to
         automatically login the beneficiary to eWallet system.
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -178,13 +178,13 @@ paths:
                         properties:
                           customerStatus:
                             type: integer
-                            description: The status of the customer.
+                            description: The status of the beneficiary.
                           isClosed:
                             type: boolean
-                            description: Indicates if the customer's account is closed.
+                            description: Indicates if the beneficiary's account is closed.
                           isSuspended:
                             type: boolean
-                            description: Indicates if the customer's account is suspended.
+                            description: Indicates if the beneficiary's account is suspended.
               example:
                 isSuccess: true
                 message: Account status retrieved successfully
@@ -226,7 +226,7 @@ paths:
                         properties:
                           isCustomerVerificationCompleted:
                             type: boolean
-                            description: Indicates if the customer verification is completed.
+                            description: Indicates if the beneficiary verification is completed.
                           message:
                             type: string
                             description: Additional message regarding the KYC status.

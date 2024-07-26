@@ -48,7 +48,7 @@ paths:
       tags:
         - Payins
       summary: Get Payment Items
-      description: This API will return the payment item(s) of a customer. You can use the filters like payment status, merchant reference number and date range to filter the result data set.
+      description: This API will return the payment item(s) of a beneficiary. You can use the filters like payment status, merchant reference number and date range to filter the result data set.
       operationId: get-payment-items
       security:
         - bearerAuth: []
@@ -179,7 +179,7 @@ paths:
       tags:
         - Payins
       summary: Create Public Invoice
-      description: This API will create a payment item for a non-registered eWallet customer.
+      description: This API will create a payment item for a non-registered eWallet beneficiary.
       operationId: create-public-invoice
       security:
         - bearerAuth: []
