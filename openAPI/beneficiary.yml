@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Beneficiary
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/beneficiary/create:
@@ -17,7 +17,7 @@ paths:
       summary: Create Beneficiary
       operationId: create-beneficiary
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: >-
         This API will create a new beneficiary. Once the account has been created,
@@ -63,7 +63,7 @@ paths:
       operationId: get-sso-token
       summary: Get SSO Token
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: >-
         This function will give a one time use Single Sign-On token for a
@@ -109,7 +109,7 @@ paths:
         - Beneficiary
       summary: Get Account Balance
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: >-
         This API will return the balance for a given beneficiary for a specified
@@ -157,7 +157,7 @@ paths:
       operationId: get-account-status
       summary: Get Account Status
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API will return the account status for a given beneficiary.
       parameters:
@@ -204,7 +204,7 @@ paths:
         - Beneficiary
       operationId: get-kyc-status
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       summary: Get KYC Status
       description: This API will return the KYC verification status for a given beneficiary.
@@ -249,7 +249,7 @@ paths:
       operationId: get-beneficiary
       summary: Get Beneficiary
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API will return the beneficiary profile information.
       parameters:
@@ -309,7 +309,7 @@ paths:
       summary: Beneficiary Exists
       operationId: beneficiary-exists
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API checks if a beneficiary exists by username.
       parameters:
@@ -354,7 +354,7 @@ paths:
       operationId: update-username
       summary: Update Username
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API will update the username of an existing beneficiary.
       requestBody:
@@ -402,15 +402,4 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
+

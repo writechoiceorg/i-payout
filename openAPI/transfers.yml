@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Transfers
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/transfer/create:
@@ -17,7 +17,7 @@ paths:
       summary: Create a Transfer
       operationId: create-transfer
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       requestBody:
         content:
@@ -82,7 +82,7 @@ paths:
       summary: Cancel Transfer
       operationId: cancel-transfer
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -105,7 +105,7 @@ paths:
       summary: Approve Transfer
       operationId: approve-transfer
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -129,7 +129,7 @@ paths:
       description: Retrieve transfer details by its unique identifier
       operationId: get-transfer-by-identifier
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -156,7 +156,7 @@ paths:
       summary: Update a Transfer
       operationId: update-transfer
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       requestBody:
         content:
@@ -213,7 +213,7 @@ paths:
       summary: Add Wire Profile
       operationId: add-wire-profile
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -246,7 +246,7 @@ paths:
       summary: Get Wire Profile
       operationId: get-wire-profile
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -274,7 +274,7 @@ paths:
       summary: Edit Wire Profile
       operationId: edit-wire-profile
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -307,7 +307,7 @@ paths:
         - Transfers
       summary: Get Wire Required Fields
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       operationId: get-wire-required-fields
       parameters:
@@ -337,7 +337,7 @@ paths:
         - Transfers
       summary: Add Credit Card
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       operationId: add-credit-card
       parameters:
@@ -371,7 +371,7 @@ paths:
       summary: Get Credit Card Details
       operationId: get-credit-card
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -403,7 +403,7 @@ paths:
         - Transfers
       summary: Update Credit Card
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       operationId: update-credit-card
       parameters:
@@ -437,7 +437,7 @@ paths:
         - Transfers
       summary: Get Credit Card Required Fields
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       operationId: get-credit-required-fields
       parameters:
@@ -466,7 +466,7 @@ paths:
       summary: Add Bank Account
       operationId: add-bank-account
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -499,7 +499,7 @@ paths:
       summary: Get Bank Account
       operationId: get-bank-account
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -527,7 +527,7 @@ paths:
       summary: Update Bank Account
       operationId: update-bank-account
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -561,7 +561,7 @@ paths:
       summary: Get Bank Account Required Fields
       operationId: get-bank-account-required-fields
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/BeneficiaryToken'
@@ -584,17 +584,3 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-    
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
-      

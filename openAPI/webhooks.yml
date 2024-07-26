@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Webhooks
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/webhook/Create:
@@ -17,7 +17,7 @@ paths:
       summary: Create Webhook
       operationId: create-webhook
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: >-
         This API will create a new webhook and send notifications to the
@@ -53,7 +53,7 @@ paths:
       operationId: activate-webhook
       description: This API will activate the webhook subscription.
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -81,7 +81,7 @@ paths:
       summary: Deactivate Webhook
       operationId: deactivate-webhook
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API will deactivate the webhook subscription.
       requestBody:
@@ -120,7 +120,7 @@ paths:
       summary: Update Webhook
       operationId: update-webhook
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: >-
         This API will update an existing webhook record based on the given webhook
@@ -155,7 +155,7 @@ paths:
       summary: Delete Webhook
       operationId: delete-webhook
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API will delete the webhook.
       
@@ -186,7 +186,7 @@ paths:
       operationId: get-all-merchant-webhooks
       description: This API will return all the webhook subscriptions for the merchant.
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -223,7 +223,7 @@ paths:
         This API will return a list of all the webhook events that you can
         subscribe to.
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -259,15 +259,3 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).

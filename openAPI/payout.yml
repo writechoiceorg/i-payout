@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Payout
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/PayOut/create:
@@ -18,7 +18,7 @@ paths:
       description: This API loads funds into customer accounts. You can submit an array of accounts in one API call. We suggest not to use more than 1000 accounts in one API call. With this API, if one record fails to load, then all the records in the API also will fail. You will need to resubmit all records in the API again once you fixed the failed record.
       operationId: make-payout
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -53,7 +53,7 @@ paths:
       summary: Make Payout Special Case
       operationId: make-payout-special-case
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: |
         This API will loads funds into customer accounts. You can submit array of accounts
@@ -87,16 +87,5 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
+
       

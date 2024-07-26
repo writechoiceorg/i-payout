@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Report
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/report/customers:
@@ -18,7 +18,7 @@ paths:
       description: This API returns matching beneficiary details based on filters applied
       operationId: get-beneficiary-report
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -52,7 +52,7 @@ paths:
         - Report
       summary: Get Transfer Report
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: This API returns matching transfers details based on filters applied.
       operationId: get-transfer-report
@@ -86,7 +86,7 @@ paths:
       description: This API returns matching transfers details filtered by the beneficiary's token.
       operationId: get-transfer-report-data
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -107,16 +107,5 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
+
       

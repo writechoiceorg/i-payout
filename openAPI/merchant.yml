@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Merchant
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/merchant/getinfo:
@@ -18,7 +18,7 @@ paths:
       description: This api returns merchant's information.
       operationId: get-merchant-info
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -46,7 +46,7 @@ paths:
       description: The API provides information about the merchant's balance.
       operationId: get-merchant-balance
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -75,7 +75,7 @@ paths:
       description: The API provides information about the merchant's balance history
       operationId: get-merchant-balance-history
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/merchant_schemas.yml#/parameters/Type'
@@ -109,7 +109,7 @@ paths:
       description: The API provides a monthly statement in PDF format.
       operationId: get-merchant-statement
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/merchant_schemas.yml#/parameters/Year'
@@ -128,16 +128,5 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
+
       

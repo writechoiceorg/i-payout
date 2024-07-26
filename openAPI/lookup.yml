@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Lookup
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/lookup/usa-routing-number/{RoutingNumber}:
@@ -18,7 +18,7 @@ paths:
       description: This API will return bank address details based on Routing Number
       operationId: get-bank-address-by-routing-number
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -45,7 +45,7 @@ paths:
         - Lookup
       summary: Get Bank Address Details by Swift Code,
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       description: >-
         This API will return bank and branch details based on Swift Code and
@@ -79,7 +79,7 @@ paths:
       description: This API validate IBAN provided
       operationId: validate-iban
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -101,15 +101,3 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).

@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Payins
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/PayIn/create:
@@ -18,7 +18,7 @@ paths:
       description: This API will add payment item(s) for a beneficiary's account.
       operationId: create-payment-items
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -51,7 +51,7 @@ paths:
       description: This API will return the payment item(s) of a customer. You can use the filters like payment status, merchant reference number and date range to filter the result data set.
       operationId: get-payment-items
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -84,7 +84,7 @@ paths:
       description: This API will decline a payment item if it was not paid already.
       operationId: decline-payment-items
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -113,7 +113,7 @@ paths:
       description: This API will refund a beneficiary for the payment that was already paid using the beneficiary's eWallet account.
       operationId: refund-payment-item
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -149,7 +149,7 @@ paths:
       description: This API will make a spendback payment. This function will debit the eWallet account for the spendback amount.
       operationId: make-spendback-payment
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -182,7 +182,7 @@ paths:
       description: This API will create a payment item for a non-registered eWallet customer.
       operationId: create-public-invoice
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -215,7 +215,7 @@ paths:
       description: This API will refund a beneficiary without any prior payment made by beneficiary's eWallet account.
       operationId: refund-beneficiary
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -243,16 +243,5 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
+
       

@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Transactions
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/Transaction/get:
@@ -18,7 +18,7 @@ paths:
       description: This API will return list of transactions. You can use the filters like MerchantReferenceId, MerchantBatchId and LogTransactionId to filter the result data set. Atleast one parameter is required in the filter to search the data.
       operationId: get-transactions
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -41,17 +41,3 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-  
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
-      

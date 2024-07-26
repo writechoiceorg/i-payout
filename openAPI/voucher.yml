@@ -7,7 +7,7 @@ servers:
 tags:
   - name: Voucher
 security:
-  - apikeyAuth: []
+  - bearerAuth: []
     XMerchantId: []
 paths:
   /api/v{version}/Voucher/validate:
@@ -18,7 +18,7 @@ paths:
       description: This API will validate the voucher code.
       operationId: validate-voucher
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -51,7 +51,7 @@ paths:
       description: This API will redeem the provided voucher.
       operationId: redeem-voucher
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -87,7 +87,7 @@ paths:
       description: This API will refund the beneficiary for a redeemed voucher payment.
       operationId: refund-voucher
       security:
-        - apikeyAuth: []
+        - bearerAuth: []
           XMerchantId: []
       parameters:
         - $ref: './schemas/index.yml#/parameters/Version'
@@ -115,16 +115,3 @@ paths:
           $ref: './schemas/index.yml#/responses/BadRequest'
         '500':
           $ref: './schemas/index.yml#/responses/InternalServerError'
-components:
-  securitySchemes:
-    apikeyAuth:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: Your API Key.
-    XMerchantId:
-      type: apiKey
-      name: X-MerchantId
-      in: header
-      description: Your Merchant Identifier (GUID).
-      
