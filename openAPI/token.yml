@@ -51,7 +51,7 @@ paths:
         - Token
       summary: Get Embedded Token
       description: This function will validate the API username and password and provide a bearer token which can be used for all other API calls for the Embedded Solution. This token will be valid for 30 min.
-      operationId: get-dropin-ui-token
+      operationId: get-embedded-token
       security:
         - Basic: []
           XMerchantId: []

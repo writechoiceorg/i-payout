@@ -153,4 +153,3 @@ components:
       description: |
         Use API username and password to get the dynamic bearer token which can be used to access all other APIs.
         Example: 'Basic 12345adfad'
-        
