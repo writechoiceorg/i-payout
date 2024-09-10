@@ -1,0 +1,263 @@
+<style>
+  .cards_container2 {
+    display: grid;
+    gap: 10px;
+    margin: 0 auto;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+    .card:hover {
+      box-shadow: 0px 4px 28px 0px rgba(0, 0, 0, 0.08);
+      border: 1px solid #E75426;
+      cursor: pointer;
+
+      h3 {
+        color: #E75426;
+      }
+    }
+
+    .card {
+      display: flex;
+      width: fit-content;
+      flex-shrink: 0;
+      border-radius: 6px;
+      border: 1px solid #D9D9D9;
+      background: #FFF;
+      align-self: stretch;
+      width: 100%;
+      height: 96%;
+      text-decoration: none !important;
+      transition: all 0.3s ease;
+
+      .img_container svg {
+        border-radius: 6px 0 0 6px;
+      }
+
+      .content {
+        display: flex;
+        padding: 20px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 15px;
+        flex: 1 0 0;
+        align-self: stretch;
+        color: #363636;
+        font-feature-settings: 'liga' off, 'clig' off;
+        font-family: Inter;
+        font-style: normal;
+        line-height: 18px;
+
+        h3 {
+          font-size: 15px;
+          font-weight: 700;
+          line-height: 18px;
+          margin: 0;
+        }
+
+        p {
+          font-size: 14px;
+          font-weight: 500;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 390px) {
+    .cards_container2 {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+      .card {
+        .img_container {
+          display: none;
+        }
+      }
+    }
+  }
+</style>
+
+<body>
+  <div class="cards_container2">
+
+    <a class="card" href="/docs/hosted-solution">
+      <div class="img_container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="123" height="142" viewBox="0 0 123 142" fill="none">
+          <g clip-path="url(#clip0_157_1216)">
+            <mask id="path-1-inside-1_157_1216" fill="white">
+              <path d="M0 0H123V142H0V0Z" />
+            </mask>
+            <path d="M0 0H123V142H0V0Z" fill="#1F2149" />
+            <g filter="url(#filter0_f_157_1216)">
+              <circle cx="188" cy="221" r="97" fill="#9BA2FF" />
+            </g>
+            <path
+              d="M70.964 85.0424V89.0254C70.964 92.325 68.2891 95 64.9895 95H44.9746C41.6749 95 39 92.325 39 89.0254V53.9746C39 50.6749 41.6749 48 44.9746 48H64.9895C68.2891 48 70.964 50.6749 70.964 53.9746V57.9576"
+              stroke="#9BA2FF" stroke-width="4.7" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M85.5017 71.5995H58.5165" stroke="#9BA2FF" stroke-width="4.7" stroke-miterlimit="10"
+              stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M80.6648 78.1717L85.1244 73.7119C86.2911 72.5453 86.2911 70.654 85.1244 69.4873L80.6648 65.0276"
+              stroke="#9BA2FF" stroke-width="4.7" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </g>
+          <path d="M122 0V142H124V0H122Z" fill="#DCDCDC" mask="url(#path-1-inside-1_157_1216)" />
+          <defs>
+            <filter id="filter0_f_157_1216" x="-59" y="-26" width="494" height="494" filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+              <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_157_1216" />
+            </filter>
+            <clipPath id="clip0_157_1216">
+              <path d="M0 0H123V142H0V0Z" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="content">
+        <h3>
+          Hosted Solution
+        </h3>
+        <p>
+          Our interface manages accounts and KYC, with backend via API.
+        </p>
+      </div>
+    </a>
+
+    <a class="card" href="/docs/api-integration">
+      <div class="img_container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="123" height="142" viewBox="0 0 123 142" fill="none">
+          <g clip-path="url(#clip0_157_1276)">
+            <mask id="path-1-inside-1_157_1276" fill="white">
+              <path d="M0 0H123V142H0V0Z" />
+            </mask>
+            <path d="M0 0H123V142H0V0Z" fill="#1F2149" />
+            <g filter="url(#filter0_f_157_1276)">
+              <circle cx="188" cy="221" r="97" fill="#9BA2FF" />
+            </g>
+            <path d="M45.4484 96.9801L44.4678 89.5313L51.9165 88.5507" stroke="#9BA2FF" stroke-width="4.08"
+              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M79.5516 46.02L80.5323 53.4687L73.0836 54.4494" stroke="#9BA2FF" stroke-width="4.08"
+              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M80.5314 53.4688C75.9169 48.8542 69.5419 46 62.5001 46C48.4168 46 37 57.4167 37 71.5001C37 75.4367 37.8933 79.1641 39.4863 82.493"
+              stroke="#9BA2FF" stroke-width="4.08" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M44.4678 89.5313C49.0824 94.1458 55.4575 97 62.499 97C76.5823 97 87.9992 85.5832 87.9992 71.4999C87.9992 67.5633 87.1058 63.836 85.5128 60.5071"
+              stroke="#9BA2FF" stroke-width="4.08" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M77.1804 67.3007L73.4772 60.8864L72.6841 61.3442C69.8038 63.0071 66.2033 60.9284 66.2033 57.6024V56.6868H58.7966V57.6024C58.7966 60.9284 55.1962 63.0071 52.3158 61.3442L51.5229 60.8864L47.8196 67.3007L48.6123 67.7583C51.4928 69.4214 51.4928 73.5788 48.6123 75.2419L47.8196 75.6997L51.5229 82.114L52.3158 81.6562C55.1962 79.9931 58.7966 82.0718 58.7966 85.3979V86.3134H66.2033V85.3979C66.2033 82.072 69.8038 79.9933 72.6841 81.6562L73.4772 82.114L77.1804 75.6997L76.3876 75.2419C73.5073 73.5788 73.5073 69.4214 76.3876 67.7583L77.1804 67.3007Z"
+              stroke="#9BA2FF" stroke-width="4.08" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M62.4995 76.7906C65.4213 76.7906 67.79 74.422 67.79 71.5001C67.79 68.5783 65.4213 66.2096 62.4995 66.2096C59.5776 66.2096 57.2091 68.5783 57.2091 71.5001C57.2091 74.422 59.5776 76.7906 62.4995 76.7906Z"
+              stroke="#9BA2FF" stroke-width="4.08" stroke-miterlimit="10" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </g>
+          <path d="M122 0V142H124V0H122Z" fill="#DCDCDC" mask="url(#path-1-inside-1_157_1276)" />
+          <defs>
+            <filter id="filter0_f_157_1276" x="-59" y="-26" width="494" height="494" filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+              <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_157_1276" />
+            </filter>
+            <clipPath id="clip0_157_1276">
+              <path d="M0 0H123V142H0V0Z" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="content">
+        <h3>
+          API Integration
+        </h3>
+        <p>
+          Manage user actions via API, no need to visit the i-payout site.
+        </p>
+      </div>
+    </a>
+
+    <a class="card" href="/docs/embedded-solution">
+      <div class="img_container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="123" height="142" viewBox="0 0 123 142" fill="none">
+          <g clip-path="url(#clip0_157_1281)">
+            <mask id="path-1-inside-1_157_1281" fill="white">
+              <path d="M0 0H123V142H0V0Z" />
+            </mask>
+            <path d="M0 0H123V142H0V0Z" fill="#1F2149" />
+            <g filter="url(#filter0_f_157_1281)">
+              <circle cx="188" cy="221" r="97" fill="#9BA2FF" />
+            </g>
+            <path
+              d="M84.3078 68.8562L84.1366 68.6852L89.4211 63.4008C89.7276 63.0942 89.9 62.6785 89.9 62.245C89.9 61.8115 89.7276 61.3956 89.4211 61.089L84.1366 55.8047L84.3078 55.6336C85.622 55.4492 86.8384 54.8458 87.7883 53.8961C90.1826 51.5017 90.1826 47.606 87.7883 45.2119C86.6284 44.0517 85.0863 43.413 83.4461 43.413C81.8059 43.413 80.2638 44.0517 79.1041 45.2116C78.1544 46.1614 77.551 47.3778 77.3666 48.6922L77.1956 48.8632L71.911 43.5788C71.2727 42.9404 70.2375 42.9404 69.599 43.5788L46.8046 66.3734L46.6336 66.2024C46.4491 64.8881 45.8457 63.6716 44.8959 62.7218C42.5017 60.3275 38.6061 60.3275 36.2117 62.7218C33.8176 65.1161 33.8176 69.0118 36.2117 71.406C37.1615 72.3558 38.3779 72.9592 39.6922 73.1437L39.8634 73.3146L34.5788 78.5992C33.9404 79.2375 33.9404 80.2726 34.5788 80.911L52.089 98.4211C52.3956 98.7277 52.8113 98.9 53.2448 98.9C53.6785 98.9 54.0942 98.7278 54.4007 98.4211L60.8411 91.9807C61.4795 91.3424 61.4795 90.3073 60.8411 89.6688L59.0936 87.9214C58.7982 87.6258 58.4007 87.4548 57.9829 87.4432C57.2465 87.4226 56.5542 87.1248 56.0336 86.6042C55.4914 86.0618 55.1927 85.3408 55.1927 84.574C55.1927 83.807 55.4914 83.086 56.0336 82.5438C57.153 81.4244 58.9744 81.4242 60.0941 82.5438C60.6146 83.0643 60.9125 83.7567 60.933 84.4929C60.9445 84.9108 61.1156 85.3081 61.411 85.6036L63.1586 87.3513C63.4652 87.6579 63.8809 87.8301 64.3146 87.8301C64.7482 87.8301 65.1639 87.658 65.4705 87.3513L77.1953 75.6264L77.3662 75.7974C77.5507 77.1118 78.1541 78.3283 79.1039 79.2781C81.4981 81.6722 85.3938 81.6722 87.7881 79.2781C88.948 78.1181 89.5866 76.5761 89.5866 74.9359C89.5866 73.2957 88.9478 71.7536 87.7881 70.5938C86.8386 69.6442 85.622 69.0407 84.3078 68.8562ZM64.3146 83.8835L64.1437 83.7125C63.9594 82.3981 63.3558 81.1818 62.4061 80.232C60.0117 77.8377 56.116 77.8377 53.7218 80.232C52.5619 81.3918 51.9233 82.9339 51.9233 84.5741C51.9233 86.2143 52.5621 87.7563 53.7218 88.9161C54.6714 89.866 55.888 90.4694 57.2023 90.6539L57.3733 90.8248L53.2448 94.9534L38.0467 79.755L43.3311 74.4706C43.6377 74.164 43.81 73.7483 43.81 73.3148C43.81 72.8812 43.6377 72.4652 43.3311 72.1588L41.5836 70.4113C41.2881 70.1157 40.8906 69.9448 40.4729 69.9331C39.7365 69.9127 39.0442 69.6148 38.5236 69.0941C37.4042 67.9749 37.4042 66.1533 38.5236 65.0338C39.6431 63.9143 41.4644 63.9143 42.5839 65.0338C43.1045 65.5544 43.4025 66.2468 43.4229 66.9832C43.4344 67.4009 43.6055 67.7983 43.9011 68.0938L45.6486 69.8412C46.2869 70.4795 47.322 70.4795 47.9604 69.8412L53.2448 64.5568L58.5292 69.8412C59.1677 70.4797 60.2028 70.4797 60.8412 69.8412L62.5887 68.0938C62.8843 67.7983 63.0554 67.4009 63.0669 66.983C63.0873 66.2468 63.3852 65.5546 63.9057 65.0338C65.0253 63.9143 66.8469 63.9143 67.9663 65.0338C69.0857 66.1533 69.0857 67.9747 67.9663 69.0941C67.4456 69.6148 66.7534 69.9128 66.017 69.9331C65.5991 69.9448 65.2017 70.1157 64.9063 70.4113L63.1588 72.1588C62.5203 72.7971 62.5203 73.8323 63.1588 74.4708L68.4432 79.7552L64.3146 83.8835ZM85.4763 76.9663C84.3569 78.0857 82.5353 78.0857 81.4161 76.9663C80.8954 76.4456 80.5975 75.7532 80.5771 75.0168C80.5656 74.5991 80.3945 74.2017 80.0989 73.9061L78.3514 72.1588C78.0321 71.8395 77.6138 71.6798 77.1956 71.6798C76.7772 71.6798 76.3587 71.8395 76.0396 72.1588L70.7552 77.4432L66.6268 73.3146L66.7977 73.1437C68.112 72.9592 69.3286 72.3558 70.2782 71.4061C72.6725 69.0118 72.6725 65.1161 70.2782 62.7218C67.884 60.3275 63.9883 60.3275 61.5941 62.7218C60.6444 63.6716 60.0408 64.8882 59.8567 66.2024L59.6855 66.3734L55.5571 62.2448L70.755 47.0466L76.0396 52.331C76.6779 52.9693 77.713 52.9693 78.3514 52.331L80.0989 50.5835C80.3943 50.2881 80.5656 49.8906 80.5771 49.4728C80.5975 48.7364 80.8954 48.0442 81.4161 47.5236C81.9583 46.9812 82.6793 46.6825 83.4461 46.6825C84.2131 46.6825 84.9341 46.9812 85.4763 47.5236C86.5957 48.6429 86.5957 50.4644 85.4765 51.5839C84.9558 52.1045 84.2634 52.4025 83.527 52.4228C83.1093 52.4344 82.7119 52.6055 82.4163 52.9011L80.6688 54.6486C80.0305 55.2871 80.0305 56.3221 80.6688 56.9606L85.9532 62.2448L80.6688 67.5292C80.0304 68.1675 80.0304 69.2028 80.6688 69.8412L82.4163 71.5887C82.7117 71.8841 83.1091 72.0552 83.5269 72.0669C84.2633 72.0873 84.9557 72.3852 85.4763 72.9057C86.0185 73.4481 86.3172 74.1691 86.3172 74.9359C86.3173 75.7029 86.0186 76.4239 85.4763 76.9663Z"
+              fill="#9BA2FF" stroke="#9BA2FF" stroke-width="0.5" />
+          </g>
+          <path d="M122 0V142H124V0H122Z" fill="#DCDCDC" mask="url(#path-1-inside-1_157_1281)" />
+          <defs>
+            <filter id="filter0_f_157_1281" x="-59" y="-26" width="494" height="494" filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+              <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_157_1281" />
+            </filter>
+            <clipPath id="clip0_157_1281">
+              <path d="M0 0H123V142H0V0Z" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="content">
+        <h3>
+          Embedded Solution
+        </h3>
+        <p>
+          Embed KYC and transfer features via UI scripts, reducing data handling.
+        </p>
+      </div>
+    </a>
+
+    <a class="card" href="/batch-files-integration">
+      <div class="img_container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="123" height="142" viewBox="0 0 123 142" fill="none">
+          <g clip-path="url(#clip0_157_1286)">
+            <mask id="path-1-inside-1_157_1286" fill="white">
+              <path d="M0 0H123V142H0V0Z" />
+            </mask>
+            <path d="M0 0H123V142H0V0Z" fill="#1F2149" />
+            <g filter="url(#filter0_f_157_1286)">
+              <circle cx="188" cy="221" r="97" fill="#9BA2FF" />
+            </g>
+            <path
+              d="M86.2443 64.8738L85.8771 65.1338C85.8771 65.1339 85.8783 65.1355 85.88 65.1396C85.8807 65.1413 85.8816 65.1433 85.8824 65.1458C85.8837 65.1496 85.8852 65.1543 85.8866 65.1602C85.8914 65.1804 85.8946 65.2087 85.894 65.2449L85.894 65.2451C85.8927 65.3201 85.875 65.4192 85.8344 65.5353L77.8374 88.3774C77.6944 88.7858 77.3504 89.197 76.9116 89.5082L76.9115 89.5083C76.4728 89.8196 75.9711 90.0083 75.5385 90.0083H38.4828C38.3605 90.0083 38.2609 89.9924 38.1892 89.9688C38.1549 89.9575 38.1293 89.945 38.1119 89.9338C38.095 89.9229 38.0902 89.9161 38.0901 89.916L38.09 89.9158C38.0899 89.9157 38.0887 89.9141 38.087 89.91C38.0852 89.9058 38.0828 89.8991 38.0804 89.8894C38.0756 89.8693 38.0723 89.841 38.073 89.8048C38.0743 89.7297 38.092 89.6303 38.1326 89.5146L38.1327 89.5144L46.1296 66.6724C46.2726 66.2639 46.6166 65.8528 47.0553 65.5416L47.0554 65.5416C47.4942 65.2302 47.9958 65.0415 48.4286 65.0415H85.4842C85.607 65.0415 85.7066 65.0575 85.7779 65.081L85.9191 64.6538L85.7779 65.0811C85.812 65.0923 85.8376 65.1047 85.8551 65.1161C85.8722 65.1271 85.8772 65.1341 85.8773 65.1342L86.2443 64.8738ZM86.2443 64.8738C86.3223 64.984 86.3462 65.1223 86.3439 65.2529L86.2443 64.8738ZM85.484 61.5997H80.9453V56.6423C80.9453 54.5007 79.2034 52.7588 77.0619 52.7588H60.2879C59.985 52.7588 59.5679 52.6351 59.1655 52.4308C58.763 52.2265 58.4171 51.9628 58.2385 51.7184L58.2384 51.7183L56.9831 50.0011L56.983 50.001C56.4657 49.2936 55.6904 48.6831 54.8362 48.2494C53.9821 47.8158 53.0316 47.55 52.155 47.55H46.3427C44.4113 47.55 42.4808 48.9149 41.8368 50.7363L41.8368 50.7364L41.4371 51.8672C41.4371 51.8672 41.4371 51.8672 41.4371 51.8672C41.3656 52.0695 41.1758 52.2963 40.9218 52.4759L40.9218 52.4759C40.6678 52.6555 40.3907 52.7588 40.1761 52.7588H38.4334C36.2919 52.7588 34.55 54.5007 34.55 56.6423V89.4876C34.55 89.6783 34.5825 89.8604 34.6392 90.0301C34.6768 90.7111 34.8924 91.3572 35.2827 91.9073C35.9838 92.8956 37.1568 93.45 38.4828 93.45H75.5385C77.8833 93.45 80.3112 91.7277 81.086 89.5146L89.0828 66.6724L88.6581 66.5237L89.0828 66.6724C89.5209 65.4211 89.3851 64.1307 88.684 63.1425C87.983 62.1544 86.8099 61.5997 85.484 61.5997ZM77.5035 61.5997H48.4284C46.0835 61.5997 43.6556 63.322 42.8808 65.5353L37.9918 79.5002V56.6423C37.9918 56.4054 38.1966 56.2006 38.4334 56.2006H40.1761C42.1078 56.2006 44.0381 54.8357 44.682 53.0142L44.682 53.0142L45.0815 51.8838C45.1531 51.6814 45.343 51.4545 45.5969 51.2749C45.8509 51.0953 46.128 50.992 46.3427 50.992H52.1549C52.4577 50.992 52.8748 51.1156 53.2772 51.32L53.2773 51.32C53.6798 51.5243 54.0257 51.788 54.2045 52.0325L55.4599 53.7495C55.4599 53.7495 55.4599 53.7495 55.46 53.7495C55.9772 54.4571 56.7527 55.0677 57.6067 55.5012C58.4607 55.9349 59.4113 56.2006 60.2879 56.2006H77.0619C77.2988 56.2006 77.5035 56.4053 77.5035 56.6423V61.5997ZM46.795 65.1746C46.3041 65.5227 45.8872 66.0029 45.7049 66.5237L37.7079 89.3657L46.795 65.1746Z"
+              fill="#9BA2FF" stroke="#9BA2FF" stroke-width="0.9" />
+          </g>
+          <path d="M122 0V142H124V0H122Z" fill="#DCDCDC" mask="url(#path-1-inside-1_157_1286)" />
+          <defs>
+            <filter id="filter0_f_157_1286" x="-59" y="-26" width="494" height="494" filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+              <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_157_1286" />
+            </filter>
+            <clipPath id="clip0_157_1286">
+              <path d="M0 0H123V142H0V0Z" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="content">
+        <h3>
+          Batch Files Integration
+        </h3>
+        <p>
+          Create accounts and payouts via CSV/Excel, for low-tech businesses.
+        </p>
+      </div>
+    </a>
+
+  </div>
+</body>
