@@ -1,0 +1,166 @@
+<style>
+  .card_container {
+    display: flex;
+    gap: 10px;
+    margin: 0 auto;
+    max-width: var(--container-lg);
+    width: 100%;
+    flex-wrap: wrap;
+    /* grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); */
+
+    .card {
+      display: flex;
+      padding: 20px 14px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      min-width: 190px;
+      flex-shrink: 0;
+      gap: 12px;
+      border-radius: 6px;
+      border: 1px solid #DCDCDC;
+      background: #FFF;
+      box-shadow: 0px 3.656px 27.422px 0px rgba(0, 0, 0, 0.13);
+      text-decoration: none;
+      flex-grow: 1;
+      flex-basis: 0;
+      text-decoration: none !important;
+
+      svg {
+        fill: none;
+
+        rect {
+          fill: #FFF;
+          stroke: #C9C9C9;
+        }
+
+        path {
+          fill: #E75426;
+        }
+      }
+
+      h3 {
+        color: #383838;
+        text-align: center;
+        font-family: Inter;
+        font-size: 17.5px;
+        font-style: normal;
+        font-weight: 700;
+        text-decoration: none;
+        margin: 0;
+        text-align: start;
+      }
+    }
+
+    .card:hover {
+      cursor: pointer;
+      border: 1px solid #E75426 !important;
+      box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
+      transform: translateY(-1px);
+
+      h3 {
+        color: #E75426;
+      }
+
+      svg {
+        fill: none;
+
+        rect {
+          fill: #E75426;
+          stroke: #C9C9C9;
+        }
+
+        path {
+          fill: #FFF;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 450px) {
+    .card_container {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+  }
+</style>
+
+<div class="card_container">
+
+  <a class="card" href="#receivable">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Receivable</h3>
+  </a>
+
+  <a class="card" href="#spendback">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Spendback</h3>
+  </a>
+
+  <a class="card" href="#environment">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Environment</h3>
+  </a>
+
+  <a class="card" href="#beneficiary">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Beneficiary</h3>
+  </a>
+
+  <a class="card" href="#payout">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Payout</h3>
+  </a>
+
+  <a class="card" href="#webhook">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Webhook</h3>
+  </a>
+
+  <a class="card" href="#bulk-transfer">
+    <svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+      <rect x="0.5" y="0.5" width="31.8205" height="31.8205" rx="3.70776" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M23.3736 24.9994C22.4754 24.9994 21.7472 24.2712 21.7472 23.373V11.2526L9.62638 11.2526C8.72816 11.2526 8 10.5245 8 9.62632C8 8.72813 8.72816 8 9.62639 8L23.3736 8C24.2718 8 25 8.72813 25 9.62632L25 23.373C25 24.2712 24.2718 24.9994 23.3736 24.9994Z" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M22.8056 10.1953C23.4408 10.8304 23.4408 11.8602 22.8056 12.4953L10.7768 24.5237C10.1416 25.1588 9.11188 25.1588 8.47674 24.5237C7.84159 23.8885 7.84159 22.8588 8.47673 22.2237L20.5056 10.1953C21.1407 9.56019 22.1705 9.56019 22.8056 10.1953Z" />
+    </svg>
+    <h3>Bulk Transfer</h3>
+  </a>
+
+</div>
