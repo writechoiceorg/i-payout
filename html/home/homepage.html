@@ -1,614 +1,546 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+  :root {
+    --pink-light: #9ba2ff;
+    --blue: #2c317a;
+    --white: #f9fafc;
+    --text-dark: #1f2149;
+    --violet: #e1e5f2;
+  }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    .homepage_body {
-      font-family: Inter !important;
-      background-image: url('https://raw.githubusercontent.com/writechoiceorg/i-payout-docs/main/html/home/imgs/back.png');
-      background-size: cover;
-      background-position: center -50px;
-      background-repeat: no-repeat;
-      /* position: relative; */
-      width: 100%;
+  .hero-section {
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    background-image: linear-gradient(#e8ecf2, #fff);
+    flex-flow: column;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    padding-top: 7rem;
+    padding-bottom: 4rem;
+  }
+
+  .heading-text {
+    background-image: linear-gradient(180deg, var(--pink-light), var(--blue));
+    color: var(--white);
+    letter-spacing: -0.02rem;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: Fk Display, sans-serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  .hero-text {
+    color: var(--blue);
+    font-family: Roobert, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .button {
+    border: 1px solid var(--pink-light);
+    background-color: var(--pink-light);
+    color: var(--text-dark);
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4rem;
+    padding: 0.9375rem 1.9375rem;
+    font-family: "Roobert (Semi Bold)", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+    text-decoration: none;
+    transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 40px #9ba2ffb3;
+  }
+
+  .button:hover {
+    box-shadow: none;
+    color: var(--pink-light);
+    background-color: #0000;
+  }
+
+  .hero-text-container {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    flex-flow: column;
+    align-items: flex-start;
+    display: inline-flex;
+  }
+
+  .hero-image-container {
+    aspect-ratio: 3 / 2;
+    position: relative;
+  }
+
+  .hero-logo {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    inset: 0%;
+  }
+
+  .page-container {
+    grid-column-gap: 5rem;
+    grid-row-gap: 5rem;
+    flex-flow: column;
+    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .rm-LandingPage {
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .rdmd-html {
+    width: 100% !important;
+  }
+
+  .hero-map {
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    width: 113%;
+    max-width: none;
+    display: block;
+    position: absolute;
+    top: -5%;
+    left: -5%;
+  }
+
+  .hero-component {
+    grid-column-gap: 5rem;
+    grid-row-gap: 5rem;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-columns: 1fr;
+    place-items: center stretch;
+    margin-bottom: 5rem;
+    display: grid;
+  }
+
+  .hero-card-component {
+    grid-column-gap: 2rem;
+    grid-row-gap: 2rem;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    display: grid;
+  }
+
+  .hero-card {
+    grid-column-gap: 1.125rem;
+    grid-row-gap: 1.125rem;
+    background-color: var(--white);
+    cursor: pointer;
+    border-radius: 1rem;
+    flex-flow: column;
+    padding: 1.5rem 1.5rem 1.375rem;
+    text-decoration: none;
+    display: flex;
+    box-shadow: 0 13px 57.9px #1f214924;
+  }
+
+  .hero-card-image {
+    aspect-ratio: 368 / 172;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 10rem;
+  }
+
+  .hero-card-text {
+    color: var(--blue);
+    text-align: center;
+    font-family: "Roobert (Semi Bold)", sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .integrations-section {
+    text-align: center;
+    background-color: #f9fafc;
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+
+  .integrations-component {
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    display: grid;
+  }
+
+  .integrations-card {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    background-color: var(--blue);
+    border-radius: 1rem;
+    flex-flow: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3rem 1rem 2.5rem;
+    text-decoration: none;
+    display: flex;
+  }
+
+  .integrations-card-text {
+    color: var(--white);
+    font-family: Fk Display, sans-serif;
+    font-size: 1.5rem;
+    line-height: 1.3;
+  }
+
+  .integrations-card-button {
+    grid-column-gap: 0.25rem;
+    grid-row-gap: 0.25rem;
+    color: var(--white);
+    font-family: "Roobert (Semi Bold)", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-decoration: none;
+    display: flex;
+  }
+
+  .integrations-heading {
+    margin-bottom: 2.5rem;
+  }
+
+  .padding-global {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  .integrations-card-content {
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1.5rem;
+    flex-flow: column;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+  }
+
+  @media screen and (max-width: 991px) {
+    .hero-section {
+      padding-top: 4rem;
     }
 
-    .rm-LandingPage {
-      width: 100% !important;
-      padding: 0 !important;
+    .hero-map {
+      overflow: hidden;
     }
 
-    .rdmd-html {
-      width: 100% !important;
+    .hero-component {
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
+      margin-bottom: 2.5rem;
     }
 
-    .hero {
-      .header_container {
-        display: flex;
-        margin: 0 auto;
-        max-width: var(--container-lg);
-        padding: 70px 20px;
-        justify-content: flex-start;
-        gap: 50px;
-
-        .hero_logo {
-          padding-left: 70px !important;
-          margin: 0 !important;
-          width: 471px;
-          height: 228px;
-          max-width: 402px !important;
-        }
-
-        .hero_content {
-          display: flex;
-          flex-direction: column;
-          align-self: center;
-          font-family: Inter;
-          font-size: 15px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 33px;
-          max-width: 600px;
-          gap: 10px;
-
-          h1.hero_title {
-            color: #1F2149;
-            font-size: 40px;
-            font-weight: 700;
-            margin: 0;
-          }
-
-          p {
-            color: #282A30;
-            font-size: 16px;
-            font-weight: 300;
-            margin-top: 0;
-          }
-
-          a.hero_btn {
-            display: inline-flex;
-            padding: 6.099px 20.041px;
-            justify-content: center;
-            align-items: center;
-            border-radius: 10px;
-            border: 1px solid transparent;
-            background: #9BA2FF;
-            color: #1F2149;
-            font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            width: fit-content;
-            box-shadow: 0px 3.656px 27.422px 0px rgba(0, 0, 0, 0.13);
-          }
-
-          a.hero_btn:hover {
-            cursor: pointer;
-            transform: translateY(-1px);
-            border: 1px solid #8a92ff !important;
-            background: #8a92ff;
-          }
-        }
-      }
+    .hero-card-component {
+      grid-column-gap: 1rem;
+      grid-row-gap: 1rem;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 2.5rem;
     }
 
-    main {
-      .card_container {
-        display: flex;
-        gap: 10px;
-        margin: 0 auto 30px;
-        justify-content: center;
-        max-width: var(--container-lg);
-        align-items: stretch;
-        width: 100%;
-        padding: 0 20px;
-        flex-wrap: wrap !important;
-
-        .card {
-          border: 1px solid transparent;
-          padding: 12px;
-          display: inline-flex;
-          flex-direction: column;
-          align-items: flex-start;
-          align-self: stretch !important;
-          transition: all 0.3s ease, border 0.1s ease;
-          border-radius: 6px;
-          background: #FFF;
-          box-shadow: 0px 3.656px 27.422px 0px rgba(0, 0, 0, 0.13);
-          text-decoration: none;
-          min-width: 312px;
-          flex-grow: 1;
-          flex-basis: 0;
-
-          .card_image {
-            height: 120px;
-            flex-shrink: 0;
-            width: 100% !important;
-            background-position: center;
-            background-size: cover;
-            border-radius: 5px 5px 0 0;
-          }
-
-          .card_content {
-            padding: 12px 2px 10px;
-            font-family: Inter;
-            font-style: normal;
-
-            h3 {
-              color: #000000de;
-              font-size: 16.5px;
-              font-weight: 700;
-              line-height: normal;
-              margin: 0;
-              transition: all 0.3s ease, border 0.1s ease;
-            }
-          }
-        }
-
-        .card:hover {
-          cursor: pointer;
-          border: 1px solid #1F2149 !important;
-          box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
-          transform: translateY(-1px);
-
-          h3 {
-            color: #1F2149 !important;
-          }
-        }
-
-        .image1 {
-          background-image: url('https://raw.githubusercontent.com/writechoiceorg/i-payout-docs/main/html/home/imgs/card1.png')
-        }
-
-        .image2 {
-          background-image: url('https://raw.githubusercontent.com/writechoiceorg/i-payout-docs/main/html/home/imgs/card2.png')
-        }
-
-        .image3 {
-          background-image: url('https://raw.githubusercontent.com/writechoiceorg/i-payout-docs/main/html/home/imgs/card3.png')
-        }
-      }
-
-      .second_card_container {
-        display: flex;
-        gap: 10px;
-        margin: 0 auto 30px;
-        justify-content: center;
-        max-width: var(--container-lg);
-        align-items: center;
-        width: 100%;
-        padding: 0 20px;
-        flex-wrap: wrap !important;
-
-        .card {
-          display: flex;
-          padding: 30px 19px;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          flex-shrink: 0;
-          border-radius: 6px;
-          border: 1px solid #D7D7D7;
-          background: linear-gradient(103deg, #1F2149 0%, #353987 100%);
-          box-shadow: 0px 3.656px 27.422px 0px rgba(0, 0, 0, 0.13);
-          text-decoration: none;
-          min-width: 208px;
-          flex-grow: 1;
-          flex-basis: 0;
-
-          h3 {
-            color: #FFF;
-            text-align: center;
-            font-family: Inter;
-            font-size: 17.5px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: 38.702px;
-            text-decoration: none;
-            margin-bottom: 0;
-          }
-        }
-
-        .card:hover {
-          cursor: pointer;
-          border: 1px solid #1F2149 !important;
-          box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.13);
-          transform: translateY(-1px);
-        }
-      }
-
-      .integration_section {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        margin: 20px 0;
-
-        h2 {
-          color: #1F2149;
-          font-family: Inter;
-          font-size: 27px;
-          font-style: normal;
-          font-weight: 700;
-        }
-
-        span {
-          margin-top: 3px;
-
-          svg {
-            width: 100%;
-          }
-        }
-      }
+    .integrations-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
     }
 
-    @media only screen and (max-width: 1500px) and (min-width: 1435px) {
-      .hero {
-        .header_container {
-          margin: 0 0 0 100px;
-        }
-      }
-
-      main {
-        margin: 40px 100px;
-      }
+    .integrations-component {
+      grid-template-rows: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
     }
 
-    @media only screen and (max-width: 1435px) {
-
-      .hero {
-        .header_container {
-          margin: 0 20px;
-        }
-      }
+    .integrations-heading {
+      margin-bottom: 2.5rem;
     }
 
-    @media only screen and (max-width: 1375px) {}
+    .padding-global {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
 
-    @media only screen and (max-width: 1210px) {}
+  @media screen and (max-width: 767px) {
 
-    @media only screen and (max-width: 989px) {
-      .hero {
-        .header_container {
-          gap: 40px;
-          padding: 50px 0;
+    .hero-section,
+    .integrations-section {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+  }
 
-          .hero_content {
-            font-size: 14px;
-          }
-        }
-      }
+  @media screen and (max-width: 479px) {
+    .heading-text {
+      font-size: 3rem;
     }
 
-    @media only screen and (max-width: 875px) {
-      .hero {
-        .header_container {
-          gap: 0 !important;
-
-          .hero_logo {
-            width: 470px !important;
-            height: 220px !important;
-            padding: 0 !important;
-          }
-
-          .hero_content {
-
-            h1.hero_title {
-              font-size: 30px;
-            }
-
-            p {
-              font-size: 12px;
-              margin: 0;
-            }
-
-            a.hero_btn {
-              font-size: 12px;
-              padding: 2px 20px;
-            }
-          }
-        }
-      }
+    .hero-image-container {
+      display: none;
     }
 
-    @media only screen and (max-width: 850px) {
-      .hero {
-        .header_container {
-          .hero_logo {
-            width: 440 !important;
-            height: 190px !important;
-          }
-        }
-      }
+    .hero-component,
+    .hero-card-component,
+    .integrations-component {
+      grid-template-columns: 1fr;
     }
 
-    @media only screen and (max-width: 780px) {
-      .hero {
-        .header_container {
-
-          .hero_content {
-            font-size: 12px;
-            margin-right: 0;
-          }
-        }
-      }
+    .padding-global {
+      padding-left: 1rem;
+      padding-right: 1rem;
     }
+  }
 
-    @media only screen and (max-width: 750px) {
-      main {
-        .card_container {
-          flex-wrap: wrap;
+  #w-node-ea2198ac-0858-15f3-5fc5-42a40d7b9ad6-d0cf18d7 {
+    align-self: center;
+  }
 
-          .card {
-            min-width: 324px;
-          }
-        }
-      }
+  @media screen and (max-width: 991px) {
+    #w-node-_5e87f8a4-ab2d-8751-8abb-ab722d01e4d1-d0cf18d7 {
+      grid-area: span 1 / span 2 / span 1 / span 2;
     }
+  }
 
-    @media only screen and (max-width: 692px) {
-      .hero {
-        .header_container {
-          .hero_logo {
-            width: 300 !important;
-            height: 150px !important;
-          }
-
-          .hero_content {
-            align-self: flex-start;
-            font-size: 12px;
-            margin-right: 0;
-            width: 80%;
-          }
-        }
-      }
+  @media screen and (max-width: 479px) {
+    #w-node-_5e87f8a4-ab2d-8751-8abb-ab722d01e4d1-d0cf18d7 {
+      grid-column: span 1 / span 1;
     }
+  }
 
-    @media only screen and (max-width: 590px) {
-      .hero {
-        .header_container {
-          background-image: url('https://raw.githubusercontent.com/writechoiceorg/i-payout-docs/main/html/home/imgs/small_bg.png');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          width: 100%;
-          padding: 30px 0;
+  @font-face {
+    font-family: "Fk Display";
+    src: url("https://uploads-ssl.webflow.com/65f9b4fdb0825b95132c7b6d/65fabec911849cdf0d6585fb_FKDisplay-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
 
-          .hero_logo {
-            display: none;
-          }
-        }
-      }
-    }
+  @font-face {
+    font-family: "Roobert";
+    src: url("https://uploads-ssl.webflow.com/65f9b4fdb0825b95132c7b6d/65fabe874c1d45a8f515c456_Roobert-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
 
-    @media only screen and (max-width: 450px) {
-      .hero {
-        .header_container {
-          padding: 10px 20px;
-        }
-      }
-
-      main {
-        .card_container {
-          .card {
-            min-width: 90%;
-          }
-        }
-      }
-    }
-
-    @media only screen and (max-width: 400px) {
-      .hero {
-        justify-content: center;
-        align-items: center;
-        display: flex;
-
-        .header_container {
-          padding: 20px;
-        }
-      }
-
-      main {
-        margin: 20px 0;
-
-        .card {
-          width: 90%;
-        }
-      }
-    }
-
-    @media only screen and (max-width: 350px) {
-      .hero {
-
-        .header_container {
-          margin: 0;
-        }
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      [data-color-mode="system"] .hero {
-        background: #212A2F !important;
-      }
-
-      [data-color-mode="system"] main {
-        .card_container {
-          .card {
-            border: 1px solid #556974;
-            background: #20292e;
-
-            .card_content {
-
-              h3,
-              p {
-                color: #FFF;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    [data-color-mode="dark"] .hero {
-      background: #212A2F !important;
-    }
-
-    [data-color-mode="dark"] main {
-      .card_container {
-        .card {
-          border: 1px solid #556974;
-          background: #20292e;
-
-          .card_content {
-
-            h3,
-            p {
-              color: #FFF;
-            }
-          }
-        }
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <div class="homepage_body">
-    <header class="hero">
-      <div class="header_container">
-        <div class="hero_content">
-          <h1 class="hero_title">i-payout docs</h1>
-          <p>
-            i-payout offers innovative global payment solutions, enabling businesses to send and receive payments in
-            local currencies worldwide. Learn how to streamline your payment processes with i-payout.
-          </p>
-          <a class="hero_btn" href="/docs/overview">
-            Get Started
+  @font-face {
+    font-family: "Roobert (Semi Bold)";
+    src: url("https://uploads-ssl.webflow.com/65f9b4fdb0825b95132c7b6d/65fabea7218a3a5d2d9828a1_Roobert-SemiBold.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
+<div class="homepage-body">
+  <section class="hero-section">
+    <div id="w-node-ea2198ac-0858-15f3-5fc5-42a40d7b9ad6-d0cf18d7" class="padding-global">
+      <div id="w-node-_677e296d-f8e5-8616-262d-3787af628d37-d0cf18d7" class="page-container">
+        <div id="w-node-_7d077587-7e26-bffd-e085-5a6136a53fe1-d0cf18d7" class="hero-component">
+          <div class="hero-text-container">
+            <div class="heading-text">
+              <div>i-payout Docs</div>
+            </div>
+            <div class="hero-text">
+              i-payout offers innovative global payment solutions, enabling
+              businesses to send and receive payments in local currencies
+              worldwide. Learn how to streamline your payment processes with
+              i-payout.
+            </div>
+            <a href="/docs/overview" class="button w-inline-block">
+              <div>Get Started</div>
+            </a>
+          </div>
+          <div id="w-node-_7cbac740-98e2-3a02-a8de-8ea29252fed8-d0cf18d7" class="hero-image-container">
+            <img src="https://cdn.prod.website-files.com/65f9b4fdb0825b95132c7b6d/66db71ca3867cdff01af540c_map.svg"
+              loading="eager" alt="" class="hero-map" />
+            <div id="w-node-b9099161-6568-f35b-65a5-ce9c1ba24fe1-d0cf18d7" class="hero-logo w-embed">
+              <svg width="354" height="64" viewbox="0 0 354 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M333.165 40.874L333.486 39.9059L338.722 20.437H352.078L354.001 13.3378H340.538L342.675 5.37817H325.686L323.549 13.3378H299.507H299.4L292.027 41.3042C291.707 42.2723 290.852 43.0252 289.784 43.0252H281.556C280.594 43.0252 279.953 42.1647 280.167 41.1967V41.0891L287.54 13.3378H270.871L264.032 39.153C263.925 39.3681 263.819 40.2286 263.819 40.3362C263.391 42.8101 263.712 45.1765 264.673 46.8975C265.849 48.9412 267.879 50.232 270.978 50.232H306.452L314.359 20.5446H321.732L316.176 41.5194C314.894 46.2521 317.992 50.232 322.694 50.232H344.919L346.842 43.1328H334.661C334.554 43.1328 334.127 43.1328 333.806 43.0252C333.7 43.0252 333.7 42.9177 333.593 42.9177C333.486 42.9177 333.379 42.8101 333.272 42.7025C333.059 42.595 332.952 42.3799 332.952 42.1647C333.059 41.7345 333.059 41.4118 333.165 40.874Z"
+                  fill="#2C317A"></path>
+                <path d="M9.72351 13.1228L0 50.1245H16.6689L26.4992 13.1228H9.72351Z" fill="#2C317A"></path>
+                <path d="M29.8087 0H13.3535L10.7891 9.57311H27.2442L29.8087 0Z" fill="#2C317A"></path>
+                <path d="M63.7897 27.7512H27.1396L25.1094 35.1731H61.8664L63.7897 27.7512Z" fill="#2C317A"></path>
+                <path
+                  d="M115.506 23.4488C115.613 23.1261 115.613 22.6959 115.719 22.3732C115.826 22.0505 115.826 21.7278 115.933 21.4051C115.933 21.0824 115.933 20.7597 115.933 20.5446C115.933 20.1144 115.933 19.5765 115.933 19.1463C115.933 18.716 115.826 18.2858 115.613 17.8555C115.506 17.5328 115.399 17.2102 115.185 16.8875C114.971 16.5648 114.865 16.2421 114.651 15.9194C114.437 15.5967 114.117 15.1665 113.796 14.9513C113.476 14.6286 113.048 14.4135 112.621 14.1984C112.407 14.0908 112.086 13.9833 111.766 13.8757C111.445 13.7681 111.125 13.6606 110.804 13.553C110.484 13.553 110.27 13.4455 109.949 13.4455C109.629 13.4455 109.308 13.3379 108.988 13.3379H73.1924L59.8359 64.0001H76.5048L80.1378 50.1244H99.1574C99.478 50.1244 99.9054 50.1244 100.333 50.0169C100.76 50.0169 101.081 49.9093 101.508 49.8018C101.829 49.8018 102.256 49.6942 102.684 49.4791C103.111 49.3715 103.431 49.1564 103.859 49.0488C104.179 48.9412 104.393 48.7261 104.714 48.6186C105.034 48.4034 105.248 48.2959 105.569 48.0807C105.782 47.8656 106.103 47.6505 106.316 47.4354C106.637 47.2202 106.851 47.0051 107.064 46.6824C107.385 46.4673 107.599 46.1446 107.812 45.9295C108.026 45.6068 108.347 45.2841 108.56 44.9614C108.774 44.6387 108.988 44.316 109.308 43.8858C109.522 43.5631 109.736 43.1328 109.949 42.8102C110.056 42.4875 110.27 42.2723 110.377 41.9497C110.591 41.627 110.697 41.3043 110.804 40.874C110.911 40.5513 111.018 40.2286 111.125 39.906C111.232 39.5833 111.339 39.153 111.445 38.8303L115.292 24.5244C115.292 24.2018 115.399 23.8791 115.506 23.4488ZM98.9437 22.4807L94.1354 40.7665C93.8148 41.8421 92.8531 42.8102 91.6778 42.8102H83.9844C82.8091 42.8102 82.3817 41.7345 82.4885 40.874L87.4037 22.6959C87.6174 21.6202 88.6859 20.5446 89.6476 20.437H97.4478C98.6231 20.5446 99.1574 21.5127 98.9437 22.4807Z"
+                  fill="#2C317A"></path>
+                <path
+                  d="M156.43 13.1228H124.482L122.558 20.3295H145.532C146.6 20.3295 147.455 21.19 147.348 22.2657C147.241 23.8791 145.745 25.1699 144.036 25.1699H126.833C126.085 25.1699 125.337 25.2774 124.589 25.385C123.841 25.4925 123.2 25.7077 122.452 26.0304C122.131 26.1379 121.704 26.3531 121.383 26.5682C121.063 26.7833 120.635 27.106 120.315 27.3211C119.994 27.5362 119.78 27.8589 119.46 28.0741C119.139 28.3967 118.926 28.7194 118.605 29.0421C118.391 29.3648 118.178 29.6875 117.964 30.0102C117.75 30.3329 117.536 30.7631 117.43 31.0858C117.216 31.4085 117.109 31.8388 116.895 32.1615C116.682 32.4841 116.575 32.9144 116.468 33.2371C116.361 33.5598 116.254 33.99 116.147 34.4203C116.041 34.8505 115.934 35.1732 115.827 35.4959C115.72 35.8186 115.613 36.1413 115.506 36.5715C115.399 36.8942 115.293 37.3245 115.293 37.6472C115.186 37.9699 115.079 38.2925 114.972 38.7228C114.865 39.1531 114.758 39.4757 114.651 39.906C114.651 40.2287 114.545 40.6589 114.438 41.0892C114.331 41.5194 114.224 41.9497 114.224 42.2724C114.224 42.5951 114.117 43.0253 114.117 43.4556C114.117 43.8858 114.117 44.2085 114.117 44.6388C114.117 44.9615 114.117 45.3917 114.224 45.7144C114.224 46.0371 114.331 46.3598 114.438 46.6825C114.545 47.0052 114.651 47.2203 114.758 47.543C114.865 47.8657 114.972 48.0808 115.186 48.2959C115.399 48.511 115.613 48.7262 115.72 48.9413C115.934 49.1564 116.147 49.264 116.361 49.3715C116.682 49.4791 116.895 49.6942 117.216 49.8018C117.536 49.9094 117.75 50.0169 118.071 50.0169C118.712 50.1245 119.353 50.232 120.208 50.232H135.701C138.373 50.232 140.616 48.6186 141.792 46.3598V50.232H156.644L163.055 26.1379C164.872 19.8993 164.338 13.1228 156.43 13.1228ZM142.433 40.5514C142.112 41.8421 141.044 42.8102 139.762 42.8102H133.03C131.855 42.8102 131.107 41.5194 131.427 40.4438L132.816 35.1732C133.244 33.5598 134.74 32.269 136.449 32.269H144.677L142.433 40.5514Z"
+                  fill="#2C317A"></path>
+                <path
+                  d="M198.639 13.3379L191.373 40.7665C191.159 41.627 190.305 42.8102 189.236 42.8102H181.65C180.688 42.8102 179.94 41.5194 180.26 40.5514L187.526 13.1228H170.751L164.019 38.7228C162.416 43.8858 164.553 50.3396 170.858 50.1245H189.022L187.74 54.6421C187.313 55.9329 185.817 56.6858 184.641 56.6858H161.348L159.531 63.785H193.938C198.746 63.785 203.02 59.8051 204.302 55.0724L215.415 13.3379H198.639Z"
+                  fill="#2C317A"></path>
+                <path
+                  d="M264.352 18.5008V18.2857C264.138 14.3059 260.933 13.2302 257.513 13.2302C254.735 13.2302 232.724 13.2302 229.091 13.2302C228.984 13.2302 228.877 13.2302 228.77 13.2302C226.419 13.2302 224.069 13.8756 222.359 15.3815C219.367 17.8554 218.299 21.5126 217.444 25.1697C216.375 29.3647 214.452 36.4638 213.49 40.2285C211.781 45.3916 213.277 50.0168 219.688 50.0168C226.206 50.0168 246.508 50.0168 248.004 50.0168C255.269 50.0168 258.368 44.6386 259.65 38.2924C260.505 35.0655 262.215 28.8269 263.07 25.4924C263.711 23.126 264.459 20.9748 264.352 18.5008ZM247.149 22.4806C247.149 22.6958 247.042 23.0185 247.042 23.2336C245.546 28.9344 243.943 34.6353 242.447 40.4437C242.234 41.1966 242.02 41.9496 241.486 42.3798C240.844 42.9176 239.99 42.9176 239.135 42.9176C236.891 42.9176 234.647 42.9176 232.296 42.9176C231.655 42.9176 230.694 42.8101 230.266 42.2722C229.946 41.7344 230.052 41.089 230.266 40.4437C231.869 34.6353 233.365 28.8269 234.968 22.9109C235.395 21.2975 236.25 20.5445 237.853 20.6521C240.097 20.6521 242.34 20.6521 244.584 20.6521C245.119 20.6521 245.653 20.6521 246.08 20.7596C246.614 20.8672 247.042 21.2975 247.149 21.7277C247.149 21.9428 247.149 22.2655 247.149 22.4806Z"
+                  fill="#2C317A"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-component">
+          <a id="w-node-b54703e6-c527-db85-406b-56151f9d58eb-d0cf18d7" href="/docs/overview"
+            class="hero-card w-inline-block"><img
+              src="https://cdn.prod.website-files.com/65f9b4fdb0825b95132c7b6d/66db6f65968519bc67649152_card1.svg"
+              loading="eager" alt="" class="hero-card-image" />
+            <div class="hero-card-text">Getting Started</div>
+          </a>
+          <a id="w-node-_9ccb7409-0e82-0191-7704-b7aec7883dd9-d0cf18d7"
+            href="/docs/select-the-right-integration-for-you" class="hero-card w-inline-block"><img
+              src="https://cdn.prod.website-files.com/65f9b4fdb0825b95132c7b6d/66db6f65dda2e68d62835730_card2.svg"
+              loading="eager" alt="" class="hero-card-image" />
+            <div class="hero-card-text">
+              Select the Right Integration for You
+            </div>
+          </a>
+          <a id="w-node-_5e87f8a4-ab2d-8751-8abb-ab722d01e4d1-d0cf18d7" href="/reference/api-overview"
+            class="hero-card w-inline-block"><img
+              src="https://cdn.prod.website-files.com/65f9b4fdb0825b95132c7b6d/66db6f65ec6b25b8511af242_card3.svg"
+              loading="eager" alt="" class="hero-card-image" />
+            <div class="hero-card-text">API Reference</div>
           </a>
         </div>
-        <img class="hero_logo"
-          src="https://raw.githubusercontent.com/writechoiceorg/i-payout-docs/main/html/home/imgs/logo.png" alt="">
       </div>
-    </header>
-    <main>
-      <div class="card_container">
-        <a class="card" href="/docs/getting-started">
-          <div class="card_image image1">
+    </div>
+  </section>
+  <section class="integrations-section">
+    <div id="w-node-_08f092ff-29c9-f346-8d7f-dc7ff788c879-d0cf18d7" class="padding-global">
+      <div id="w-node-_22085788-f321-5f67-2417-576d72d405fc-d0cf18d7" class="page-container">
+        <div class="integrations-heading">
+          <div class="heading-text">
+            <div>Integrations</div>
           </div>
-          <div class="card_content">
-            <h3>Getting Started</h3>
-          </div>
-        </a>
-
-        <a class="card" href="/docs/select-the-right-integration-for-you">
-          <div class="card_image image2">
-          </div>
-          <div class="card_content">
-            <h3>Select the Right Integration for You</h3>
-          </div>
-        </a>
-
-        <a class="card" href="/reference/api-overview">
-          <div class="card_image image3">
-          </div>
-          <div class="card_content">
-            <h3>API Reference</h3>
-          </div>
-        </a>
+        </div>
+        <div class="integrations-component">
+          <a id="w-node-_5bdeba26-8721-2234-7b5b-6643e95f3dbe-d0cf18d7" href="/docs/hosted-solution"
+            class="integrations-card w-inline-block">
+            <div class="integrations-icon w-embed">
+              <svg width="40" height="40" viewbox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M32.2659 19.1553C32.2659 12.3899 26.7618 6.88562 19.9962 6.88562C13.2306 6.88562 7.72656 12.3899 7.72656 19.1553C7.72656 23.3042 9.84485 27.1821 13.2986 29.4371V33.3026C13.2986 36.9956 16.3031 40 19.996 40C23.689 40 26.6935 36.9955 26.6935 33.3026V31.1315C26.6935 31.131 26.6934 29.4373 26.6934 29.4373C30.1475 27.1821 32.2659 23.3044 32.2659 19.1553ZM24.3283 33.3027C24.3283 35.6915 22.385 37.6347 19.9962 37.6347C17.6074 37.6347 15.6641 35.6914 15.6641 33.3027V32.3141H24.3283V33.3027ZM24.9218 27.7501C24.5546 27.9611 24.3283 28.3521 24.3283 28.7757V29.9489H21.1788V23.8333C22.7144 23.3337 23.8278 21.8894 23.8278 20.1892C23.8278 19.5361 23.2983 19.0066 22.6452 19.0066C21.9921 19.0066 21.4625 19.5361 21.4625 20.1892C21.4625 20.9978 20.8047 21.6556 19.9962 21.6556C19.1877 21.6556 18.5298 20.9978 18.5298 20.1892C18.5298 19.5361 18.0003 19.0066 17.3471 19.0066C16.694 19.0066 16.1645 19.5361 16.1645 20.1892C16.1645 21.8893 17.2778 23.3337 18.8135 23.8333V29.9489H15.6642V28.7756C15.6642 28.3521 15.4379 27.9611 15.0707 27.7501C11.9997 25.9858 10.092 22.6925 10.092 19.1553C10.092 13.6941 14.5351 9.25094 19.9964 9.25094C25.4578 9.25094 29.9008 13.694 29.9008 19.1553C29.9007 22.6926 27.9929 25.986 24.9218 27.7501Z"
+                  fill="#F9FAFC"></path>
+                <path
+                  d="M20.003 0C19.3498 0 18.8203 0.529532 18.8203 1.18266V3.25883C18.8203 3.91196 19.3498 4.44149 20.003 4.44149C20.6561 4.44149 21.1856 3.91196 21.1856 3.25883V1.18266C21.1856 0.529532 20.6562 0 20.003 0Z"
+                  fill="#F9FAFC"></path>
+                <path
+                  d="M16.6717 3.56221L15.9376 1.62002C15.7067 1.00908 15.024 0.701037 14.4133 0.931897C13.8023 1.16283 13.4942 1.84534 13.7251 2.45627L14.4591 4.39847C14.638 4.87175 15.0879 5.16331 15.5656 5.16331C15.7045 5.16331 15.8459 5.13862 15.9836 5.08659C16.5945 4.85565 16.9026 4.17315 16.6717 3.56221Z"
+                  fill="#F9FAFC"></path>
+                <path
+                  d="M25.5851 0.931828C24.9741 0.700812 24.2917 1.00909 24.0607 1.62003L23.3267 3.56222C23.0958 4.17308 23.4039 4.85559 24.0149 5.08652C24.1525 5.13856 24.2939 5.16324 24.4328 5.16324C24.9106 5.16324 25.3604 4.87168 25.5392 4.3984L26.2733 2.45621C26.5042 1.84519 26.1961 1.16277 25.5851 0.931828Z"
+                  fill="#F9FAFC"></path>
+              </svg>
+            </div>
+            <div class="integrations-card-content">
+              <div class="integrations-card-text">Hosted Solutions</div>
+              <div class="integrations-card-button">
+                <div>Learn more</div>
+                <div class="w-embed">
+                  <svg width="29" height="22" viewbox="0 0 29 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M15.8125 0.5H18.4375V3.125H15.8125V0.5ZM21.0625 5.75H18.4375V3.125H21.0625V5.75ZM23.6875 8.375H21.0625V5.75H23.6875V8.375ZM23.6875 13.625H26.3125V12.3125H28.9375V9.6875H26.3125V8.375H23.6875V9.6875H2.6875V1.8125L0.0625 1.8125V9.6875H2.6875V12.3125H23.6875V13.625ZM21.0625 16.25V13.625H23.6875V16.25H21.0625ZM18.4375 18.875V16.25H21.0625V18.875H18.4375ZM18.4375 18.875V21.5H15.8125V18.875H18.4375Z"
+                      fill="#E75426"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a id="w-node-_2d7ca042-707d-4403-bbc3-7c135be9bcdd-d0cf18d7" href="/docs/api-integration"
+            class="integrations-card w-inline-block">
+            <div class="integrations-icon w-embed">
+              <svg width="40" height="40" viewbox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7.225 18.8336L7.19172 18.8558L7.16953 18.8891C6.82955 19.399 6.46927 20.1066 6.46927 20.8333C6.46927 21.5601 6.82955 22.2676 7.16953 22.7776L7.19172 22.8109L7.225 22.8331C7.73496 23.1731 8.44249 23.5333 9.16927 23.5333H20.0026C20.4572 23.5333 20.8204 23.684 21.0695 23.9331C21.3186 24.1822 21.4693 24.5455 21.4693 25C21.4693 25.4546 21.3186 25.8178 21.0695 26.0669C20.8204 26.316 20.4572 26.4667 20.0026 26.4667H9.16927C7.72929 26.4667 6.27637 25.8263 5.1386 24.8531C4.0168 23.7288 3.53594 22.4495 3.53594 20.8333C3.53594 19.2296 4.17411 17.9424 5.14945 16.8027C6.27382 15.6809 7.55311 15.2 9.16927 15.2H10.0026C10.4572 15.2 10.8204 15.3506 11.0695 15.5998C11.3186 15.8489 11.4693 16.2121 11.4693 16.6667C11.4693 17.1212 11.3186 17.4845 11.0695 17.7336C10.8204 17.9827 10.4572 18.1333 10.0026 18.1333H9.16927C8.44249 18.1333 7.73496 18.4936 7.225 18.8336Z"
+                  fill="#F9FAFC" stroke="#2C317A" stroke-width="0.4"></path>
+                <path
+                  d="M18.8336 32.7776L18.8446 32.7941L18.8586 32.8081C19.9265 33.8761 21.7261 33.8985 22.6478 32.8018C23.1935 32.2518 23.3667 31.5282 23.3667 30.8334V20C23.3667 19.5455 23.5173 19.1822 23.7664 18.9331C24.0155 18.684 24.3788 18.5334 24.8333 18.5334C25.2879 18.5334 25.6511 18.684 25.9002 18.9331C26.1494 19.1822 26.3 19.5455 26.3 20V30.8334C26.3 32.2758 25.6575 33.7312 24.6815 34.8699C23.7295 35.9805 22.2923 36.4667 20.8333 36.4667C19.3934 36.4667 17.9404 35.8264 16.8027 34.8532C15.6809 33.7288 15.2 32.4495 15.2 30.8334V30C15.2 29.5455 15.3506 29.1822 15.5998 28.9331C15.8489 28.684 16.2121 28.5334 16.6667 28.5334C17.1212 28.5334 17.4845 28.684 17.7336 28.9331C17.9827 29.1822 18.1333 29.5455 18.1333 30V30.8334C18.1333 31.5602 18.4936 32.2677 18.8336 32.7776Z"
+                  fill="#F9FAFC" stroke="#2C317A" stroke-width="0.4"></path>
+                <path
+                  d="M32.7802 21.1665L32.7967 21.1555L32.8107 21.1415C33.3614 20.5907 33.5359 19.8642 33.5359 19.1667C33.5359 18.4399 33.1757 17.7324 32.8357 17.2224C32.6328 16.9182 32.2911 16.7322 31.9373 16.6216C31.5798 16.51 31.1838 16.4667 30.8359 16.4667H20.0026C19.5481 16.4667 19.1848 16.3161 18.9357 16.067C18.6866 15.8178 18.5359 15.4546 18.5359 15C18.5359 14.5455 18.6866 14.1822 18.9357 13.9331C19.1848 13.684 19.5481 13.5334 20.0026 13.5334H30.8359C32.2759 13.5334 33.7288 14.1737 34.8666 15.1469C35.9884 16.2713 36.4693 17.5505 36.4693 19.1667C36.4693 20.7731 35.8289 22.062 34.8508 23.2032C33.902 24.3101 32.3015 24.8 30.8359 24.8H30.0026C29.5481 24.8 29.1848 24.6494 28.9357 24.4003C28.6866 24.1512 28.5359 23.7879 28.5359 23.3334C28.5359 22.8788 28.6866 22.5156 28.9357 22.2665C29.1848 22.0174 29.5481 21.8667 30.0026 21.8667H30.8359C31.5627 21.8667 32.2703 21.5064 32.7802 21.1665Z"
+                  fill="#F9FAFC" stroke="#2C317A" stroke-width="0.4"></path>
+                <path
+                  d="M21.0023 7.22239L20.9914 7.20592L20.9774 7.19191C19.9071 6.12169 18.1022 6.10147 17.1823 7.2053L17.1755 7.2135L17.1695 7.22239C16.8296 7.73235 16.4693 8.43988 16.4693 9.16667V20C16.4693 20.4546 16.3186 20.8178 16.0695 21.0669C15.8204 21.316 15.4572 21.4667 15.0026 21.4667C14.5481 21.4667 14.1848 21.316 13.9357 21.0669C13.6866 20.8178 13.5359 20.4546 13.5359 20V9.16667C13.5359 7.72669 14.1763 6.27378 15.1494 5.13601C17.239 3.05286 20.9411 3.05466 23.0278 5.14142C24.1535 6.2671 24.6359 7.54791 24.6359 9.16667V10C24.6359 10.4546 24.4853 10.8178 24.2362 11.0669C23.9871 11.316 23.6238 11.4667 23.1693 11.4667C22.7147 11.4667 22.3515 11.316 22.1024 11.0669C21.8532 10.8178 21.7026 10.4546 21.7026 10V9.16667C21.7026 8.43988 21.3423 7.73235 21.0023 7.22239Z"
+                  fill="#F9FAFC" stroke="#2C317A" stroke-width="0.4"></path>
+              </svg>
+            </div>
+            <div class="integrations-card-content">
+              <div class="integrations-card-text">Full API Integration</div>
+              <div class="integrations-card-button">
+                <div>Learn more</div>
+                <div class="w-embed">
+                  <svg width="29" height="22" viewbox="0 0 29 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M15.8125 0.5H18.4375V3.125H15.8125V0.5ZM21.0625 5.75H18.4375V3.125H21.0625V5.75ZM23.6875 8.375H21.0625V5.75H23.6875V8.375ZM23.6875 13.625H26.3125V12.3125H28.9375V9.6875H26.3125V8.375H23.6875V9.6875H2.6875V1.8125L0.0625 1.8125V9.6875H2.6875V12.3125H23.6875V13.625ZM21.0625 16.25V13.625H23.6875V16.25H21.0625ZM18.4375 18.875V16.25H21.0625V18.875H18.4375ZM18.4375 18.875V21.5H15.8125V18.875H18.4375Z"
+                      fill="#E75426"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a id="w-node-e08374a1-9d87-6a8b-1020-307ccef9ed31-d0cf18d7" href="/docs/embedded-solution"
+            class="integrations-card w-inline-block">
+            <div class="integrations-icon w-embed">
+              <svg width="40" height="40" viewbox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M36.6693 23.75H32.9193V16.25H36.6693C37.3526 16.25 37.9193 15.6834 37.9193 15C37.9193 14.3167 37.3526 13.75 36.6693 13.75H32.9193V11.6667C32.9193 9.13337 30.8693 7.08337 28.3359 7.08337H26.2526V3.33337C26.2526 2.65004 25.6859 2.08337 25.0026 2.08337C24.3193 2.08337 23.7526 2.65004 23.7526 3.33337V7.08337H16.2526V3.33337C16.2526 2.65004 15.6859 2.08337 15.0026 2.08337C14.3193 2.08337 13.7526 2.65004 13.7526 3.33337V7.08337H11.6693C9.13594 7.08337 7.08594 9.13337 7.08594 11.6667V13.75H3.33594C2.6526 13.75 2.08594 14.3167 2.08594 15C2.08594 15.6834 2.6526 16.25 3.33594 16.25H7.08594V23.75H3.33594C2.6526 23.75 2.08594 24.3167 2.08594 25C2.08594 25.6834 2.6526 26.25 3.33594 26.25H7.08594V28.3334C7.08594 30.8667 9.13594 32.9167 11.6693 32.9167H13.7526V36.6667C13.7526 37.35 14.3193 37.9167 15.0026 37.9167C15.6859 37.9167 16.2526 37.35 16.2526 36.6667V32.9167H23.7526V36.6667C23.7526 37.35 24.3193 37.9167 25.0026 37.9167C25.6859 37.9167 26.2526 37.35 26.2526 36.6667V32.9167H28.3359C30.8693 32.9167 32.9193 30.8667 32.9193 28.3334V26.25H36.6693C37.3526 26.25 37.9193 25.6834 37.9193 25C37.9193 24.3167 37.3526 23.75 36.6693 23.75ZM30.4193 28.3334C30.4193 29.4834 29.4859 30.4167 28.3359 30.4167H11.6693C10.5193 30.4167 9.58594 29.4834 9.58594 28.3334V11.6667C9.58594 10.5167 10.5193 9.58337 11.6693 9.58337H28.3359C29.4859 9.58337 30.4193 10.5167 30.4193 11.6667V28.3334ZM18.1026 16.7167L14.8193 20L18.1026 23.2834C18.5859 23.7667 18.5859 24.5667 18.1026 25.05C17.8526 25.3 17.5359 25.4167 17.2193 25.4167C16.9026 25.4167 16.5859 25.3 16.3359 25.05L12.1693 20.8834C11.6859 20.4 11.6859 19.6 12.1693 19.1167L16.3359 14.95C16.8193 14.4667 17.6193 14.4667 18.1026 14.95C18.5859 15.4334 18.5859 16.2334 18.1026 16.7167ZM27.8193 19.1167C28.3026 19.6 28.3026 20.4 27.8193 20.8834L23.6526 25.05C23.4026 25.3 23.0859 25.4167 22.7693 25.4167C22.4526 25.4167 22.1359 25.3 21.8859 25.05C21.4026 24.5667 21.4026 23.7667 21.8859 23.2834L25.1693 20L21.8859 16.7167C21.4026 16.2334 21.4026 15.4334 21.8859 14.95C22.3693 14.4667 23.1693 14.4667 23.6526 14.95L27.8193 19.1167Z"
+                  fill="#F9FAFC"></path>
+              </svg>
+            </div>
+            <div class="integrations-card-content">
+              <div class="integrations-card-text">Embedded Solution</div>
+              <div class="integrations-card-button">
+                <div>Learn more</div>
+                <div class="w-embed">
+                  <svg width="29" height="22" viewbox="0 0 29 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M15.8125 0.5H18.4375V3.125H15.8125V0.5ZM21.0625 5.75H18.4375V3.125H21.0625V5.75ZM23.6875 8.375H21.0625V5.75H23.6875V8.375ZM23.6875 13.625H26.3125V12.3125H28.9375V9.6875H26.3125V8.375H23.6875V9.6875H2.6875V1.8125L0.0625 1.8125V9.6875H2.6875V12.3125H23.6875V13.625ZM21.0625 16.25V13.625H23.6875V16.25H21.0625ZM18.4375 18.875V16.25H21.0625V18.875H18.4375ZM18.4375 18.875V21.5H15.8125V18.875H18.4375Z"
+                      fill="#E75426"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a id="w-node-ea4be346-32d8-8273-f397-860f64f344b3-d0cf18d7" href="/batch-files-integration"
+            class="integrations-card w-inline-block">
+            <div class="integrations-icon w-embed">
+              <svg width="40" height="40" viewbox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M34.395 10.6712C34.09 10.0164 33.6758 9.41827 33.17 8.9025L27.3475 3.08C26.1693 1.91754 24.5838 1.26093 22.9288 1.25H11.25C9.59301 1.25198 8.00445 1.9111 6.83277 3.08277C5.6611 4.25445 5.00198 5.84301 5 7.5V32.5C5.00198 34.157 5.6611 35.7456 6.83277 36.9172C8.00445 38.0889 9.59301 38.748 11.25 38.75H28.75C30.407 38.748 31.9956 38.0889 33.1672 36.9172C34.3389 35.7456 34.998 34.157 35 32.5V13.3212C34.9939 12.4044 34.7874 11.4999 34.395 10.6712ZM30.7325 10H27.5C27.1685 10 26.8505 9.8683 26.6161 9.63388C26.3817 9.39946 26.25 9.08152 26.25 8.75V5.5175L30.7325 10ZM32.5 32.5C32.5 33.4946 32.1049 34.4484 31.4017 35.1516C30.6984 35.8549 29.7446 36.25 28.75 36.25H11.25C10.2554 36.25 9.30161 35.8549 8.59835 35.1516C7.89509 34.4484 7.5 33.4946 7.5 32.5V7.5C7.5 6.50544 7.89509 5.55161 8.59835 4.84835C9.30161 4.14509 10.2554 3.75 11.25 3.75H22.9288C23.2054 3.75245 23.4809 3.786 23.75 3.85V8.75C23.75 9.74456 24.1451 10.6984 24.8483 11.4017C25.5516 12.1049 26.5054 12.5 27.5 12.5H32.4C32.464 12.7691 32.4975 13.0446 32.5 13.3212V32.5Z"
+                  fill="#F9FAFC"></path>
+                <path
+                  d="M25 20H21.25V16.25C21.25 15.9185 21.1183 15.6005 20.8839 15.3661C20.6495 15.1317 20.3315 15 20 15C19.6685 15 19.3505 15.1317 19.1161 15.3661C18.8817 15.6005 18.75 15.9185 18.75 16.25V20H15C14.6685 20 14.3505 20.1317 14.1161 20.3661C13.8817 20.6005 13.75 20.9185 13.75 21.25C13.75 21.5815 13.8817 21.8995 14.1161 22.1339C14.3505 22.3683 14.6685 22.5 15 22.5H18.75V26.25C18.75 26.5815 18.8817 26.8995 19.1161 27.1339C19.3505 27.3683 19.6685 27.5 20 27.5C20.3315 27.5 20.6495 27.3683 20.8839 27.1339C21.1183 26.8995 21.25 26.5815 21.25 26.25V22.5H25C25.3315 22.5 25.6495 22.3683 25.8839 22.1339C26.1183 21.8995 26.25 21.5815 26.25 21.25C26.25 20.9185 26.1183 20.6005 25.8839 20.3661C25.6495 20.1317 25.3315 20 25 20Z"
+                  fill="#F9FAFC"></path>
+              </svg>
+            </div>
+            <div class="integrations-card-content">
+              <div class="integrations-card-text">Batch Files</div>
+              <div class="integrations-card-button">
+                <div>Learn more</div>
+                <div class="w-embed">
+                  <svg width="29" height="22" viewbox="0 0 29 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M15.8125 0.5H18.4375V3.125H15.8125V0.5ZM21.0625 5.75H18.4375V3.125H21.0625V5.75ZM23.6875 8.375H21.0625V5.75H23.6875V8.375ZM23.6875 13.625H26.3125V12.3125H28.9375V9.6875H26.3125V8.375H23.6875V9.6875H2.6875V1.8125L0.0625 1.8125V9.6875H2.6875V12.3125H23.6875V13.625ZM21.0625 16.25V13.625H23.6875V16.25H21.0625ZM18.4375 18.875V16.25H21.0625V18.875H18.4375ZM18.4375 18.875V21.5H15.8125V18.875H18.4375Z"
+                      fill="#E75426"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
       </div>
-
-      <div class="integration_section">
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg" height="2" viewBox="0 0 531 2" fill="none">
-            <path d="M0 1L531 0.999954" stroke="url(#paint0_linear_24_635)" />
-            <defs>
-              <linearGradient id="paint0_linear_24_635" x1="4.37114e-08" y1="1.5" x2="531" y2="1.49995"
-                gradientUnits="userSpaceOnUse">
-                <stop stop-color="#9BA2FF" stop-opacity="0" />
-                <stop offset="1" stop-color="#9BA2FF" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </span>
-        <h2>Integrations</h2>
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg" height="2" viewBox="0 0 531 2" fill="none">
-            <path d="M0 1L531 0.999954" stroke="url(#paint0_linear_24_638)" />
-            <defs>
-              <linearGradient id="paint0_linear_24_638" x1="4.37114e-08" y1="1.5" x2="531" y2="1.49995"
-                gradientUnits="userSpaceOnUse">
-                <stop stop-color="#9BA2FF" />
-                <stop offset="1" stop-color="#9BA2FF" stop-opacity="0" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </span>
-      </div>
-
-      <div class="second_card_container">
-        <a class="card" href="/docs/hosted-solution">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path
-              d="M26.6408 30.625V33.75C26.6408 36.3388 24.5421 38.4375 21.9533 38.4375H6.25012C3.66129 38.4375 1.56262 36.3388 1.56262 33.75V6.25C1.56262 3.66118 3.66129 1.5625 6.25012 1.5625H21.9533C24.5421 1.5625 26.6408 3.66118 26.6408 6.25V9.375"
-              stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path d="M38.047 20.0781H16.8751" stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10"
-              stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M34.2521 25.2344L37.751 21.7354C38.6663 20.8201 38.6663 19.3362 37.751 18.4209L34.2521 14.9219"
-              stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-          <h3>Hosted Solution</h3>
-        </a>
-
-        <a class="card" href="/docs/api-integration">
-          <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 38 38" fill="none">
-            <path d="M7.63258 35.9867L6.97882 31.0208L11.9446 30.3671" stroke="#9BA2FF" stroke-width="2.5"
-              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-            <path d="M30.368 2.01337L31.0218 6.9792L26.056 7.63296" stroke="#9BA2FF" stroke-width="2.5"
-              stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-            <path
-              d="M31.0211 6.97923C27.9448 3.90286 23.6948 2.00006 19.0003 2.00006C9.61151 2.00006 2.00031 9.61116 2.00031 19.0001C2.00031 21.6245 2.59587 24.1094 3.65785 26.3287"
-              stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path
-              d="M6.97882 31.0208C10.0552 34.0971 14.3053 35.9999 18.9996 35.9999C28.3884 35.9999 35.9997 28.3887 35.9997 18.9999C35.9997 16.3755 35.4041 13.8906 34.3421 11.6714"
-              stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path
-              d="M28.787 16.2005L26.3182 11.9243L25.7895 12.2295C23.8693 13.3381 21.469 11.9523 21.469 9.73497V9.12457H16.5312V9.73497C16.5312 11.9523 14.1309 13.3381 12.2107 12.2295L11.6821 11.9243L9.2132 16.2005L9.7417 16.5056C11.662 17.6143 11.662 20.3859 9.7417 21.4946L9.2132 21.7998L11.6821 26.076L12.2107 25.7708C14.1309 24.6621 16.5312 26.0479 16.5312 28.2653V28.8756H21.469V28.2653C21.469 26.048 23.8693 24.6622 25.7895 25.7708L26.3182 26.076L28.787 21.7998L28.2585 21.4946C26.3383 20.3859 26.3383 17.6143 28.2585 16.5056L28.787 16.2005Z"
-              stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-            <path
-              d="M18.9999 22.5271C20.9478 22.5271 22.5269 20.948 22.5269 19.0001C22.5269 17.0522 20.9478 15.4731 18.9999 15.4731C17.052 15.4731 15.473 17.0522 15.473 19.0001C15.473 20.948 17.052 22.5271 18.9999 22.5271Z"
-              stroke="#9BA2FF" stroke-width="2.5" stroke-miterlimit="10" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
-          <h3>Full API Integration</h3>
-        </a>
-
-        <a class="card" href="/docs/embedded-solution">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path
-              d="M34.3921 18.6169L34.2817 18.5066L37.691 15.0973C37.8888 14.8995 38 14.6313 38 14.3516C38 14.0719 37.8888 13.8036 37.691 13.6058L34.2817 10.1966L34.3921 10.0862C35.24 9.96724 36.0248 9.57792 36.6376 8.96521C38.1823 7.42045 38.1823 4.90712 36.6376 3.3625C35.8893 2.61402 34.8944 2.20192 33.8362 2.20192C32.778 2.20192 31.7831 2.61402 31.0349 3.36229C30.4222 3.97506 30.0329 4.75989 29.9139 5.60786L29.8036 5.71818L26.3942 2.30887C25.9824 1.89704 25.3145 1.89704 24.9026 2.30887L10.1965 17.0151L10.0862 16.9048C9.96719 16.0568 9.57787 15.272 8.9651 14.6592C7.42048 13.1145 4.90717 13.1145 3.36241 14.6592C1.81779 16.2039 1.81779 18.7173 3.36241 20.2619C3.97518 20.8747 4.75993 21.264 5.6079 21.383L5.71829 21.4933L2.30892 24.9027C1.89703 25.3145 1.89703 25.9823 2.30892 26.3942L13.6058 37.691C13.8036 37.8888 14.0718 38 14.3515 38C14.6313 38 14.8995 37.8889 15.0972 37.691L19.2523 33.5359C19.6642 33.1241 19.6642 32.4563 19.2523 32.0444L18.1249 30.917C17.9343 30.7263 17.6779 30.616 17.4083 30.6085C16.9332 30.5952 16.4866 30.4031 16.1507 30.0672C15.8009 29.7173 15.6082 29.2521 15.6082 28.7574C15.6082 28.2626 15.8009 27.7974 16.1507 27.4476C16.8729 26.7254 18.048 26.7253 18.7704 27.4476C19.1062 27.7834 19.2984 28.2301 19.3116 28.7051C19.319 28.9747 19.4294 29.231 19.62 29.4217L20.7475 30.5492C20.9453 30.747 21.2135 30.8581 21.4933 30.8581C21.773 30.8581 22.0412 30.7471 22.239 30.5492L29.8034 22.9848L29.9137 23.0951C30.0327 23.9431 30.422 24.7279 31.0348 25.3407C32.5794 26.8853 35.0928 26.8853 36.6375 25.3407C37.3858 24.5923 37.7978 23.5975 37.7978 22.5393C37.7978 21.4811 37.3857 20.4862 36.6375 19.7379C36.0249 19.1253 35.24 18.7359 34.3921 18.6169ZM21.4933 28.3119L21.383 28.2016C21.2641 27.3536 20.8747 26.5689 20.262 25.9561C18.7172 24.4114 16.2039 24.4114 14.6592 25.9561C13.9109 26.7044 13.4989 27.6993 13.4989 28.7575C13.4989 29.8157 13.911 30.8105 14.6592 31.5588C15.2719 32.1716 16.0568 32.5609 16.9047 32.6799L17.015 32.7902L14.3515 35.4538L4.54625 25.6484L7.95556 22.2391C8.15335 22.0413 8.26451 21.7731 8.26451 21.4934C8.26451 21.2137 8.15335 20.9453 7.95556 20.7476L6.8281 19.6202C6.63748 19.4295 6.38105 19.3192 6.11155 19.3117C5.63645 19.2985 5.18982 19.1063 4.85394 18.7704C4.13176 18.0483 4.13176 16.8731 4.85394 16.1508C5.57619 15.4286 6.75125 15.4286 7.4735 16.1508C7.80938 16.4867 8.00161 16.9334 8.01476 17.4085C8.02221 17.678 8.1326 17.9344 8.32329 18.125L9.45068 19.2524C9.8625 19.6642 10.5303 19.6642 10.9422 19.2524L14.3515 15.8431L17.7608 19.2524C18.1727 19.6643 18.8405 19.6643 19.2524 19.2524L20.3798 18.125C20.5705 17.9344 20.6809 17.678 20.6883 17.4084C20.7015 16.9334 20.8937 16.4868 21.2295 16.1508C21.9518 15.4286 23.127 15.4286 23.8492 16.1508C24.5714 16.8731 24.5714 18.0482 23.8492 18.7704C23.5133 19.1063 23.0667 19.2986 22.5916 19.3117C22.322 19.3192 22.0656 19.4295 21.875 19.6202L20.7476 20.7476C20.3357 21.1594 20.3357 21.8273 20.7476 22.2392L24.1569 25.6485L21.4933 28.3119ZM35.146 23.8492C34.4238 24.5714 33.2486 24.5714 32.5265 23.8492C32.1906 23.5133 31.9984 23.0666 31.9852 22.5915C31.9778 22.322 31.8674 22.0656 31.6767 21.8749L30.5493 20.7476C30.3433 20.5416 30.0734 20.4386 29.8036 20.4386C29.5337 20.4386 29.2637 20.5416 29.0578 20.7476L25.6485 24.1569L22.985 21.4933L23.0953 21.383C23.9432 21.264 24.7281 20.8747 25.3408 20.262C26.8855 18.7173 26.8855 16.2039 25.3408 14.6592C23.7961 13.1145 21.2828 13.1145 19.7381 14.6592C19.1254 15.272 18.736 16.0569 18.6172 16.9048L18.5068 17.0151L15.8433 14.3515L25.6484 4.54621L29.0578 7.95545C29.4696 8.36727 30.1374 8.36727 30.5493 7.95545L31.6767 6.82806C31.8673 6.63745 31.9778 6.38102 31.9852 6.11151C31.9984 5.63641 32.1906 5.18978 32.5265 4.8539C32.8763 4.50402 33.3415 4.3113 33.8362 4.3113C34.331 4.3113 34.7962 4.50402 35.146 4.8539C35.8682 5.57608 35.8682 6.75121 35.1461 7.47346C34.8102 7.80934 34.3635 8.00158 33.8884 8.01473C33.6189 8.02218 33.3625 8.13257 33.1718 8.32326L32.0444 9.45072C31.6326 9.86261 31.6326 10.5304 32.0444 10.9423L35.4537 14.3515L32.0444 17.7608C31.6325 18.1726 31.6325 18.8405 32.0444 19.2524L33.1718 20.3798C33.3624 20.5704 33.6188 20.6808 33.8883 20.6883C34.3634 20.7015 34.8101 20.8937 35.146 21.2295C35.4958 21.5794 35.6885 22.0446 35.6885 22.5393C35.6886 23.0341 35.4959 23.4993 35.146 23.8492Z"
-              fill="#9BA2FF" />
-          </svg>
-          <h3>Embedded Solution</h3>
-        </a>
-
-        <a class="card" href="/batch-files-integration">
-          <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" fill="#9ba2ff" viewBox="0 0 256 256">
-            <path
-              d="M245,110.64A16,16,0,0,0,232,104H216V88a16,16,0,0,0-16-16H130.67L102.94,51.2a16.14,16.14,0,0,0-9.6-3.2H40A16,16,0,0,0,24,64V208h0a8,8,0,0,0,8,8H211.1a8,8,0,0,0,7.59-5.47l28.49-85.47A16.05,16.05,0,0,0,245,110.64ZM93.34,64,123.2,86.4A8,8,0,0,0,128,88h72v16H69.77a16,16,0,0,0-15.18,10.94L40,158.7V64Zm112,136H43.1l26.67-80H232Z">
-            </path>
-          </svg>
-          <h3>Batch Files</h3>
-        </a>
-      </div>
-    </main>
-  </div>
-</body>
-
-</html>
+    </div>
+  </section>
+</div>
