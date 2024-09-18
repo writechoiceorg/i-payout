@@ -1,0 +1,1880 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "LINKs API",
+    "description": "# API Introduction\r\n\r\nThe LINKs API is based on the principles of Representational State Transfer (REST) allowing clients to create, view, modify and delete resources using standard HTTP request methods.\r\n\r\nRecommended reading:\r\n\r\n- HTTP: http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol\r\n- Headers: http://en.wikipedia.org/wiki/List_of_HTTP_headers\r\n-- Basic access authentication: http://en.wikipedia.org/wiki/Basic_access_authentication\r\n-- Status codes: http://en.wikipedia.org/wiki/List_of_HTTP_status_codes\r\n- REST: http://en.wikipedia.org/wiki/Representational_State_Transfer\r\n- JSON: http://en.wikipedia.org/wiki/JSON\r\n\r\n## About versioning\r\n\r\nOver time new features will come along and others will be removed. To foresee and avoid potential compatibility issues, the API handles this by having multiple versions available at the same time. There is however a limit in terms of backward compability and at any time only the two newest versions will be available. In addition, a be beta/preview version might also be available. This **example** demostrates the versions and their lifecycle:\r\n\r\n- **v11b**: Preview version\r\n- **v10**: Latest version\r\n- **v09**: Deprecated version\r\n\r\n## Access and Security\r\n\r\nAny and all communication must be encrypted using a TLS.\r\n\r\nTo interact with our API you will need to **create a merchant account**.\r\n\r\nAuthentication is done by using **HTTP Basic Auth** and you will need valid credentials from your account at LINKs. \r\n\r\n## The HTTP Request\r\n\r\n### URI\r\n\r\nThe request URI identifies the resource we want to handle. See the complete list over `Payments` in the sidebar to the left.\r\n\r\n### Method\r\n\r\nRequest methods defines the action we wish to perform on a resource. The LINKs API recognizes five HTTP request methods:\r\n\r\n| Method | Description |\r\n| --- | --- |\r\n| GET | Get a resource or list of resources |\r\n| POST | Create a resource |\r\n| PUT | Replace a resource |\r\n| PATCH | Update a resource |\r\n| DELETE | Delete a resource |\r\n\r\n**Please note!** Not all methods are valid for all URIs.\r\n\r\n### Headers\r\n\r\n| Method | Description |\r\n| --- | --- |\r\n| Host | The domain name of the server |\r\n| Authorization | HTTP Basic authentication |\r\n| Accept-Version | The desired version of the API |\r\n| Accept | Content-Types that are acceptable, currently only application/json is available |\r\n| Content-Type\t | The mime type of the body of the request (used with POST and PUT requests) |\r\n| Content-Length\t| Length (in bytes) of the response message body (used with POST and PUT requests) |\r\n\r\n## The HTTP Responses\r\n\r\n### Status\r\n\r\nThe HTTP response status line contains a status code. This code is used to identify wether the request went well or if an error occurred. If indeed something went wrong in processing of the request, the status code will also tell something about the type of error.\r\n\r\nThe following status codes are defined in the LINKs API:\r\n\r\n| HTTP Status | Description |\r\n| --- | --- |\r\n| 200 OK | Standard response for successful HTTP requests. The actual response will depend on the request method used. |\r\n| 201 Created | A new resource was created and a response body containing a representation of the new resource is being returned. |\r\n| 400 Bad Request | The request could not be processed because it contains missing or invalid information. |\r\n| 401 Unauthorized | Authentication has failed or not provided. |\r\n| 403 Forbidden | The server recognized your credentials, but you do not possess authorization to perform the request. |\r\n| 404 Not Found | The requested resource could not be found. |\r\n| 405 Method Not Allowed | A request was made of a resource using a request method not supported by that resource. |\r\n| 406 Not Acceptable | The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request. |\r\n| 500 Internal Server Error | The server encountered an unexpected condition which prevented it from fulfilling the request. |\r\n\r\n# Payments Introduction\r\n\r\n## 1. Create a new payment\r\n\r\nThe first step is to `create` a payment in LINKs.\r\n\r\n```\r\nPOST /api/payments\r\n```\r\n\r\n[See more in the API documentation](/index.html#operation/New).\r\n\r\n## 2. Authorize the created payment\r\n\r\nNext step is to `authorize` the payment.\r\n\r\n```\r\nPOST /api/payments/{identifier}/authorize\r\n```\r\n\r\nThe recommended way is to use the LINKs payment UI; Our ready-made payment UI, where your customer can fill in their card information, that offers the quickest way to integrate and start securely accepting payments with LINKs.\r\n\r\n[See more in the API documentation](/index.html#operation/Authorize).\r\n\r\n## 3. Check payment status\r\n\r\nOptionaly, you can check the `status` of the payment.\r\n\r\n```\r\nGET /api/payments/{identifier}\r\n```\r\n\r\n[See more in the API documentation](/index.html#operation/Get).\r\n\r\n## 4. Capture payment\r\n\r\nIf during the payment authorization, you did not set `autocapture = true`, you can `capture` your previusly authorized payment.\r\n\r\n```\r\nPOST /api/payments/{identifier}/capture\r\n```\r\n\r\n[See more in the API documentation](/index.html#operation/Capture).\r\n\r\n## 5. Refund payment\r\n\r\nTo refund a previusly `captured` payment.\r\n\r\n```\r\nPOST /api/payments/{identifier}/refund\r\n```\r\n\r\n[See more in the API documentation](/index.html#operation/Refund).\r\n\r\n## 6. Void payment\r\n\r\nTo void a previusly `authorized` payment.\r\n\r\n```\r\nPOST /api/payments/{identifier}/void\r\n```\r\n\r\n[See more in the API documentation](/index.html#operation/Void).\r\n\r\n# LIKNs UI\r\n\r\nOur LIKNs UI is a ready-made payment UI that offers a quick and easy way to integrate and start securely accepting payments with LINKs. It offers:\r\n\r\n- **Quick, easy integrations.** Quickly integrate it into your app or website's checkout flow.\r\n- **User-friendly, customizable UI.** Customize the checkout form to meet your needs and fit your brand requirements.\r\n- **Saved cards.** With this feature your returning customers will only have to authorize their credit card once - after that they can pay with just a single click.\r\n\r\n## Easy set up\r\n\r\nThe easiest way to start securely accepting payments with LINKs is using our `LIKNs UI Lite`:\r\n\r\nJust include our public `links.js` and a container (`lms-ui`) where you want the payment form to appear in your page, and provide the `LINKs.loadUi` method with your **payment data**.\r\n\r\n- Payment data\r\n-- Your LINKs account `Merchant Identifier`\r\n-- Your LINKs account `Tokenization Key`\r\n-- The transaction `Amount`\r\n-- The transaction `Currency`\r\n-- The `Callback Action`. *We will post the payment result to this action*\r\n-- The `Order Id`. *A unique order id*\r\n\r\n\r\n```javascript\r\n...\r\n<link href=\"https://testclientjs.linksmerchantservices.com/lms/v1.0/links.css\" rel=\"stylesheet\" />\r\n...\r\n\r\n<!--Payment form container-->\r\n<div lms-ui>\r\n</div>\r\n\r\n<script src=\"https://testclientjs.linksmerchantservices.com/lms/v1.0/links.js\"></script>\r\n<script>\r\n\t$(document).ready(function () {           \r\n\t\tLINKs.loadUi({\r\n\t\t\tmerchantIdentifier: 'f9c6ae8a-66e8-4971-b3a8-1f579efdb3e7',\r\n\t\t\ttokenizationKey: 'f9c6ae8a-66e8-4971-b3a8-1f579efdb3e7',\r\n\t\t\tamount: '4.56',\r\n\t\t\tcurrency: 'USD',\r\n\t\t\tcallbackAction: '/Payment/Callback',\r\n\t\t\torderId: '987654',\r\n\t\t});\r\n\t});\r\n</script>\r\n```\r\n\r\nThe above example generates the following form inside the `lms-ui` container:\r\n\r\n![payment Lite Form](/images/pay-lite-form.png)\r\n\r\n**Note!** Every part of this form can be customized via `css`.\r\n\r\n## Advanced, but still easy, set up\r\n\r\nThere are 2 ways to authorize the LINKs UI to collect payment information:\r\n\r\n- **Tokenization key**. (The method used in the previus example). Is an static key with reduced privileges that authorizes a subset of LINKs API capabilities\r\n- **Client token**. Is a one time use password. Requires a round trip to your server and enables you to use all of LINKs API capabilities.\r\n\r\n### Tokenization key\r\n\r\nA tokenization key authorizes clients to tokenize payment information.\r\n\r\nUnlike a client token, a tokenization key is both **static** and **reduced privilege**. It can be shipped with your apps without the need to generate a new key for each session.\r\n\r\n#### Static\r\n\r\nA single tokenization key may be reused indefinitely across many client apps. If you decide you no longer want a specific tokenization key to be used, it can be revoked. Doing so will deauthorize any clients using that key.\r\n\r\n#### Reduced privilege\r\n\r\nTokenization keys authorize only a subset of LINKs API capabilities. The **LINKs UI** should function as with a client token, with some limitations:\r\n\r\n- You may not specify a customer ID or otherwise provide any configuration. \r\n- LINKs UI will not be able to retrieve a customer's saved payment methods. Repeat purchases will show the add payment method UI. \r\n\r\n#### When to use tokenization keys\r\n\r\nTokenization keys do not require any interaction with your server until after payment information is tokenized. If you want to collect payment information to hand off to your server, tokenization keys are ideal.\r\n\r\nTokenization keys are also useful for situations where you want to tokenize payment information **as simply as possible**. \r\n\r\n### Client token\r\n\r\nIs a one time use password, valid for up to 24 hours. Requires a round trip to your server and enables you to use all of LINKs API capabilities. Your server is responsible for generating the **client token**, [creating a payment](/index.html#operation/New) using `Basic` authentication. When your server provides a `client token` to your client, it is used by LINKs UI to authenticate the request.\r\n\r\n#### When to use client tokens\r\n\r\nClient tokens allow use of the full range of LINKs UI functionality. If you want customers to save their payment methods directly from your client or want to present returning customers with a list of their saved payment methods, use client tokens.\r\n\r\nThe following example uses client token with LINKs UI:\r\n\r\n```javascript\r\n...\r\n<link href=\"https://testclientjs.linksmerchantservices.com/lms/v1.0/links.css\" rel=\"stylesheet\" />\r\n...\r\n\r\n<!--Payment form container-->\r\n<div lms-ui>\r\n</div>\r\n\r\n<script src=\"https://testclientjs.linksmerchantservices.com/lms/v1.0/links.js\"></script>\r\n<script>\r\n\t$(document).ready(function () {\r\n            let settings =  @Json.Serialize(Model); //object returned from API(server side) when a new payment is created, this objects has the client token\r\n\t\t\t\r\n            settings.callbackAction = \"/Payment/Callback/\";\r\n            settings.autoCapture = true;\r\n\t\t\t\r\n            LINKs.loadUi(settings);\r\n        });\r\n</script>\r\n```\r\n\r\n**Note!**: For the server code samples, [see the API documentation](/index.html#operation/New)\r\n\r\nThe above example generates the following form inside the `lms-ui` container:\r\n\r\n![payment Lite Form](/images/pay-customer-form.png)\r\n\r\n**Note!** Every part of this form can be customized via `css`.\r\n\r\n## The Callback Action\r\n\r\nAll payment responses, either approved or declined, must be handled. LINKs UI makes this process easy by posting the payment response to a `callback action`. \r\n\r\nThe **callback action** must have the following signature: \r\n\r\n```C# \r\n[HttpPost]\r\npublic IActionResult Callback(string base64JsonStringResponse)\r\n{\r\n\tstring jsonStringResponse = Encoding.UTF8.GetString(Convert.FromBase64String(base64JsonStringResponse));\r\n\r\n\tvar response = JsonSerializer.Deserialize<PayResponse>(jsonStringResponse);\r\n\r\n\tif (response.Result.ResultType == \"Accepted\")\r\n\t{\r\n\t\t//Handle your accepted payment\r\n\t}\r\n\telse\r\n\t{\r\n\t\t//Handle your declined payment\r\n\t}\r\n}\r\n/*\r\npublic class PayResponse\r\n{\t\r\n\tpublic string MerchantIdentifier { get; set; }\r\n\tpublic string Amount { get; set; }\r\n\tpublic string CurrencyCode { get; set; }\r\n\tpublic string PaymentStatus { get; set; }\r\n\tpublic string PaymentMethodType { get; set; }\r\n\tpublic string Acquirer { get; set; }\r\n\tpublic string CustomerIdentifier { get; set; }\r\n\tpublic string PaymentIdentifier { get; set; }\r\n\tpublic PayResponseResult Result { get; set; }\r\n}\r\npublic class PayResponseResult\r\n{\r\n\tpublic string ResultType { get; set; } //\"Accepted\" \"Declined\" \"NotFound\" \"ValidationFailed\" \"Error\"\r\n\tpublic string MerchantMessage { get; set; }\r\n\tpublic string LogIdentifier { get; set; }\r\n}\r\n*/\r\n\r\n``` \r\n\r\nHowever, if you want to process your client's payments in a different way, you can do it as follows: \r\n\r\n```javascript\r\n LINKs.loadUi({\r\n                ...\r\n                callbackFunction = function(response){\r\n\t\t\t\t     /*\r\n\t\t\t\t\t   response.merchantIdentifier\r\n\t\t\t\t\t   response.amount\r\n\t\t\t\t\t   response.currencyCode\r\n\t\t\t\t\t   response.paymentStatus\r\n\t\t\t\t\t   response.paymentMethodType\r\n\t\t\t\t\t   response.acquirer\r\n\t\t\t\t\t   response.customerIdentifier\r\n\t\t\t\t\t   response.paymentIdentifier\r\n\t\t\t\t\t   response.result.resultType\r\n\t\t\t\t\t   response.result.merchantMessage\r\n\t\t\t\t\t   response.result.logIdentifier\r\n\t\t\t\t\t */\t\r\n\t\t\t\t\t \r\n\t\t\t\t  return false;//Return true to post to action(default), return false to avoid posting\r\n\t\t\t\t},\r\n            });\r\n\r\n``` \r\n\r\n# Authentication\r\n\r\nDepending on the request, LINKs API offers two forms of authentication: `Basic` and `client token`.",
+    "termsOfService": "https://linksmerchantservices.com/",
+    "contact": {
+      "name": "LINKS Merchant Services, Inc",
+      "url": "https://linksmerchantservices.com",
+      "email": "discover@linksmerchantservices.com"
+    },
+    "license": {
+      "name": "EULA",
+      "url": "https://en.wikipedia.org/wiki/End-user_license_agreement"
+    },
+    "version": "v1",
+    "x-logo": {
+      "url": "/images/logo.png",
+      "altText": "LINKs Logo"
+    }
+  },
+  "paths": {
+    "/api/auth/getdropinuijwttoken": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "It will send Jwt Token (Guid) and it will used in Lite version of API for Authorization.",
+        "operationId": "GetDropinUiJwtToken",
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/paymentmethod": {
+      "post": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Create Payment Method",
+        "operationId": "New",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePaymentMethodRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentMethodResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ],
+        "x-code-samples": [
+          {
+            "lang": "C#",
+            "source": "public async Task<IActionResult> CreatePayment()\r\n{\r\n\tstring MerchantIdentifier = \"your LINKs account identifier\";\r\n\tstring MerchantSecretKey = \"your LINKs account secret\";\r\n\tstring Amount = \"37.89\";\r\n\tstring CurrencyCode = \"USD\";\r\n\tstring CustomerIdentifier = \"previus transaction customer identifier\",\r\n\tstring OrderId - \"your unique order id\"\r\n\r\n\t//Setting headers\r\n\tstring credentials = $\"{MerchantIdentifier}:{MerchantSecretKey}\";\r\n\tstring credentialsBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));\r\n\r\n\t//--Authorization \r\n\t_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Basic\", credentialsBase64);\r\n\r\n\t//--Accept \r\n\t_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));\r\n\r\n\tvar request = new\r\n\t{\r\n\t\tMerchantIdentifier = MerchantIdentifier,\r\n\t\tAmount = Amount,\r\n\t\tCurrencyCode = CurrencyCode,\r\n\t\tCustomerIdentifier = CustomerIdentifier,\r\n\t\tMerchantOrderId = OrderId\r\n\t};\r\n\r\n\t//POST ~/api/payments\r\n\tHttpResponseMessage httpResponse = await _httpClient.PostAsJsonAsync(\"https://linksmerchantservices.com/api/payments\", request);\r\n\r\n\tif (httpResponse.IsSuccessStatusCode)\r\n\t{\r\n\t\tvar response = await httpResponse.Content.ReadAsAsync<CreatePaymentResponse>();\r\n\r\n\t\treturn View(response);\r\n\t}\r\n\r\n\tvar errorResponse = await httpResponse.Content.ReadAsAsync<ErrorResponse>();\r\n\r\n\telse if (errorResponse != default)\r\n\t{\r\n\t\t//Handle payment fail\r\n\t}\r\n\telse\r\n\t{\r\n\t\tstring statusCode = httpResponse.StatusCode;\r\n\t\tstring reasonPhrase = httpResponse.ReasonPhrase;\r\n\t\t\r\n\t\t//Handle payment fail\r\n\t}\r\n}\r\n/*\r\n\tpublic class CreatePaymentResponse\r\n\t{\r\n\t\tpublic string MerchantIdentifier { get; set; }\r\n\t\tpublic string PaymentIdentifier { get; set; }\r\n\t\tpublic string Token { get; set; }\r\n\t\tpublic List<PaymentMethodResponse> CustomerPaymentMethods { get; set; }\r\n\t\tpublic List<string> AllowedCardBrands { get; set; }\r\n\t\tpublic List<string> AllowedCurrencies { get; set; }\r\n\t\tpublic bool ShowCardHolderNameField { get; set; }\r\n\t\tpublic bool ShowCvvField { get; set; }\r\n\t\tpublic bool ShowZipCodeField { get; set; }\r\n\t\tpublic int ServerYear { get; set; }\r\n\t\tpublic int ServerMonth { get; set; }\r\n\t\tpublic Result Result { get; }\r\n\t}\r\n\tpublic class Result\r\n\t{\r\n\t\tpublic string ResultType { get; set; }\r\n\t\tpublic string Message { get; set; }\r\n\t\tpublic string LogIdentifier { get; set; }\r\n\t}\r\n*/"
+          }
+        ]
+      }
+    },
+    "/api/paymentmethod/{identifier}": {
+      "get": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Get payment method",
+        "operationId": "Get",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentMethodResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ]
+      }
+    },
+    "/api/paymentmethod/delete/{identifier}": {
+      "post": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Delete Payment Method",
+        "operationId": "Delete",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethodResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paymentmethod/update": {
+      "post": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Update Payment Method",
+        "operationId": "Update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePaymentMethodRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentMethodResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paymentmethod/customer/identifier/{customerIdentifier}": {
+      "get": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Get Customer Payment Methods ByIdentifier",
+        "operationId": "GetCustomerPaymentMethodsByIdentifier",
+        "parameters": [
+          {
+            "name": "customerIdentifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentMethodsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paymentmethod/customer/reference/{customerReference}": {
+      "get": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Get Customer Payment Methods ByReference",
+        "operationId": "GetCustomerPaymentMethodsByReference",
+        "parameters": [
+          {
+            "name": "customerReference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentMethodsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paymentmethod/test": {
+      "post": {
+        "tags": [
+          "PaymentMethod"
+        ],
+        "summary": "Update CardType and Last4Digits column for existing records, once it will be run on test and production we can comment out this Method",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payments": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Create payment",
+        "operationId": "New",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ],
+        "x-code-samples": [
+          {
+            "lang": "C#",
+            "source": "public async Task<IActionResult> CreatePayment()\r\n{\r\n\tstring MerchantIdentifier = \"your LINKs account identifier\";\r\n\tstring MerchantSecretKey = \"your LINKs account secret\";\r\n\tstring Amount = \"37.89\";\r\n\tstring CurrencyCode = \"USD\";\r\n\tstring CustomerIdentifier = \"previus transaction customer identifier\",\r\n\tstring OrderId - \"your unique order id\"\r\n\r\n\t//Setting headers\r\n\tstring credentials = $\"{MerchantIdentifier}:{MerchantSecretKey}\";\r\n\tstring credentialsBase64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));\r\n\r\n\t//--Authorization \r\n\t_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(\"Basic\", credentialsBase64);\r\n\r\n\t//--Accept \r\n\t_httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));\r\n\r\n\tvar request = new\r\n\t{\r\n\t\tMerchantIdentifier = MerchantIdentifier,\r\n\t\tAmount = Amount,\r\n\t\tCurrencyCode = CurrencyCode,\r\n\t\tCustomerIdentifier = CustomerIdentifier,\r\n\t\tMerchantOrderId = OrderId\r\n\t};\r\n\r\n\t//POST ~/api/payments\r\n\tHttpResponseMessage httpResponse = await _httpClient.PostAsJsonAsync(\"https://linksmerchantservices.com/api/payments\", request);\r\n\r\n\tif (httpResponse.IsSuccessStatusCode)\r\n\t{\r\n\t\tvar response = await httpResponse.Content.ReadAsAsync<CreatePaymentResponse>();\r\n\r\n\t\treturn View(response);\r\n\t}\r\n\r\n\tvar errorResponse = await httpResponse.Content.ReadAsAsync<ErrorResponse>();\r\n\r\n\telse if (errorResponse != default)\r\n\t{\r\n\t\t//Handle payment fail\r\n\t}\r\n\telse\r\n\t{\r\n\t\tstring statusCode = httpResponse.StatusCode;\r\n\t\tstring reasonPhrase = httpResponse.ReasonPhrase;\r\n\t\t\r\n\t\t//Handle payment fail\r\n\t}\r\n}\r\n/*\r\n\tpublic class CreatePaymentResponse\r\n\t{\r\n\t\tpublic string MerchantIdentifier { get; set; }\r\n\t\tpublic string PaymentIdentifier { get; set; }\r\n\t\tpublic string Token { get; set; }\r\n\t\tpublic List<PaymentMethodResponse> CustomerPaymentMethods { get; set; }\r\n\t\tpublic List<string> AllowedCardBrands { get; set; }\r\n\t\tpublic List<string> AllowedCurrencies { get; set; }\r\n\t\tpublic bool ShowCardHolderNameField { get; set; }\r\n\t\tpublic bool ShowCvvField { get; set; }\r\n\t\tpublic bool ShowZipCodeField { get; set; }\r\n\t\tpublic int ServerYear { get; set; }\r\n\t\tpublic int ServerMonth { get; set; }\r\n\t\tpublic Result Result { get; }\r\n\t}\r\n\tpublic class Result\r\n\t{\r\n\t\tpublic string ResultType { get; set; }\r\n\t\tpublic string Message { get; set; }\r\n\t\tpublic string LogIdentifier { get; set; }\r\n\t}\r\n*/"
+          }
+        ]
+      }
+    },
+    "/api/payments/{identifier}": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Get payment",
+        "operationId": "Get",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPaymentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ]
+      }
+    },
+    "/api/payments/{identifier}/authorize": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Authorize payment",
+        "operationId": "Authorize",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizePaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizePaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Client Token": [ ]
+          }
+        ]
+      }
+    },
+    "/api/payments/{identifier}/capture": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Capture payment",
+        "operationId": "Capture",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CapturePaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ]
+      }
+    },
+    "/api/payments/{identifier}/refund": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Refund payment",
+        "operationId": "Refund",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefundPaymentRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefundPaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ]
+      }
+    },
+    "/api/payments/{identifier}/void": {
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Void payment",
+        "operationId": "Void",
+        "parameters": [
+          {
+            "name": "identifier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoidPaymentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "Basic": [ ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreditCardTypes": {
+        "enum": [
+          "Unknown",
+          "MasterCard",
+          "Visa",
+          "Amex",
+          "Discover",
+          "JCB"
+        ],
+        "type": "string"
+      },
+      "CreditCardInfo": {
+        "type": "object",
+        "properties": {
+          "cardNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "expiryMonth": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "expiryYear": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cardHolderName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cvv": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditCardBrand": {
+            "$ref": "#/components/schemas/CreditCardTypes"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillingInfo": {
+        "type": "object",
+        "properties": {
+          "firstLine": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "secondLine": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "zipCode": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "countryAlpha3Code": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "countryId": {
+            "type": "integer",
+            "format": "int64",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePaymentMethodRequest": {
+        "required": [
+          "merchantIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "merchantIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string",
+            "description": "Merchant Identifier"
+          },
+          "customerIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "pattern": "^.{0,100}$",
+            "type": "string",
+            "description": "Merchant Customer Reference",
+            "nullable": true
+          },
+          "card": {
+            "$ref": "#/components/schemas/CreditCardInfo"
+          },
+          "billingInformation": {
+            "$ref": "#/components/schemas/BillingInfo"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ResponseResultType": {
+        "enum": [
+          "Accepted",
+          "Declined",
+          "NotFound",
+          "ValidationFailed",
+          "Forbidden",
+          "Error"
+        ],
+        "type": "string"
+      },
+      "ResponseResult": {
+        "type": "object",
+        "properties": {
+          "resultType": {
+            "$ref": "#/components/schemas/ResponseResultType"
+          },
+          "merchantMessage": {
+            "type": "string",
+            "description": "Message",
+            "nullable": true
+          },
+          "logIdentifier": {
+            "type": "string",
+            "description": "Server Log Identifier",
+            "nullable": true
+          },
+          "logAsError": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetPaymentMethodResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          },
+          "card": {
+            "$ref": "#/components/schemas/CreditCardInfo"
+          },
+          "billingInformation": {
+            "$ref": "#/components/schemas/BillingInfo"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentMethodResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdatePaymentMethodRequest": {
+        "required": [
+          "merchantIdentifier",
+          "paymentMethodIdentifier"
+        ],
+        "type": "object",
+        "properties": {
+          "paymentMethodType": {
+            "type": "string",
+            "nullable": true
+          },
+          "card": {
+            "$ref": "#/components/schemas/CreditCardInfo"
+          },
+          "billingInformation": {
+            "$ref": "#/components/schemas/BillingInfo"
+          },
+          "merchantIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string",
+            "description": "Merchant Identifier"
+          },
+          "paymentMethodIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillingInformationData": {
+        "type": "object",
+        "properties": {
+          "firstLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "secondLine": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "nullable": true
+          },
+          "zipCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "countryAlpha3Code": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardData": {
+        "type": "object",
+        "properties": {
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "card": {
+            "$ref": "#/components/schemas/CreditCardInfo"
+          },
+          "billingInformation": {
+            "$ref": "#/components/schemas/BillingInformationData"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetPaymentMethodsResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "paymentMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CardData"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TestResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "test": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePaymentRequest": {
+        "required": [
+          "amount",
+          "currencyCode",
+          "merchantIdentifier",
+          "merchantOrderId"
+        ],
+        "type": "object",
+        "properties": {
+          "merchantIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string",
+            "description": "Merchant Identifier"
+          },
+          "currencyCode": {
+            "pattern": "^[A-Z]{3}$",
+            "type": "string",
+            "description": "Transaction Currency Code"
+          },
+          "amount": {
+            "minimum": 0.01,
+            "type": "number",
+            "description": "Transaction Amount",
+            "format": "double"
+          },
+          "customerIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "pattern": "^.{0,100}$",
+            "type": "string",
+            "description": "Merchant Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "pattern": "^.{0,100}$",
+            "type": "string",
+            "description": "Merchant Unique Order Id"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentMethodType": {
+        "enum": [
+          "Unknown",
+          "CreditCard",
+          "BankAccount"
+        ],
+        "type": "string"
+      },
+      "PaymentMethodResponseDto": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/PaymentMethodType"
+          },
+          "identifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditCardLast4Digits": {
+            "type": "string",
+            "nullable": true
+          },
+          "creditCardBrand": {
+            "$ref": "#/components/schemas/CreditCardTypes"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreatePaymentResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "paymentIdentifier": {
+            "type": "string",
+            "description": "Payment Identifier",
+            "nullable": true
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency Code",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "Order Id",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "description": "Client Token",
+            "nullable": true
+          },
+          "allowedCardBrands": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CreditCardTypes"
+            },
+            "description": "Allowed Card Brands",
+            "nullable": true
+          },
+          "allowedCurrencies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Allowed Currencies",
+            "nullable": true
+          },
+          "showCardHolderNameField": {
+            "type": "boolean",
+            "description": "Show Card Holder Name Field?"
+          },
+          "showCvvField": {
+            "type": "boolean",
+            "description": "Show Cvv Field?"
+          },
+          "showZipCodeField": {
+            "type": "boolean",
+            "description": "Show Zip Code Field?"
+          },
+          "serverYear": {
+            "type": "integer",
+            "description": "Server Year",
+            "format": "int32"
+          },
+          "serverMonth": {
+            "type": "integer",
+            "description": "Server Month",
+            "format": "int32"
+          },
+          "showBillingAddressField": {
+            "type": "boolean"
+          },
+          "customerPaymentMethods": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentMethodResponseDto"
+            },
+            "description": "Customer Payment Methods",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SaleTransactionStatusTypes": {
+        "enum": [
+          "New",
+          "Authorized",
+          "Captured",
+          "Voided",
+          "Processing"
+        ],
+        "type": "string"
+      },
+      "TransactionStatusResponseDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "paymentIdentifier": {
+            "type": "string",
+            "description": "Payment Identifier",
+            "nullable": true
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency Code",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment Amount",
+            "format": "double"
+          },
+          "paymentStatus": {
+            "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "OrderId",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          },
+          "statusHistory": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionStatusResponseDto"
+            },
+            "description": "Status History",
+            "nullable": true
+          },
+          "acquirer": {
+            "type": "string",
+            "description": "Acquirer",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizeCardRequest": {
+        "required": [
+          "cardExpiryMonth",
+          "cardExpiryYear",
+          "cardHolderName",
+          "cardNumber"
+        ],
+        "type": "object",
+        "properties": {
+          "cardNumber": {
+            "type": "string",
+            "description": "Card Number"
+          },
+          "cardExpiryMonth": {
+            "type": "integer",
+            "description": "Card Expiry Month",
+            "format": "int32"
+          },
+          "cardExpiryYear": {
+            "type": "integer",
+            "description": "Card Expiry Year",
+            "format": "int32"
+          },
+          "cardHolderName": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Card Holder Name"
+          },
+          "cardCvv": {
+            "type": "string",
+            "description": "Card Cvv",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BillingInformationRequest": {
+        "required": [
+          "countryAlpha3Code"
+        ],
+        "type": "object",
+        "properties": {
+          "firstLine": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Address First Line",
+            "nullable": true
+          },
+          "secondLine": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Address Second Line",
+            "nullable": true
+          },
+          "city": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Address City",
+            "nullable": true
+          },
+          "region": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Address Region",
+            "nullable": true
+          },
+          "zipCode": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "description": "Address Postal Code",
+            "nullable": true
+          },
+          "countryAlpha3Code": {
+            "type": "string",
+            "description": "Country Alpha3 Code"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PaymentTypes": {
+        "enum": [
+          "Unknown",
+          "Regular",
+          "Recurring",
+          "Installment",
+          "Unscheduled"
+        ],
+        "type": "string"
+      },
+      "PaymentModes": {
+        "enum": [
+          "Unknown",
+          "Initial",
+          "Repeated"
+        ],
+        "type": "string"
+      },
+      "PaymentSources": {
+        "enum": [
+          "Unknown",
+          "CIT",
+          "MIT"
+        ],
+        "type": "string"
+      },
+      "AuthorizeRequestPaymentFields": {
+        "type": "object",
+        "properties": {
+          "paymentType": {
+            "$ref": "#/components/schemas/PaymentTypes"
+          },
+          "paymentMode": {
+            "$ref": "#/components/schemas/PaymentModes"
+          },
+          "paymentSource": {
+            "$ref": "#/components/schemas/PaymentSources"
+          },
+          "previousTransactionId": {
+            "type": "string",
+            "description": "Previous Transaction Id",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizeRequestCustomerFields": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "string",
+            "description": "Customer Id",
+            "nullable": true
+          },
+          "customerPhoneCountryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerPhoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerMobileCountryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerMobileNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "customerIpAddress": {
+            "type": "string",
+            "nullable": true
+          },
+          "merchantName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizeRequestDeviceFields": {
+        "type": "object",
+        "properties": {
+          "browserDeviceId": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobileDeviceId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizePaymentRequest": {
+        "required": [
+          "autoCapture",
+          "paymentMethodType"
+        ],
+        "type": "object",
+        "properties": {
+          "paymentMethodIdentifier": {
+            "pattern": "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$",
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          },
+          "paymentMethodType": {
+            "$ref": "#/components/schemas/PaymentMethodType"
+          },
+          "card": {
+            "$ref": "#/components/schemas/AuthorizeCardRequest"
+          },
+          "billingInformation": {
+            "$ref": "#/components/schemas/BillingInformationRequest"
+          },
+          "payment": {
+            "$ref": "#/components/schemas/AuthorizeRequestPaymentFields"
+          },
+          "customer": {
+            "$ref": "#/components/schemas/AuthorizeRequestCustomerFields"
+          },
+          "device": {
+            "$ref": "#/components/schemas/AuthorizeRequestDeviceFields"
+          },
+          "autoCapture": {
+            "type": "boolean",
+            "description": "Auto-Capture?"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizePaymentResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment Amount",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency Code",
+            "nullable": true
+          },
+          "paymentStatus": {
+            "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          },
+          "paymentMethodType": {
+            "$ref": "#/components/schemas/PaymentMethodType"
+          },
+          "acquirer": {
+            "type": "string",
+            "description": "Acquirer",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "CustomerIdentifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "OrderId",
+            "nullable": true
+          },
+          "paymentIdentifier": {
+            "type": "string",
+            "description": "Payment Identifier",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          },
+          "returnUrl": {
+            "type": "string",
+            "description": "ReturnUrl",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CapturePaymentResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "paymentIdentifier": {
+            "type": "string",
+            "description": "Payment Identifier",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment Amount",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency Code",
+            "nullable": true
+          },
+          "paymentStatus": {
+            "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          },
+          "acquirer": {
+            "type": "string",
+            "description": "Acquirer",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "Order Id",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefundPaymentRequest": {
+        "type": "object",
+        "properties": {
+          "refundedAlreadyAtProcessor": {
+            "type": "boolean"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RefundPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment Amount",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency Code",
+            "nullable": true
+          },
+          "acquirer": {
+            "type": "string",
+            "description": "Acquirer",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "Order Id",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          },
+          "paymentIdentifier": {
+            "type": "string",
+            "description": "Payment Identifier",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VoidPaymentResponse": {
+        "type": "object",
+        "properties": {
+          "result": {
+            "$ref": "#/components/schemas/ResponseResult"
+          },
+          "merchantIdentifier": {
+            "type": "string",
+            "description": "Merchant Identifier",
+            "nullable": true
+          },
+          "amount": {
+            "type": "number",
+            "description": "Payment Amount",
+            "format": "double"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency Code",
+            "nullable": true
+          },
+          "paymentStatus": {
+            "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          },
+          "acquirer": {
+            "type": "string",
+            "description": "Acquirer",
+            "nullable": true
+          },
+          "customerIdentifier": {
+            "type": "string",
+            "description": "Customer Identifier",
+            "nullable": true
+          },
+          "customerReference": {
+            "type": "string",
+            "description": "Customer Reference",
+            "nullable": true
+          },
+          "merchantOrderId": {
+            "type": "string",
+            "description": "OrderId",
+            "nullable": true
+          },
+          "paymentMethodIdentifier": {
+            "type": "string",
+            "description": "Payment Method Identifier",
+            "nullable": true
+          },
+          "paymentIdentifier": {
+            "type": "string",
+            "description": "Payment Identifier",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Basic": {
+        "type": "http",
+        "description": "In **Basic HTTP authentication**, a request contains a header field in the form of `Authorization: Basic 'credentials'`, where `'credentials'` is the **Base64** encoding of `'ID'` and `'secret'` joined by a single colon `':'`.\r\n\r\nFor example, to authorize as `demo / p@55w0rd` the client would send:\r\n\r\n```bash\r\nAuthorization: Basic ZGVtbzpwQDU1dzByZA==\r\n```",
+        "scheme": "Basic"
+      },
+      "Client Token": {
+        "type": "http",
+        "description": "A `client token` is a one time use password. Your server is responsible for generating the **client token** using `Basic` authentication. When your server provides a `client token` to your client, it is used to authenticate the request.\r\n\r\nFor example, to authorize the `'2dd972cc-05e6-4a9b-8885-d51e8e1083c6'` (server side generated **client token**) the client would send:\r\n\r\n```bash\r\nAuthorization: X-Api-Key 2dd972cc-05e6-4a9b-8885-d51e8e1083c6\r\n```",
+        "scheme": "X-Api-Key"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Payments",
+      "description": "Payment operations"
+    }
+  ]
+}

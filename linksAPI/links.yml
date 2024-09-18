@@ -1,0 +1,1433 @@
+openapi: 3.0.1
+info:
+  title: LINKs API
+  description: ""
+  termsOfService: https://linksmerchantservices.com/
+  contact:
+    name: LINKS Merchant Services, Inc
+    url: https://linksmerchantservices.com
+    email: discover@linksmerchantservices.com
+  license:
+    name: EULA
+    url: https://en.wikipedia.org/wiki/End-user_license_agreement
+  version: v1
+  x-logo:
+    url: "/images/logo.png"
+    altText: LINKs Logo
+tags:
+- name: Payments
+  description: Payment operations
+servers:
+- url: https://example.com
+paths:
+  /api/auth/getdropinuijwttoken:
+    get:
+      tags:
+      - Auth
+      summary: Retrieve a JWT Token for Lite API Authorization
+      operationId: get-dropin-ui-jwt-token
+      description: This endpoint returns a JWT token (GUID) which is used to authorize requests in the Lite version of the API.
+      responses:
+        '200':
+          description: A successful response containing the JWT token to be used for authentication in the Lite API.
+  /api/paymentmethod:
+    post:
+      tags:
+      - PaymentMethod
+      summary: Create a New Payment Method
+      operationId: create-payment-method
+      description: This endpoint allows the creation of a new payment method for a customer or merchant. The request should include details such as the merchant identifier, optional customer identifier, and payment method information like credit card details and billing information. This API helps link a payment method to a merchant account, and optionally, to a customer.
+      security:
+      - Basic: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePaymentMethodRequest"
+      responses:
+        '201':
+          description: A successful response with the created payment method details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetPaymentMethodResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+  /api/paymentmethod/{identifier}:
+    get:
+      tags:
+      - PaymentMethod
+      summary: Retrieve a Payment Method
+      operationId: get-payment-method
+      description: This endpoint retrieves the details of a payment method using its unique identifier. The response includes information such as the merchant, customer, and billing details associated with the payment method.
+      security:
+      - Basic: []
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment method to retrieve.
+          nullable: true
+      responses:
+        '200':
+          description: A successful response containing the payment method details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetPaymentMethodResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+        '404':
+          description: The requested payment method was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/paymentmethod/delete/{identifier}:
+    post:
+      tags:
+      - PaymentMethod
+      summary: Delete a Payment Method
+      operationId: delete-payment-method
+      description: This endpoint deletes a payment method identified by its unique identifier. Upon successful deletion, a confirmation response is returned.
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment method to delete.
+          nullable: true
+      responses:
+        '200':
+          description: A successful response confirming the deletion of the payment method.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PaymentMethodResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: The specified payment method was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/paymentmethod/update:
+    post:
+      tags:
+      - PaymentMethod
+      summary: Update a Payment Method
+      operationId: update-payment-method
+      description: This endpoint allows updating an existing payment method by providing the necessary details such as payment method type, card information, and billing details. The `merchantIdentifier` and `paymentMethodIdentifier` are required to locate the payment method to update.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/UpdatePaymentMethodRequest"
+      responses:
+        '200':
+          description: A successful response containing the updated payment method details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetPaymentMethodResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: The specified payment method was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/paymentmethod/customer/identifier/{customerIdentifier}:
+    get:
+      tags:
+      - PaymentMethod
+      summary: Retrieve Customer Payment Methods by ID
+      operationId: get-customer-payment-methods-by-id
+      description: This endpoint retrieves all payment methods associated with a specific customer, identified by the `customerIdentifier`. It returns details for each payment method linked to the customer.
+      parameters:
+      - name: customerIdentifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the customer whose payment methods are being retrieved.
+          nullable: true
+      responses:
+        '200':
+          description: A successful response containing the list of payment methods associated with the customer.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetPaymentMethodsResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: No payment methods were found for the specified customer identifier.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/paymentmethod/customer/reference/{customerReference}:
+    get:
+      tags:
+      - PaymentMethod
+      summary: Retrieve Customer Payment Methods by Reference
+      operationId: get-customer-payment-methods-by-reference
+      description: This endpoint retrieves all payment methods associated with a specific customer, identified by the `customerReference`. It returns details for each payment method linked to the customer reference.
+      parameters:
+      - name: customerReference
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique reference provided by the merchant to identify the customer whose payment methods are being retrieved.
+          nullable: true
+      responses:
+        '200':
+          description: A successful response containing the list of payment methods associated with the customer reference.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetPaymentMethodsResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: No payment methods were found for the specified customer reference.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/paymentmethod/test:
+    post:
+      tags:
+      - PaymentMethod
+      summary: Update Card Type and Last 4 Digits (Test Method)
+      operationId: update-cardtype-last4digits-test
+      description: This endpoint updates the `CardType` and `Last4Digits` columns for existing records. It is intended to be run in both test and production environments. Once it is executed successfully in these environments, this method can be commented out or disabled.
+      responses:
+        '200':
+          description: A successful response indicating the records were updated.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/TestResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '404':
+          description: The specified records were not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/payments:
+    post:
+      tags:
+      - Payments
+      summary: Create a New Payment
+      operationId: create-payment
+      description: This endpoint allows for the creation of a new payment by providing the necessary details such as the amount, currency, and merchant information.
+      security:
+      - Basic: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreatePaymentRequest"
+      responses:
+        '201':
+          description: A successful response containing the created payment details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CreatePaymentResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+  /api/payments/{identifier}:
+    get:
+      tags:
+      - Payments
+      summary: Retrieve Payment
+      operationId: get-payment
+      description: This endpoint retrieves the details of a payment using its unique identifier. The response includes the payment status, amount, and other related details.
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment to retrieve.
+          nullable: true
+      security:
+      - Basic: []
+      responses:
+        '200':
+          description: A successful response containing the payment details.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/GetPaymentResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+        '404':
+          description: The specified payment was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/payments/{identifier}/authorize:
+    post:
+      tags:
+      - Payments
+      summary: Authorize a Payment
+      operationId: authorize-payment
+      description: This endpoint authorizes a payment by providing the necessary payment method details, customer information, and whether the payment should be auto-captured.
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment to be authorized.
+          nullable: true
+      security:
+      - Client Token: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/AuthorizePaymentRequest"
+      responses:
+        '200':
+          description: A successful response containing the authorization details of the payment.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/AuthorizePaymentResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+        '404':
+          description: The specified payment was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/payments/{identifier}/capture:
+    post:
+      tags:
+      - Payments
+      summary: Capture a Payment
+      operationId: capture-payment
+      description: This endpoint captures a payment that was previously authorized. It finalizes the transaction by moving funds from the customer to the merchant.
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment to be captured.
+          nullable: true
+      security:
+      - Basic: []
+      responses:
+        '200':
+          description: A successful response indicating that the payment has been captured.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CapturePaymentResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+        '404':
+          description: The specified payment was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/payments/{identifier}/refund:
+    post:
+      tags:
+      - Payments
+      summary: Refund a Payment
+      operationId: refund-payment
+      description: This endpoint refunds a previously captured payment by providing the necessary refund details, including the amount to be refunded.
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment to be refunded.
+          nullable: true
+      security:
+      - Basic: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/RefundPaymentRequest"
+      responses:
+        '200':
+          description: A successful response indicating the payment was refunded.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/RefundPaymentResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+        '404':
+          description: The specified payment was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+  /api/payments/{identifier}/void:
+    post:
+      tags:
+      - Payments
+      summary: Void a Payment
+      operationId: void-payment
+      description: This endpoint voids a previously authorized payment before it has been captured. Voiding a payment cancels the transaction and prevents it from being processed.
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique identifier of the payment to be voided.
+          nullable: true
+      security:
+      - Basic: []
+      responses:
+        '200':
+          description: A successful response indicating the payment has been voided.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/VoidPaymentResponse"
+        '400':
+          description: The request is invalid or contains incorrect parameters.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+        '401':
+          description: Unauthorized request. Authentication is required.
+        '403':
+          description: Access is forbidden due to insufficient permissions.
+        '404':
+          description: The specified payment was not found.
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Response"
+components:
+  securitySchemes:
+    Basic:
+      type: http
+      description: "In **Basic HTTP authentication**, a request contains a header
+        field in the form of `Authorization: Basic 'credentials'`, where `'credentials'`
+        is the **Base64** encoding of `'ID'` and `'secret'` joined by a single colon
+        `':'`.\r\n\r\nFor example, to authorize as `demo / p@55w0rd` the client would
+        send:\r\n\r\n```bash\r\nAuthorization: Basic ZGVtbzpwQDU1dzByZA==\r\n```"
+      scheme: Basic
+    Client Token:
+      type: http
+      description: "A `client token` is a one time use password. Your server is responsible
+        for generating the **client token** using `Basic` authentication. When your
+        server provides a `client token` to your client, it is used to authenticate
+        the request.\r\n\r\nFor example, to authorize the `'2dd972cc-05e6-4a9b-8885-d51e8e1083c6'`
+        (server side generated **client token**) the client would send:\r\n\r\n```bash\r\nAuthorization:
+        X-Api-Key 2dd972cc-05e6-4a9b-8885-d51e8e1083c6\r\n```"
+      scheme: X-Api-Key
+  schemas:
+    CreatePaymentMethodRequest:
+      required:
+      - merchantIdentifier
+      type: object
+      properties:
+        merchantIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: A unique identifier for the merchant, used to associate the payment method with the correct merchant account.
+        customerIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: A unique identifier for the customer. This is optional and can be used to associate the payment method with a specific customer.
+          nullable: true
+        customerReference:
+          pattern: "^.{0,100}$"
+          type: string
+          description: An optional reference provided by the merchant to identify the customer.
+          nullable: true
+        card:
+          "$ref": "#/components/schemas/CreditCardInfo"
+          description: Details about the credit card used for the payment method.
+        billingInformation:
+          "$ref": "#/components/schemas/BillingInfo"
+          description: Billing address and contact details associated with the payment method.
+      additionalProperties: false
+    CreditCardInfo:
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: The credit card number. This field is optional and should be stored securely.
+          nullable: true
+        expiryMonth:
+          type: integer
+          format: int32
+          description: The expiry month of the credit card.
+        expiryYear:
+          type: integer
+          format: int32
+          description: The expiry year of the credit card.
+        cardHolderName:
+          type: string
+          description: The name of the cardholder as it appears on the credit card.
+          nullable: true
+        cvv:
+          type: string
+          description: The card verification value (CVV) for the credit card. This field is optional.
+          nullable: true
+        creditCardBrand:
+          "$ref": "#/components/schemas/CreditCardTypes"
+          description: The brand of the credit card, such as Visa or MasterCard.
+      additionalProperties: false
+    CreditCardTypes:
+      enum:
+      - Unknown
+      - MasterCard
+      - Visa
+      - Amex
+      - Discover
+      - JCB
+      type: string
+      description: The list of supported credit card brands.
+    BillingInfo:
+      type: object
+      properties:
+        firstLine:
+          type: string
+          description: The first line of the billing address. This field is read-only and optional.
+          nullable: true
+          readOnly: true
+        secondLine:
+          type: string
+          description: The second line of the billing address. This field is read-only and optional.
+          nullable: true
+          readOnly: true
+        city:
+          type: string
+          description: The city for the billing address. This field is read-only and optional.
+          nullable: true
+          readOnly: true
+        region:
+          type: string
+          description: The region or state for the billing address. This field is read-only and optional.
+          nullable: true
+          readOnly: true
+        zipCode:
+          type: string
+          description: The postal or zip code for the billing address. This field is read-only and optional.
+          nullable: true
+          readOnly: true
+        countryAlpha3Code:
+          type: string
+          description: The three-letter country code (ISO Alpha-3) for the billing address. This field is read-only and optional.
+          nullable: true
+          readOnly: true
+        countryId:
+          type: integer
+          format: int64
+          description: The unique identifier for the country. This field is read-only and optional.
+          readOnly: true
+      additionalProperties: false
+    GetPaymentMethodResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the payment method retrieval request, including the status and any relevant messages.
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant associated with this payment method.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer, if available.
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer associated with the payment method.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method.
+          nullable: true
+        card:
+          "$ref": "#/components/schemas/CreditCardInfo"
+          description: The details of the credit card associated with this payment method.
+        billingInformation:
+          "$ref": "#/components/schemas/BillingInfo"
+          description: The billing information associated with the payment method, including address details.
+      additionalProperties: false
+    ResponseResult:
+      type: object
+      properties:
+        resultType:
+          "$ref": "#/components/schemas/ResponseResultType"
+          description: The type of result indicating the status of the request.
+        merchantMessage:
+          type: string
+          description: A message intended for the merchant, providing additional details about the result of the request.
+          nullable: true
+        logIdentifier:
+          type: string
+          description: A unique identifier for the server log entry related to this request, useful for troubleshooting.
+          nullable: true
+        logAsError:
+          type: boolean
+          description: Indicates whether this log entry should be treated as an error.
+          readOnly: true
+      additionalProperties: false
+    ResponseResultType:
+      enum:
+      - Accepted
+      - Declined
+      - NotFound
+      - ValidationFailed
+      - Forbidden
+      - Error
+      type: string
+      description: |
+        The possible outcomes of the payment method retrieval request. Possible values are:
+        - **Accepted**: The request was successfully processed and accepted.
+        - **Declined**: The request was processed, but the payment method was declined.
+        - **NotFound**: The requested resource or payment method was not found.
+        - **ValidationFailed**: The request failed due to validation errors.
+        - **Forbidden**: The request was forbidden due to insufficient permissions.
+        - **Error**: An unexpected error occurred during the processing of the request.
+    Response:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result object that contains the outcome and additional details of the API request.
+      additionalProperties: false
+    PaymentMethodResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the request, including status and any relevant messages.
+        merchantIdentifier:
+          type: string
+          description: A unique identifier for the merchant associated with this payment method.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: A unique identifier for the customer associated with this payment method, if applicable.
+          nullable: true
+        customerReference:
+          type: string
+          description: An optional reference provided by the merchant to identify the customer.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: A unique identifier for the payment method.
+          nullable: true
+      additionalProperties: false
+    UpdatePaymentMethodRequest:
+      required:
+      - merchantIdentifier
+      - paymentMethodIdentifier
+      type: object
+      properties:
+        paymentMethodType:
+          type: string
+          description: The type of payment method, such as credit card or other forms of payment.
+          nullable: true
+        card:
+          "$ref": "#/components/schemas/CreditCardInfo"
+          description: The credit card details associated with the payment method, if applicable.
+        billingInformation:
+          "$ref": "#/components/schemas/BillingInfo"
+          description: Billing address and contact information for the payment method.
+        merchantIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: A unique identifier for the merchant associated with the payment method.
+        paymentMethodIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: A unique identifier for the payment method to be updated.
+      additionalProperties: false
+    GetPaymentMethodsResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the request, including status and any relevant messages.
+        merchantIdentifier:
+          type: string
+          description: A unique identifier for the merchant associated with the payment methods.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: A unique identifier for the customer whose payment methods are being retrieved.
+          nullable: true
+        customerReference:
+          type: string
+          description: An optional reference provided by the merchant to identify the customer.
+          nullable: true
+        paymentMethods:
+          type: array
+          items:
+            "$ref": "#/components/schemas/CardData"
+          description: A list of payment methods associated with the customer.
+          nullable: true
+      additionalProperties: false
+    CardData:
+      type: object
+      properties:
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method.
+          nullable: true
+        card:
+          "$ref": "#/components/schemas/CreditCardInfo"
+          description: Credit card information associated with the payment method.
+        billingInformation:
+          "$ref": "#/components/schemas/BillingInformationData"
+          description: Billing address and contact details for the payment method.
+      additionalProperties: false
+    BillingInformationData:
+      type: object
+      properties:
+        firstLine:
+          type: string
+          description: The first line of the billing address.
+          nullable: true
+        secondLine:
+          type: string
+          description: The second line of the billing address.
+          nullable: true
+        city:
+          type: string
+          description: The city of the billing address.
+          nullable: true
+        region:
+          type: string
+          description: The region or state of the billing address.
+          nullable: true
+        zipCode:
+          type: string
+          description: The postal or zip code for the billing address.
+          nullable: true
+        countryAlpha3Code:
+          type: string
+          description: The three-letter country code (ISO Alpha-3) for the billing address.
+          nullable: true
+      additionalProperties: false
+    TestResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the test, including status and any relevant messages.
+        test:
+          type: string
+          description: A string containing test-specific data or output.
+          nullable: true
+      additionalProperties: false
+    CreatePaymentRequest:
+      required:
+      - amount
+      - currencyCode
+      - merchantIdentifier
+      - merchantOrderId
+      type: object
+      properties:
+        merchantIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: The unique identifier for the merchant creating the payment.
+        currencyCode:
+          pattern: "^[A-Z]{3}$"
+          type: string
+          description: The three-letter currency code (ISO 4217) representing the transaction currency.
+        amount:
+          minimum: 0.01
+          type: number
+          format: double
+          description: The amount of the payment to be processed.
+        customerIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: A unique identifier for the customer making the payment (optional).
+          nullable: true
+        customerReference:
+          pattern: "^.{0,100}$"
+          type: string
+          description: A reference provided by the merchant to identify the customer (optional).
+          nullable: true
+        merchantOrderId:
+          pattern: "^.{0,100}$"
+          type: string
+          description: A unique identifier for the merchant's order.
+    CreatePaymentResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the payment creation request.
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the created payment.
+          nullable: true
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant who created the payment.
+          nullable: true
+        currencyCode:
+          type: string
+          description: The three-letter currency code (ISO 4217) for the payment.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer associated with the payment (optional).
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer.
+          nullable: true
+        merchantOrderId:
+          type: string
+          description: The unique identifier for the merchant's order.
+          nullable: true
+        token:
+          type: string
+          description: A client token for payment authorization.
+          nullable: true
+        allowedCardBrands:
+          type: array
+          items:
+            "$ref": "#/components/schemas/CreditCardTypes"
+          description: A list of allowed credit card brands for the payment.
+          nullable: true
+        allowedCurrencies:
+          type: array
+          items:
+            type: string
+          description: A list of allowed currencies for the payment.
+          nullable: true
+        showCardHolderNameField:
+          type: boolean
+          description: Indicates whether to display the cardholder name field.
+        showCvvField:
+          type: boolean
+          description: Indicates whether to display the CVV field.
+        showZipCodeField:
+          type: boolean
+          description: Indicates whether to display the ZIP code field.
+        serverYear:
+          type: integer
+          format: int32
+          description: The current server year.
+        serverMonth:
+          type: integer
+          format: int32
+          description: The current server month.
+        showBillingAddressField:
+          type: boolean
+          description: Indicates whether to display the billing address field.
+        customerPaymentMethods:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PaymentMethodResponseDto"
+          description: A list of the customer's saved payment methods.
+          nullable: true
+    PaymentMethodResponseDto:
+      type: object
+      properties:
+        type:
+          "$ref": "#/components/schemas/PaymentMethodType"
+          description: The type of payment method (e.g., credit card, bank account).
+        identifier:
+          type: string
+          description: A unique identifier for the payment method.
+          nullable: true
+        creditCardLast4Digits:
+          type: string
+          description: The last four digits of the associated credit card (if applicable).
+          nullable: true
+        creditCardBrand:
+          "$ref": "#/components/schemas/CreditCardTypes"
+          description: The brand of the associated credit card (if applicable).
+    PaymentMethodType:
+      enum:
+      - Unknown
+      - CreditCard
+      - BankAccount
+      type: string
+      description: The type of payment method.
+    GetPaymentResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the request, including status and any relevant messages.
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the payment.
+          nullable: true
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant associated with the payment.
+          nullable: true
+        currencyCode:
+          type: string
+          description: The three-letter currency code (ISO 4217) for the payment.
+          nullable: true
+        amount:
+          type: number
+          description: The amount of the payment.
+          format: double
+        paymentStatus:
+          "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          description: The current status of the payment transaction.
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer associated with the payment.
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer.
+          nullable: true
+        merchantOrderId:
+          type: string
+          description: The unique identifier for the merchant's order.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method used.
+          nullable: true
+        statusHistory:
+          type: array
+          items:
+            "$ref": "#/components/schemas/TransactionStatusResponseDto"
+          description: The history of statuses for the payment transaction.
+          nullable: true
+        acquirer:
+          type: string
+          description: The name of the acquirer processing the payment.
+          nullable: true
+      additionalProperties: false
+    SaleTransactionStatusTypes:
+      enum:
+      - New
+      - Authorized
+      - Captured
+      - Voided
+      - Processing
+      type: string
+      description: |
+        The status of a sale transaction. Possible values are:
+        - **New**: The transaction has been created but not yet processed.
+        - **Authorized**: The payment has been authorized but not yet captured.
+        - **Captured**: The payment has been successfully captured.
+        - **Voided**: The transaction was voided before completion.
+        - **Processing**: The transaction is currently being processed.
+    TransactionStatusResponseDto:
+      type: object
+      properties:
+        status:
+          "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          description: The status of the transaction at a specific point in time.
+        date:
+          type: string
+          description: The date when the transaction reached this status.
+          nullable: true
+      additionalProperties: false
+    AuthorizePaymentRequest:
+      required:
+      - autoCapture
+      - paymentMethodType
+      type: object
+      properties:
+        paymentMethodIdentifier:
+          pattern: "^(\\{{0,1}([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}\\}{0,1})$"
+          type: string
+          description: The unique identifier for the payment method.
+          nullable: true
+        paymentMethodType:
+          "$ref": "#/components/schemas/PaymentMethodType"
+          description: The type of payment method being used for authorization.
+        card:
+          "$ref": "#/components/schemas/AuthorizeCardRequest"
+          description: The card details for authorization, if applicable.
+        billingInformation:
+          "$ref": "#/components/schemas/BillingInformationRequest"
+          description: Billing information associated with the payment method.
+        payment:
+          "$ref": "#/components/schemas/AuthorizeRequestPaymentFields"
+          description: Payment-specific details, such as amount and currency.
+        customer:
+          "$ref": "#/components/schemas/AuthorizeRequestCustomerFields"
+          description: Customer details, such as customer identifier and reference.
+        device:
+          "$ref": "#/components/schemas/AuthorizeRequestDeviceFields"
+          description: Device-related information for authorization, if applicable.
+        autoCapture:
+          type: boolean
+          description: Indicates whether the payment should be auto-captured.
+    AuthorizePaymentResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the authorization request.
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant associated with the payment.
+          nullable: true
+        amount:
+          type: number
+          format: double
+          description: The authorized payment amount.
+        currencyCode:
+          type: string
+          description: The three-letter currency code (ISO 4217) for the payment.
+          nullable: true
+        paymentStatus:
+          "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          description: The current status of the payment after authorization.
+        paymentMethodType:
+          "$ref": "#/components/schemas/PaymentMethodType"
+          description: The type of payment method used for authorization.
+        acquirer:
+          type: string
+          description: The name of the acquirer processing the payment.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer associated with the payment.
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer.
+          nullable: true
+        merchantOrderId:
+          type: string
+          description: The unique identifier for the merchant's order.
+          nullable: true
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the authorized payment.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method used.
+          nullable: true
+        returnUrl:
+          type: string
+          description: The URL to which the customer is redirected after authorization.
+          nullable: true
+      additionalProperties: false
+    AuthorizeCardRequest:
+      required:
+      - cardExpiryMonth
+      - cardExpiryYear
+      - cardHolderName
+      - cardNumber
+      type: object
+      properties:
+        cardNumber:
+          type: string
+          description: The credit card number used for the authorization.
+        cardExpiryMonth:
+          type: integer
+          format: int32
+          description: The month when the card expires.
+        cardExpiryYear:
+          type: integer
+          format: int32
+          description: The year when the card expires.
+        cardHolderName:
+          maxLength: 50
+          minLength: 0
+          type: string
+          description: The name of the cardholder as it appears on the card.
+        cardCvv:
+          type: string
+          description: The CVV number for the card (optional).
+          nullable: true
+      additionalProperties: false
+    BillingInformationRequest:
+      required:
+      - countryAlpha3Code
+      type: object
+      properties:
+        firstLine:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: The first line of the billing address (optional).
+          nullable: true
+        secondLine:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: The second line of the billing address (optional).
+          nullable: true
+        city:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: The city of the billing address (optional).
+          nullable: true
+        region:
+          maxLength: 100
+          minLength: 0
+          type: string
+          description: The region or state of the billing address (optional).
+          nullable: true
+        zipCode:
+          maxLength: 20
+          minLength: 0
+          type: string
+          description: The postal or ZIP code of the billing address (optional).
+          nullable: true
+        countryAlpha3Code:
+          type: string
+          description: The three-letter country code (ISO Alpha-3) for the billing address.
+      additionalProperties: false
+    AuthorizeRequestPaymentFields:
+      type: object
+      properties:
+        paymentType:
+          "$ref": "#/components/schemas/PaymentTypes"
+          description: The type of payment being authorized.
+        paymentMode:
+          "$ref": "#/components/schemas/PaymentModes"
+          description: The mode of the payment (initial or repeated).
+        paymentSource:
+          "$ref": "#/components/schemas/PaymentSources"
+          description: The source of the payment (CIT or MIT).
+        previousTransactionId:
+          type: string
+          description: The ID of the previous transaction, if applicable.
+          nullable: true
+      additionalProperties: false
+    AuthorizeRequestCustomerFields:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The unique identifier for the customer (optional).
+          nullable: true
+        customerPhoneCountryCode:
+          type: string
+          description: The country code of the customer's phone number (optional).
+          nullable: true
+        customerPhoneNumber:
+          type: string
+          description: The phone number of the customer (optional).
+          nullable: true
+        customerMobileCountryCode:
+          type: string
+          description: The country code of the customer's mobile number (optional).
+          nullable: true
+        customerMobileNumber:
+          type: string
+          description: The mobile number of the customer (optional).
+          nullable: true
+        customerEmail:
+          type: string
+          description: The email address of the customer (optional).
+          nullable: true
+        customerIpAddress:
+          type: string
+          description: The IP address of the customer (optional).
+          nullable: true
+        merchantName:
+          type: string
+          description: The name of the merchant making the request (optional).
+          nullable: true
+      additionalProperties: false
+    AuthorizeRequestDeviceFields:
+      type: object
+      properties:
+        browserDeviceId:
+          type: string
+          description: The ID of the browser device used in the transaction (optional).
+          nullable: true
+        mobileDeviceId:
+          type: string
+          description: The ID of the mobile device used in the transaction (optional).
+          nullable: true
+      additionalProperties: false
+    PaymentModes:
+      enum:
+      - Unknown
+      - Initial
+      - Repeated
+      type: string
+      description: |
+        The mode of the payment transaction. Possible values are:
+        - **Unknown**: The payment mode is not specified or is unknown.
+        - **Initial**: The first transaction in a series.
+        - **Repeated**: A subsequent transaction following an initial one.
+    PaymentSources:
+      enum:
+      - Unknown
+      - CIT
+      - MIT
+      type: string
+      description: |
+        The source of the payment. Possible values are:
+        - **Unknown**: The payment source is not specified or is unknown.
+        - **CIT**: Customer Initiated Transaction, where the customer directly initiates the payment.
+        - **MIT**: Merchant Initiated Transaction, where the payment is initiated by the merchant without direct action from the customer.
+    PaymentTypes:
+      enum:
+      - Unknown
+      - Regular
+      - Recurring
+      - Installment
+      - Unscheduled
+      type: string
+      description: |
+        The type of payment being processed. Possible values are:
+        - **Unknown**: The payment type is not specified or is unknown.
+        - **Regular**: A one-time, standard payment.
+        - **Recurring**: A payment that occurs on a scheduled, recurring basis (e.g., subscriptions).
+        - **Installment**: A payment made in parts over time.
+        - **Unscheduled**: A payment made without a predetermined schedule, often initiated by the merchant.
+    CapturePaymentResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the capture request, including status and any relevant messages.
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant associated with the payment.
+          nullable: true
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the captured payment.
+          nullable: true
+        amount:
+          type: number
+          format: double
+          description: The amount that was captured.
+        currencyCode:
+          type: string
+          description: The three-letter currency code (ISO 4217) for the payment.
+          nullable: true
+        paymentStatus:
+          "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          description: The current status of the payment after capture.
+        acquirer:
+          type: string
+          description: The name of the acquirer processing the payment.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer associated with the payment.
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer.
+          nullable: true
+        merchantOrderId:
+          type: string
+          description: The unique identifier for the merchant's order.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method used.
+          nullable: true
+      additionalProperties: false
+    RefundPaymentRequest:
+      type: object
+      properties:
+        refundedAlreadyAtProcessor:
+          type: boolean
+          description: Indicates if the refund has already been processed by the payment processor.
+        amount:
+          type: number
+          format: double
+          description: The amount to be refunded.
+      additionalProperties: false
+    RefundPaymentResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the refund request, including status and any relevant messages.
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant associated with the payment.
+          nullable: true
+        amount:
+          type: number
+          format: double
+          description: The refunded amount.
+        currencyCode:
+          type: string
+          description: The three-letter currency code (ISO 4217) for the refund.
+          nullable: true
+        acquirer:
+          type: string
+          description: The name of the acquirer processing the refund.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer associated with the refund.
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer.
+          nullable: true
+        merchantOrderId:
+          type: string
+          description: The unique identifier for the merchant's order.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method used for the refund.
+          nullable: true
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the refunded payment.
+          nullable: true
+      additionalProperties: false
+    VoidPaymentResponse:
+      type: object
+      properties:
+        result:
+          "$ref": "#/components/schemas/ResponseResult"
+          description: The result of the void request, including status and any relevant messages.
+        merchantIdentifier:
+          type: string
+          description: The unique identifier for the merchant associated with the payment.
+          nullable: true
+        amount:
+          type: number
+          format: double
+          description: The amount of the payment being voided.
+        currencyCode:
+          type: string
+          description: The three-letter currency code (ISO 4217) for the voided payment.
+          nullable: true
+        paymentStatus:
+          "$ref": "#/components/schemas/SaleTransactionStatusTypes"
+          description: The current status of the payment after the void operation.
+        acquirer:
+          type: string
+          description: The name of the acquirer processing the void.
+          nullable: true
+        customerIdentifier:
+          type: string
+          description: The unique identifier for the customer associated with the payment.
+          nullable: true
+        customerReference:
+          type: string
+          description: A reference provided by the merchant to identify the customer.
+          nullable: true
+        merchantOrderId:
+          type: string
+          description: The unique identifier for the merchant's order.
+          nullable: true
+        paymentMethodIdentifier:
+          type: string
+          description: The unique identifier for the payment method used.
+          nullable: true
+        paymentIdentifier:
+          type: string
+          description: The unique identifier for the voided payment.
+          nullable: true
+      additionalProperties: false
