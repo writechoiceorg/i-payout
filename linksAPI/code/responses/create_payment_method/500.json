@@ -1,0 +1,26 @@
+[
+    {
+        "result": {
+            "resultType": "Error",
+            "merchantMessage": "Internal error.",
+            "logIdentifier": "c73e912b-b1ed-454b-b603-740ab8c319a0",
+            "logAsError": false
+        }
+    },
+    {
+        "result": {
+            "resultType": "Error",
+            "merchantMessage": "Internal error.",
+            "logIdentifier": "76f6be7d-1d9f-481a-b4ec-14ed9004037b",
+            "logAsError": false
+        }
+    },
+    {
+        "result": {
+            "resultType": "Error",
+            "merchantMessage": "Internal error.",
+            "logIdentifier": "c0dd44ce-b5f4-49da-9b1a-729f2717798d",
+            "logAsError": false
+        }
+    }
+]

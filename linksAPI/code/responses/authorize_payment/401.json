@@ -1,0 +1,18 @@
+[
+    {
+        "result": {
+            "resultType": "Forbidden",
+            "merchantMessage": "Bad request. API Key is missing.",
+            "logIdentifier": "50683330-7803-48cd-888c-b86989aebb51",
+            "logAsError": false
+        }
+    },
+    {
+        "result": {
+            "resultType": "Forbidden",
+            "merchantMessage": "Bad request. API Key is missing.",
+            "logIdentifier": "d6bd4a55-cdb8-4e08-bc47-c8144e181ca3",
+            "logAsError": false
+        }
+    }
+]

@@ -1,0 +1,18 @@
+[
+    {
+        "result": {
+            "resultType": "Declined",
+            "merchantMessage": "Bad request. Can not capture a 'Transaction' with 'New' status.",
+            "logIdentifier": "39b85828-bea6-4f16-8af1-a72acc376ff6",
+            "logAsError": false
+        }
+    },
+    {
+        "result": {
+            "resultType": "Declined",
+            "merchantMessage": "Bad request. Can not capture a 'Transaction' with 'New' status.",
+            "logIdentifier": "f6ba3990-d151-43d7-9896-dfb3986791eb",
+            "logAsError": false
+        }
+    }
+]
