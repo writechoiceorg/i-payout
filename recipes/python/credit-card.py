@@ -55,7 +55,7 @@ body = {
     "expiryYear": "2026",
     "beneficiaryAddress1": "123 Elm St",
     "beneficiaryCity": "Los Angeles",
-    "beneficiaryState": "California",
+    "beneficiaryState": "CA",
     "beneficiaryZipCode": "90001",
     "beneficiaryCountry": "US",
     "beneficiaryPhoneNumber": "+1 555-1234",
@@ -69,7 +69,16 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-# print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())
+
+# THE CALL ABOVE RETURNS THE FOLLOWING ERROR:
+# {
+#     "data": None,
+#     "isSuccess": False,
+#     "message": "Value cannot be null. (Parameter 'input')",
+#     "statusCode": -1,
+#     "logIdentifier": "edf9231fb7a941d8974ce9ce6f9d2aa1",
+# }
 
 transfer_url = f"{base_url}/transfer/create"
 body = {
@@ -90,4 +99,4 @@ headers = {
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
 
-print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())

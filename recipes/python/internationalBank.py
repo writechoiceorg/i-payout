@@ -54,7 +54,7 @@ body = {
     "accountType1": "personal",  # can be either 'personal' or 'business'
     "accountType2": "checking",  # can be either 'checking' or 'savings'
     "bankName": "HSBC",
-    "bankCode": "HSBC123",  # UK bank code if applicable, or null
+    "bankCode": "HSBC123",
     "bankCountry": "GB",
     "swiftCode": "HBUKGB4B",
     "routingNumber": "40-30-20",
@@ -116,4 +116,6 @@ headers = {
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
 
-print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())
+
+# ERROR RETURNS A 404 WITHOUT DATA

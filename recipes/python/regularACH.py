@@ -61,7 +61,7 @@ body = {
     "beneficiaryLastName": "Doe",
     "beneficiaryCountry": "US",
     "beneficiaryAddress1": "1234 Elm St",
-    "beneficiaryState": "California",
+    "beneficiaryState": "CA",
     "beneficiaryCity": "Los Angeles",
     "beneficiaryZipCode": "90001",
 }
@@ -73,7 +73,9 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-# print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())
+
+# ERROR RETURNS A 404 WITHOUT DATA
 
 transfer_url = f"{base_url}/transfer/create"
 body = {
@@ -97,7 +99,7 @@ body = {
         "branchAddress": "1234 Bank Street, Suite 567",
         "beneficiaryCountry": "US",
         "beneficiaryAddress1": "1234 Elm St",
-        "beneficiaryState": "California",
+        "beneficiaryState": "CA",
         "beneficiaryCity": "Los Angeles",
         "beneficiaryZipCode": "90001",
     },
@@ -110,4 +112,6 @@ headers = {
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
 
-print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())
+
+# ERROR RETURNS A 404 WITHOUT DATA

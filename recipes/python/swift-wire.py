@@ -49,9 +49,10 @@ body = {
     "accountNickName": "John US Wire Account",
     "beneficiaryCountry": "US",
     "accountType1": "personal",
+    "routingNumber": "12345",
     "beneficiaryAddress1": "123 Elm St",
     "beneficiaryCity": "Los Angeles",
-    "beneficiaryState": "California",
+    "beneficiaryState": "CA",
     "beneficiaryZipCode": "90001",
     "bankCountry": "US",
     "accountNumber": "987654321",
@@ -69,7 +70,21 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-# print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())
+
+# THE CALL ABOVE RETURNS THE FOLLOWING ERROR:
+# {
+#     "statusCode": -72,
+#     "isSuccess": False,
+#     "logIdentifier": "76a947c990e24c76b2a62f26ebf48639",
+#     "message": "400: Bad request. The inputs supplied to the API are invalid",
+#     "errors": {
+#         "": [
+#             "Invalid state! (Ex. BeneficiaryState allows 2 characters for BeneficiaryCountry US only.)"
+#         ]
+#     },
+# }
+# Im currently using "beneficiaryState": "CA" and it still gives the error above. I added beneficiaryCountry and it did not made a difference
 
 transfer_url = f"{base_url}/transfer/create"
 body = {
@@ -87,7 +102,7 @@ body = {
         "accountType1": "personal",
         "beneficiaryAddress1": "123 Elm St",
         "beneficiaryCity": "Los Angeles",
-        "beneficiaryState": "California",
+        "beneficiaryState": "CA",
         "beneficiaryZipCode": "90001",
         "bankCountry": "US",
         "routingNumber": "123456789",
