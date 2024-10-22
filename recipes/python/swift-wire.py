@@ -84,7 +84,7 @@ print(response.json())
 #         ]
 #     },
 # }
-# Im currently using "beneficiaryState": "CA" and it still gives the error above. I added beneficiaryCountry and it did not made a difference
+# Im currently using "beneficiaryState": "CA" and it still gives the error above. I added beneficiaryCountry and it didn't made a difference
 
 transfer_url = f"{base_url}/transfer/create"
 body = {
