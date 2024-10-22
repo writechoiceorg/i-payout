@@ -1,10 +1,16 @@
 import base64
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 base_url = "https://merchantapi.testewallet.com/api/v1"
 
-username = "6d099995-e2f9-4a01-bef1-258eb99c1b77"
-password = "Ys=LYgysz0s+tZPC"
+username = os.environ.get("USERNAME")
+password = os.environ.get("PASSWORD")
+merchant_id = os.environ.get("MERCHANT_ID")
+
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
