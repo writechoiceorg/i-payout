@@ -1,0 +1,113 @@
+using System.Text;
+using Newtonsoft.Json;
+
+class Program
+{
+    private static readonly string baseUrl = "https://merchantapi.testewallet.com/api/v1";
+    private static readonly string username = "<username>";  // replace with your username
+    private static readonly string password = "<password>";  // replace with your password
+    private static string apiToken;
+    private static string merchantId;
+    private static string beneficiary_name = "john_doe";
+
+    static async Task Main(string[] args)
+    {
+        await Authenticate();
+        var beneficiaryData = await CreateBeneficiary();
+        await CreatePaymentItems(beneficiaryData["data"]["beneficiaryToken"].ToString(), beneficiary_name);
+        await CreateWebhook();
+    }
+
+    private static async Task Authenticate()
+    {
+        string authStr = $"{username}:{password}";
+        string encodedAuthStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(authStr));
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedAuthStr}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", username);
+
+            var response = await client.GetAsync($"{baseUrl}/authentication/login");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var responseData = JsonConvert.DeserializeObject<dynamic>(responseBody);
+
+            apiToken = responseData.data.token;
+            merchantId = username;
+        }
+    }
+
+    private static async Task<dynamic> CreateBeneficiary()
+    {
+        var beneficiaryBody = new
+        {
+            username = beneficiary_name,
+            firstName = "John",
+            lastName = "Doe",
+            emailAddress = "johndoe1@gmail.com"
+        };
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", merchantId);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            var content = new StringContent(JsonConvert.SerializeObject(beneficiaryBody), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync($"{baseUrl}/beneficiaries", content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<dynamic>(responseBody);
+        }
+    }
+
+    private static async Task CreatePaymentItems(string _beneficiaryToken, string _username)
+    {
+        var paymentItemsBody = new
+        {
+            checkoutItems = new[]
+            {
+                new { description = "Service Fee", amount = 50.00, currencyCode = "USD", merchantReferenceId = username, isSubscription = false, userReturnUrl = "https://yoururl.com/notification" },
+                new { description = "Product Purchase", amount = 150.00, currencyCode = "USD", merchantReferenceId = username, isSubscription = false, userReturnUrl = "https://yoururl.com/notification" }
+            },
+            beneficiaryToken = _beneficiaryToken,
+            username = _username
+        };
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", merchantId);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            var content = new StringContent(JsonConvert.SerializeObject(paymentItemsBody), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync($"{baseUrl}/payins", content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var paymentItemsData = JsonConvert.DeserializeObject<dynamic>(responseBody);
+        }
+    }
+
+    private static async Task CreateWebhook()
+    {
+        var webhookBody = new
+        {
+            @event = "PAYMENT.COMPLETED",
+            url = "https://yourwebhookurl.com/notification",
+            description = "Webhook for payment completion"
+        };
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", merchantId);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            
+            var content = new StringContent(JsonConvert.SerializeObject(webhookBody), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync($"{baseUrl}/webhooks", content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var webhookData = JsonConvert.DeserializeObject<dynamic>(responseBody);
+
+            Console.WriteLine(responseBody);
+        }
+    }
+}

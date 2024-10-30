@@ -1,0 +1,84 @@
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+namespace IPayoutExample
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            var base_url = "https://merchantapi.testewallet.com/api/v1";
+
+            var username = Environment.GetEnvironmentVariable("IPAYOUT_USERNAME");
+            var password = Environment.GetEnvironmentVariable("IPAYOUT_PASSWORD");
+            var merchant_id = Environment.GetEnvironmentVariable("IPAYOUT_MERCHANT_ID");
+
+            var auth_str = $"{username}:{password}";
+            var encoded_auth_str = Convert.ToBase64String(Encoding.UTF8.GetBytes(auth_str));
+
+            var token_url = $"{base_url}/authentication/login";
+            var client = new HttpClient();
+
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encoded_auth_str);
+            client.DefaultRequestHeaders.Add("X-MerchantId", merchant_id);
+
+            // Authentication
+            var response = await client.GetAsync(token_url);
+            var content = await response.Content.ReadAsStringAsync();
+            dynamic json = JsonConvert.DeserializeObject(content);
+            var api_token = json.data.token;
+
+            // Create Beneficiary
+            var customer_url = $"{base_url}/beneficiaries";
+            var beneficiary = new
+            {
+                username = "john_doe",
+                firstName = "John",
+                lastName = "Doe",
+                emailAddress = "johndoe@mail.com"
+            };
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", api_token);
+            client.DefaultRequestHeaders.Remove("Content-Type");
+            client.DefaultRequestHeaders.Add("Content-Type", "application/*+json");
+
+            var beneficiaryContent = new StringContent(JsonConvert.SerializeObject(beneficiary), Encoding.UTF8, "application/json");
+            response = await client.PostAsync(customer_url, beneficiaryContent);
+            content = await response.Content.ReadAsStringAsync();
+            json = JsonConvert.DeserializeObject(content);
+            var customer_token = json.data.beneficiaryToken;
+
+            // Create Payout
+            var payout_url = $"{base_url}/payouts";
+            var payout = new
+            {
+                partnerBatchId = "batch_002",
+                poolId = "pool_123",
+                allowDuplicates = true,
+                autoLoad = true,
+                currencyCode = "USD",
+                arrAccounts = new[]
+                {
+                    new {
+                        username = "john_doe",
+                        amount = 200,
+                        merchantReferenceId = "929019"
+                    }
+                }
+            };
+
+            client.DefaultRequestHeaders.Remove("Content-Type");
+            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+
+            var payoutContent = new StringContent(JsonConvert.SerializeObject(payout), Encoding.UTF8, "application/json");
+            response = await client.PostAsync(payout_url, payoutContent);
+            content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(content);
+        }
+    }
+}

@@ -14,7 +14,7 @@ merchant_id = os.environ.get("IPAYOUT_MERCHANT_ID")
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
-token_url = f"{base_url}/Authentication/Login"
+token_url = f"{base_url}/authentication/login"
 headers = {
     "accept": "application/json",
     "authorization": f"Basic {encoded_auth_str}",
@@ -25,7 +25,7 @@ response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
 
-customer_url = f"{base_url}/beneficiary/create"
+customer_url = f"{base_url}/beneficiaries/create"
 body = {
     "username": "john_doe",
     "firstName": "John",
@@ -44,26 +44,22 @@ response = requests.post(customer_url, headers=headers, json=body)
 # customer_token = response.json()["data"]["beneficiaryToken"]
 customer_token = "e6252377-e999-46fd-bb70-3c4bdb83edf8"
 
-transfer_method_url = f"{base_url}/transfer/beneficiary/{customer_token}/bankaccount"
+transfer_method_url = (
+    f"{base_url}/transfermethod/beneficiaries/{customer_token}/creditcard"
+)
 body = {
-    "beneficiaryToken": customer_token,
-    "accountHolderName": "John Doe",
-    "accountNickName": "John's Personal Account",
-    "accountCurrency": "USD",
-    "accountNumber": "123456789",
-    "accountType1": "personal",  # can be either 'personal' or 'business'
-    "accountType2": "checking",  # can be either 'checking' or 'savings'
-    "bankName": "Bank of America",
-    "bankCountry": "US",
-    "routingNumber": "987654321",
-    "branchAddress": "1234 Bank Street, Suite 567",
     "beneficiaryFirstName": "John",
     "beneficiaryLastName": "Doe",
-    "beneficiaryCountry": "US",
-    "beneficiaryAddress1": "1234 Elm St",
-    "beneficiaryState": "CA",
+    "creditCardNumber": "4111111111111111",
+    "expiryMonth": "12",
+    "expiryYear": "2026",
+    "beneficiaryAddress1": "123 Elm St",
     "beneficiaryCity": "Los Angeles",
+    "beneficiaryState": "CA",
     "beneficiaryZipCode": "90001",
+    "beneficiaryCountry": "US",
+    "beneficiaryPhoneNumber": "+1 555-1234",
+    "cardType": "CreditCard",
 }
 
 headers = {
@@ -73,7 +69,16 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-# print(response.json())  # RETURNS A 404 WITHOUT DATA
+print(response.json())
+
+# THE CALL ABOVE RETURNS THE FOLLOWING ERROR:
+# {
+#     "data": None,
+#     "isSuccess": False,
+#     "message": "Value cannot be null. (Parameter 'input')",
+#     "statusCode": -1,
+#     "logIdentifier": "edf9231fb7a941d8974ce9ce6f9d2aa1",
+# }
 
 transfer_url = f"{base_url}/transfer/create"
 body = {
@@ -84,23 +89,7 @@ body = {
     "dateExpire": "2024-12-31T23:59:59.999Z",
     "destinationAmount": 100.00,
     "destinationCurrency": "USD",
-    "destinationType": "RealtimeACH",
-    "bankAccount": {
-        "accountNickName": "John's Personal Account",
-        "accountCurrency": "USD",
-        "accountNumber": "123456789",
-        "accountType1": "personal",
-        "accountType2": "checking",
-        "bankName": "Bank of America",
-        "bankCountry": "US",
-        "routingNumber": "987654321",
-        "branchAddress": "1234 Bank Street, Suite 567",
-        "beneficiaryCountry": "US",
-        "beneficiaryAddress1": "1234 Elm St",
-        "beneficiaryState": "CA",
-        "beneficiaryCity": "Los Angeles",
-        "beneficiaryZipCode": "90001",
-    },
+    "destinationType": "CreditCard",
 }
 headers = {
     "Authorization": f"Bearer {api_token}",
@@ -111,5 +100,3 @@ headers = {
 response = requests.post(transfer_method_url, headers=headers, json=body)
 
 print(response.json())
-
-# ERROR RETURNS A 404 WITHOUT DATA

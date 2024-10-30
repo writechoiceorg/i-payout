@@ -8,7 +8,7 @@ const password = "<password>";  // Replace with your actual password
 const authStr = `${username}:${password}`;
 const encodedAuthStr = base64.encode(authStr);
 
-const tokenUrl = `${baseUrl}/Authentication/Login`;
+const tokenUrl = `${baseUrl}/authentication/login`;
 let headers = {
     "accept": "application/json",
     "authorization": `Basic ${encodedAuthStr}`,
@@ -21,7 +21,7 @@ axios.get(tokenUrl, { headers: headers })
         const apiToken = response.data.data.token;
         const merchantId = username;
 
-        const beneficiaryUrl = `${baseUrl}/beneficiary/create`;
+        const beneficiaryUrl = `${baseUrl}/beneficiaries/create`;
         const beneficiaryBody = {
             "username": "john_doe55",
             "firstName": "John",
@@ -40,7 +40,7 @@ axios.get(tokenUrl, { headers: headers })
             .then(beneficiaryResponse => {
                 const beneficiaryData = beneficiaryResponse.data;
 
-                const paymentItemsUrl = `${baseUrl}/PayIn/create`;
+                const paymentItemsUrl = `${baseUrl}/payins`;
                 const paymentItemsBody = {
                     "items": [
                         { "description": "Service Fee", "amount": 50.00, "currency": "USD" },
@@ -60,7 +60,7 @@ axios.get(tokenUrl, { headers: headers })
                 return axios.post(paymentItemsUrl, paymentItemsBody, { headers: headers });
             })
             .then(() => {
-                const webhookUrl = `${baseUrl}/webhook/Create`;
+                const webhookUrl = `${baseUrl}/webhooks`;
                 const webhookBody = {
                     "alias": "PAYMENT.COMPLETED",
                     "eventNames": ["PAYMENT.COMPLETED"],

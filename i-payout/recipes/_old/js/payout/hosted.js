@@ -8,7 +8,7 @@ const password = "<password>";  // Replace with your actual password
 const authStr = `${username}:${password}`;
 const encodedAuthStr = base64.encode(authStr);
 
-const tokenUrl = `${baseUrl}/Authentication/Login`;
+const tokenUrl = `${baseUrl}/authentication/login`;
 let headers = {
     "accept": "application/json",
     "authorization": `Basic ${encodedAuthStr}`,
@@ -19,7 +19,7 @@ axios.get(tokenUrl, { headers: headers })
     .then(response => {
         const apiToken = response.data.data.token;
 
-        const beneficiaryUrl = `${baseUrl}/beneficiary/create`;
+        const beneficiaryUrl = `${baseUrl}/beneficiaries/create`;
         const beneficiaryBody = {
             "username": "john_doe",
             "firstName": "John",

@@ -14,7 +14,7 @@ merchant_id = os.environ.get("IPAYOUT_MERCHANT_ID")
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
-token_url = f"{base_url}/Authentication/Login"
+token_url = f"{base_url}/authentication/login"
 headers = {
     "accept": "application/json",
     "authorization": f"Basic {encoded_auth_str}",
@@ -25,7 +25,7 @@ response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
 
-customer_url = f"{base_url}/beneficiary/create"
+customer_url = f"{base_url}/beneficiaries/create"
 body = {
     "username": "john_doe",
     "firstName": "John",
@@ -44,23 +44,28 @@ response = requests.post(customer_url, headers=headers, json=body)
 # customer_token = response.json()["data"]["beneficiaryToken"]
 customer_token = "e6252377-e999-46fd-bb70-3c4bdb83edf8"
 
-transfer_method_url = f"{base_url}/transfermethod/beneficiary/{customer_token}/wire"
+transfer_method_url = f"{base_url}/transfer/beneficiaries/{customer_token}/bankaccount"
 body = {
-    "accountNickName": "John US Wire Account",
-    "beneficiaryCountry": "US",
-    "accountType1": "personal",
-    "routingNumber": "12345",
-    "beneficiaryAddress1": "123 Elm St",
-    "beneficiaryCity": "Los Angeles",
-    "beneficiaryState": "CA",
-    "beneficiaryZipCode": "90001",
-    "bankCountry": "US",
+    "beneficiaryToken": customer_token,
+    "accountHolderName": "John Doe",
+    "accountNickName": "John's UK Account",
+    "accountCurrency": "GBP",
     "accountNumber": "987654321",
-    "bankName": "Bank of America",
-    "bankAddress1": "123 Bank St",
-    "bankCity": "New York",
-    "bankState": "New York",
-    "bankZipCode": "10001",
+    "accountType1": "personal",  # can be either 'personal' or 'business'
+    "accountType2": "checking",  # can be either 'checking' or 'savings'
+    "bankName": "HSBC",
+    "bankCode": "HSBC123",
+    "bankCountry": "GB",
+    "swiftCode": "HBUKGB4B",
+    "routingNumber": "40-30-20",
+    "branchAddress": "1 Queen's Road, Central London",
+    "beneficiaryFirstName": "John",
+    "beneficiaryLastName": "Doe",
+    "beneficiaryCountry": "GB",
+    "beneficiaryAddress1": "123 King St",
+    "beneficiaryState": "England",
+    "beneficiaryCity": "London",
+    "beneficiaryZipCode": "SW1A 1AA",
 }
 
 headers = {
@@ -70,21 +75,7 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-print(response.json())
-
-# THE CALL ABOVE RETURNS THE FOLLOWING ERROR:
-# {
-#     "statusCode": -72,
-#     "isSuccess": False,
-#     "logIdentifier": "76a947c990e24c76b2a62f26ebf48639",
-#     "message": "400: Bad request. The inputs supplied to the API are invalid",
-#     "errors": {
-#         "": [
-#             "Invalid state! (Ex. BeneficiaryState allows 2 characters for BeneficiaryCountry US only.)"
-#         ]
-#     },
-# }
-# Im currently using "beneficiaryState": "CA" and it still gives the error above. I added beneficiaryCountry and it didn't made a difference
+# print(response.json())  # RETURNS A 404 WITHOUT DATA
 
 transfer_url = f"{base_url}/transfer/create"
 body = {
@@ -94,24 +85,27 @@ body = {
     "comments": "Payment for services",
     "dateExpire": "2024-12-31T23:59:59.999Z",
     "destinationAmount": 100.00,
-    "destinationCurrency": "USD",
-    "destinationType": "Wire",
-    "wireProfile": {
-        "accountNickName": "John's Wire Account",
-        "beneficiaryCountry": "US",
-        "accountType1": "personal",
-        "beneficiaryAddress1": "123 Elm St",
-        "beneficiaryCity": "Los Angeles",
-        "beneficiaryState": "CA",
-        "beneficiaryZipCode": "90001",
-        "bankCountry": "US",
-        "routingNumber": "123456789",
+    "destinationCurrency": "GBP",
+    "destinationType": "Bank",
+    "bankAccount": {
+        "accountNickName": "John's UK Account",
+        "accountCurrency": "GBP",
         "accountNumber": "987654321",
-        "bankName": "Bank of America",
-        "bankAddress1": "123 Bank St",
-        "bankCity": "New York",
-        "bankState": "New York",
-        "bankZipCode": "10001",
+        "accountType1": "personal",
+        "accountType2": "checking",
+        "bankName": "HSBC",
+        "bankCountry": "GB",
+        "routingNumber": "40-30-20",
+        "branchAddress": "1 Queen's Road, Central London",
+        "beneficiaryFirstName": "John",
+        "beneficiaryLastName": "Doe",
+        "beneficiaryDateOfBirth": "1990-01-01",
+        "beneficiaryGovernmentID": "987654321",
+        "beneficiaryCountry": "GB",
+        "beneficiaryAddress1": "123 King St",
+        "beneficiaryState": "England",
+        "beneficiaryCity": "London",
+        "beneficiaryZipCode": "SW1A 1AA",
     },
 }
 headers = {
@@ -123,3 +117,5 @@ headers = {
 response = requests.post(transfer_method_url, headers=headers, json=body)
 
 print(response.json())
+
+# ERROR RETURNS A 404 WITHOUT DATA

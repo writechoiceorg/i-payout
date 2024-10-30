@@ -14,7 +14,7 @@ merchant_id = os.environ.get("IPAYOUT_MERCHANT_ID")
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
-token_url = f"{base_url}/Authentication/Login"
+token_url = f"{base_url}/authentication/login"
 headers = {
     "accept": "application/json",
     "authorization": f"Basic {encoded_auth_str}",
@@ -25,7 +25,7 @@ response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
 
-customer_url = f"{base_url}/beneficiary/create"
+customer_url = f"{base_url}/beneficiaryies"
 body = {
     "username": "john_doe",
     "firstName": "John",
@@ -41,25 +41,24 @@ headers = {
 
 response = requests.post(customer_url, headers=headers, json=body)
 
-# customer_token = response.json()["data"]["beneficiaryToken"]
-customer_token = "e6252377-e999-46fd-bb70-3c4bdb83edf8"
+customer_token = response.json()["data"]["beneficiaryToken"]
 
-transfer_method_url = (
-    f"{base_url}/transfermethod/beneficiary/{customer_token}/creditcard"
-)
+transfer_method_url = f"{base_url}/transfermethods/beneficiaries/{customer_token}/wires"
 body = {
-    "beneficiaryFirstName": "John",
-    "beneficiaryLastName": "Doe",
-    "creditCardNumber": "4111111111111111",
-    "expiryMonth": "12",
-    "expiryYear": "2026",
+    "accountNickName": "John US Wire Account",
+    "beneficiaryCountry": "US",
+    "accountType1": "personal",
     "beneficiaryAddress1": "123 Elm St",
     "beneficiaryCity": "Los Angeles",
     "beneficiaryState": "CA",
     "beneficiaryZipCode": "90001",
-    "beneficiaryCountry": "US",
-    "beneficiaryPhoneNumber": "+1 555-1234",
-    "cardType": "CreditCard",
+    "bankCountry": "US",
+    "accountNumber": "987654321",
+    "bankName": "Bank of America",
+    "bankAddress1": "123 Bank St",
+    "bankCity": "New York",
+    "bankState": "New York",
+    "bankZipCode": "10001",
 }
 
 headers = {
@@ -69,18 +68,8 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-print(response.json())
 
-# THE CALL ABOVE RETURNS THE FOLLOWING ERROR:
-# {
-#     "data": None,
-#     "isSuccess": False,
-#     "message": "Value cannot be null. (Parameter 'input')",
-#     "statusCode": -1,
-#     "logIdentifier": "edf9231fb7a941d8974ce9ce6f9d2aa1",
-# }
-
-transfer_url = f"{base_url}/transfer/create"
+transfer_url = f"{base_url}/transfers"
 body = {
     "merchantTransactionId": "TX123456",
     "beneficiaryToken": customer_token,
@@ -89,7 +78,24 @@ body = {
     "dateExpire": "2024-12-31T23:59:59.999Z",
     "destinationAmount": 100.00,
     "destinationCurrency": "USD",
-    "destinationType": "CreditCard",
+    "destinationType": "Wire",
+    "wireProfile": {
+        "accountNickName": "John's Wire Account",
+        "beneficiaryCountry": "US",
+        "accountType1": "personal",
+        "beneficiaryAddress1": "123 Elm St",
+        "beneficiaryCity": "Los Angeles",
+        "beneficiaryState": "CA",
+        "beneficiaryZipCode": "90001",
+        "bankCountry": "US",
+        "routingNumber": "123456789",
+        "accountNumber": "987654321",
+        "bankName": "Bank of America",
+        "bankAddress1": "123 Bank St",
+        "bankCity": "New York",
+        "bankState": "New York",
+        "bankZipCode": "10001",
+    },
 }
 headers = {
     "Authorization": f"Bearer {api_token}",

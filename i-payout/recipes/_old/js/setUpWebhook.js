@@ -9,7 +9,7 @@ const password = "<password>";
 const authStr = `${username}:${password}`;
 const encodedAuthStr = base64.encode(authStr);
 
-const tokenUrl = `${baseUrl}/Authentication/Login`;
+const tokenUrl = `${baseUrl}/authentication/login`;
 let headers = {
     "accept": "application/json",
     "authorization": `Basic ${encodedAuthStr}`,
@@ -21,7 +21,7 @@ axios.get(tokenUrl, { headers: headers })
         const apiToken = response.data.data.token;
         const merchantId = username;
 
-        const webhookUrl = `${baseUrl}/webhook/Create`;
+        const webhookUrl = `${baseUrl}/webhooks`;
         const webhookBody = {
             "eventNames": ["PAYMENT.CREATED"],
             "url": "https://webhook.site/#!/view/94480622-0f4f-4b1c-bbf4-0d3071c0958a",

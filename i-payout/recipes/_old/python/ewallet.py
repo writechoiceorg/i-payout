@@ -1,53 +1,62 @@
 import base64
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 base_url = "https://merchantapi.testewallet.com/api/v1"
 
-username = "6d099995-e2f9-4a01-bef1-258eb99c1b77"
-password = "Ys=LYgysz0s+tZPC"
+username = os.environ.get("IPAYOUT_USERNAME")
+password = os.environ.get("IPAYOUT_PASSWORD")
+merchant_id = os.environ.get("IPAYOUT_MERCHANT_ID")
+
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
-token_url = f"{base_url}/Authentication/Login"
+token_url = f"{base_url}/authentication/login"
 headers = {
     "accept": "application/json",
     "authorization": f"Basic {encoded_auth_str}",
-    "X-MerchantId": username,
+    "X-MerchantId": merchant_id,
 }
 
 response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
 
-beneficiary_url = f"{base_url}/beneficiary/create"
+customer_url = f"{base_url}/beneficiaries/create"
 body = {
     "username": "john_doe",
     "firstName": "John",
     "lastName": "Doe",
-    "emailAddress": "johndoe@gmail.com",
+    "emailAddress": "johndoe@mail.com",
 }
 headers = {
     "Authorization": f"Bearer {api_token}",
-    "X-MerchantId": username,
+    "X-MerchantId": merchant_id,
     "accept": "application/json",
     "content-type": "application/*+json",
 }
 
-response = requests.post(beneficiary_url, headers=headers, json=body)
+response = requests.post(customer_url, headers=headers, json=body)
+
+customer_token = response.json()["data"]["beneficiaryToken"]
 
 payout_url = f"{base_url}/PayOut/create"
 body = {
-    "partnerBatchId": "batch_001",
+    "partnerBatchId": "batch_002",
+    "poolId": "pool_123",
     "allowDuplicates": True,
     "autoLoad": True,
     "currencyCode": "USD",
     "arrAccounts": [
-        {"username": "john_doe", "amount": 200, "merchantReferenceId": "789012"}
+        {"username": "john_doe", "amount": 200, "merchantReferenceId": "929019"}
     ],
 }
 headers = {
     "Authorization": f"Bearer {api_token}",
-    "X-MerchantId": username,
+    "X-MerchantId": merchant_id,
     "Content-Type": "application/json",
 }
 

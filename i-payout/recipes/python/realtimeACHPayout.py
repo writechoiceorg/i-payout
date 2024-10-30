@@ -14,7 +14,7 @@ merchant_id = os.environ.get("IPAYOUT_MERCHANT_ID")
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
-token_url = f"{base_url}/Authentication/Login"
+token_url = f"{base_url}/authentication/login"
 headers = {
     "accept": "application/json",
     "authorization": f"Basic {encoded_auth_str}",
@@ -25,7 +25,7 @@ response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
 
-customer_url = f"{base_url}/beneficiary/create"
+customer_url = f"{base_url}/beneficiaries"
 body = {
     "username": "john_doe",
     "firstName": "John",
@@ -41,10 +41,11 @@ headers = {
 
 response = requests.post(customer_url, headers=headers, json=body)
 
-# customer_token = response.json()["data"]["beneficiaryToken"]
-customer_token = "e6252377-e999-46fd-bb70-3c4bdb83edf8"
+customer_token = response.json()["data"]["beneficiaryToken"]
 
-transfer_method_url = f"{base_url}/transfer/beneficiary/{customer_token}/bankaccount"
+transfer_method_url = (
+    f"{base_url}/transfermethods/beneficiaries/{customer_token}/bank-accounts"
+)
 body = {
     "beneficiaryToken": customer_token,
     "accountHolderName": "John Doe",
@@ -73,11 +74,8 @@ headers = {
 }
 
 response = requests.post(transfer_method_url, headers=headers, json=body)
-print(response.json())
 
-# ERROR RETURNS A 404 WITHOUT DATA
-
-transfer_url = f"{base_url}/transfer/create"
+transfer_url = f"{base_url}/transfers"
 body = {
     "merchantTransactionId": "TX123456",
     "beneficiaryToken": customer_token,
@@ -86,7 +84,7 @@ body = {
     "dateExpire": "2024-12-31T23:59:59.999Z",
     "destinationAmount": 100.00,
     "destinationCurrency": "USD",
-    "destinationType": "RegularACH",
+    "destinationType": "RealtimeACH",
     "bankAccount": {
         "accountNickName": "John's Personal Account",
         "accountCurrency": "USD",
@@ -113,5 +111,3 @@ headers = {
 response = requests.post(transfer_method_url, headers=headers, json=body)
 
 print(response.json())
-
-# ERROR RETURNS A 404 WITHOUT DATA

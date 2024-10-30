@@ -14,7 +14,7 @@ merchant_id = os.environ.get("IPAYOUT_MERCHANT_ID")
 auth_str = f"{username}:{password}"
 encoded_auth_str = base64.b64encode(auth_str.encode()).decode()
 
-token_url = f"{base_url}/Authentication/Login"
+token_url = f"{base_url}/authentication/login"
 headers = {
     "accept": "application/json",
     "authorization": f"Basic {encoded_auth_str}",
@@ -24,8 +24,7 @@ headers = {
 response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
-
-customer_url = f"{base_url}/beneficiary/create"
+customer_url = f"{base_url}/beneficiaries"
 body = {
     "username": "john_doe",
     "firstName": "John",
@@ -43,7 +42,7 @@ response = requests.post(customer_url, headers=headers, json=body)
 
 customer_token = response.json()["data"]["beneficiaryToken"]
 
-payout_url = f"{base_url}/PayOut/create"
+payout_url = f"{base_url}/payouts"
 body = {
     "partnerBatchId": "batch_002",
     "poolId": "pool_123",

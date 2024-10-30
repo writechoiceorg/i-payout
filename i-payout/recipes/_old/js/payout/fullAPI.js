@@ -8,7 +8,7 @@ const password = "<password>";  // Replace with your actual password
 const authStr = `${username}:${password}`;
 const encodedAuthStr = base64.encode(authStr);
 
-const tokenUrl = `${baseUrl}/Authentication/Login`;
+const tokenUrl = `${baseUrl}/authentication/login`;
 let headers = {
     "accept": "application/json",
     "authorization": `Basic ${encodedAuthStr}`,
@@ -19,7 +19,7 @@ axios.get(tokenUrl, { headers: headers })
     .then(response => {
         const apiToken = response.data.data.token;
 
-        const customerUrl = `${baseUrl}/beneficiary/create`;
+        const customerUrl = `${baseUrl}/beneficiaries/create`;
         const customerBody = {
             "username": "john_doe3",
             "firstName": "Johne",
@@ -37,7 +37,7 @@ axios.get(tokenUrl, { headers: headers })
             .then(response => {
                 const customerToken = response.data.data.beneficiaryToken;
 
-                const transferMethodUrl = `${baseUrl}/transfer/beneficiary/${customerToken}/bankaccount`;
+                const transferMethodUrl = `${baseUrl}/transfer/beneficiaries/${customerToken}/bankaccount`;
                 const transferMethodBody = {
                     "beneficiaryToken": customerToken,
                     "accountHolderName": "John Doe",

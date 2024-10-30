@@ -1,0 +1,119 @@
+using System.Security.Cryptography;
+using System.Text;
+using Newtonsoft.Json;
+
+class Program
+{
+    private static readonly string baseUrl = "https://merchantapi.testewallet.com/api/v1";
+    private static readonly string username = "<username>";  // Replace with your actual username
+    private static readonly string password = "<password>";  // Replace with your actual password
+    private static string authStr = $"{username}:{password}";
+    private static string encodedAuthStr = Convert.ToBase64String(Encoding.UTF8.GetBytes(authStr));
+    private static string apiToken;
+    private static string merchantId;
+
+    static async Task Main(string[] args)
+    {
+        await Authenticate();
+        var webhookData = await CreateWebhook();
+        string webhookToken = webhookData["data"]["token"].ToString();
+        await ActivateWebhook(webhookToken);
+
+        // Example usage of the verification function
+        string publicKey = "<public_key>";
+        string timestamp = "<x-timestamp_value>";
+        string notificationUrl = "https://webhook.site/#!/view/94480622-0f4f-4b1c-bbf4-0d3071c0958a";
+        string jsonBody = "{\"event\":\"PAYMENT.COMPLETED\"}";  // Replace with the actual JSON payload
+        string receivedSignature = "<x-signature_value>";  // This is received from the triggered webhook
+
+        bool isValid = VerifyWebhookSignature(publicKey, timestamp, notificationUrl, jsonBody, receivedSignature);
+        if (isValid)
+        {
+            Console.WriteLine("Webhook signature is valid.");
+        }
+        else
+        {
+            Console.WriteLine("Webhook signature is invalid.");
+        }
+    }
+
+    private static async Task Authenticate()
+    {
+
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.Add("Authorization", $"Basic {encodedAuthStr}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", username);
+
+            var response = await client.GetAsync($"{baseUrl}/authentication/login");
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var responseData = JsonConvert.DeserializeObject<dynamic>(responseBody);
+
+            apiToken = responseData.data.token;
+            merchantId = username;
+        }
+    }
+
+    private static async Task<dynamic> CreateWebhook()
+    {
+        var webhookBody = new
+        {
+            eventNames = new[] { "PAYMENT.CREATED" },
+            url = "https://webhook.site/#!/view/94480622-0f4f-4b1c-bbf4-0d3071c0958a",
+            alias = "WebhookTest"
+        };
+
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", merchantId);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            
+            var content = new StringContent(JsonConvert.SerializeObject(webhookBody), Encoding.UTF8, "application/json");
+            var response = await client.PostAsync($"{baseUrl}/webhooks", content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<dynamic>(responseBody);
+        }
+    }
+
+    private static async Task ActivateWebhook(string webhookToken)
+    {
+        using (var client = new HttpClient())
+        {
+            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiToken}");
+            client.DefaultRequestHeaders.Add("X-MerchantId", merchantId);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            var response = await client.PostAsync($"{baseUrl}/webhooks/{webhookToken}/activate", null);
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var activateData = JsonConvert.DeserializeObject<dynamic>(responseBody);
+        }
+    }
+
+    private static bool VerifyWebhookSignature(string publicKey, string timestamp, string notificationUrl, string jsonBody, string receivedSignature)
+    {
+        // Construct the signature body
+        string signatureBody = $"{timestamp}#{notificationUrl}#{jsonBody}";
+        byte[] signatureHash = SHA256.Create().ComputeHash(Encoding.UTF8.GetBytes(signatureBody));
+
+        // Verify the signature using the public key
+        try
+        {
+            using (var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(publicKey)))
+            {
+                byte[] hmacSignature = hmac.ComputeHash(signatureHash);
+                string expectedSignature = Convert.ToBase64String(hmacSignature);
+
+                // Compare the received signature with the expected signature
+                return receivedSignature == expectedSignature;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Signature verification failed: {e.Message}");
+            return false;
+        }
+    }
+}
