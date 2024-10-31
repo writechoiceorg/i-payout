@@ -3,6 +3,9 @@ name: Weekly ReadMe Sync
 on:
   schedule:
     - cron: "0 0 * * 0" # Runs every Sunday at 00:00 UTC
+  push:
+    paths:
+      - ".github/workflows/weekly_sync.yml"
 
 jobs:
   readme-weekly-sync:
