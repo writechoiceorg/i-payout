@@ -25,7 +25,7 @@ response = requests.get(token_url, headers=headers)
 api_token = response.json()["data"]["token"]
 
 
-customer_url = f"{base_url}/beneficiaryies"
+customer_url = f"{base_url}/beneficiaries"
 body = {
     "username": "john_doe",
     "firstName": "John",
