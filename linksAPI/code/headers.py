@@ -20,3 +20,11 @@ def create_headers():
 
 
 headers = create_headers()
+
+
+def create_headers_with_token(token):
+    return {
+        "accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": f"X-Api-Key {token}",
+    }

@@ -97,5 +97,38 @@
             "logIdentifier": "444a7758-60ad-47d3-b43e-5d8fca8b0f88",
             "logAsError": false
         }
+    },
+    {
+        "paymentIdentifier": "19d10cb1-3a88-4c1e-a5c2-74cedfdbb111",
+        "merchantIdentifier": "AF9A9D3E-3D3B-4F7D-9FDE-4169F1ABEDD5",
+        "currencyCode": "USD",
+        "customerIdentifier": "ad009a9b-bac1-41b9-bb24-5566a79f19c1",
+        "customerReference": null,
+        "merchantOrderId": "order_1234567893",
+        "token": "2aea813c-358d-4b55-ab80-95e679c227f8",
+        "allowedCardBrands": [
+            "JCB",
+            "Discover",
+            "Amex",
+            "Visa",
+            "MasterCard"
+        ],
+        "allowedCurrencies": [
+            "USD",
+            "CAD"
+        ],
+        "showCardHolderNameField": true,
+        "showCvvField": true,
+        "showZipCodeField": false,
+        "serverYear": 2024,
+        "serverMonth": 12,
+        "showBillingAddressField": true,
+        "customerPaymentMethods": [],
+        "result": {
+            "resultType": "Accepted",
+            "merchantMessage": "",
+            "logIdentifier": "ab0ff9a4-2f33-4bd2-a85b-e8e0c109722b",
+            "logAsError": false
+        }
     }
 ]

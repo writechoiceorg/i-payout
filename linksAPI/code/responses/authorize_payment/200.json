@@ -1,0 +1,22 @@
+[
+    {
+        "merchantIdentifier": "af9a9d3e-3d3b-4f7d-9fde-4169f1abedd5",
+        "amount": "100.00",
+        "currencyCode": "USD",
+        "paymentStatus": "Authorized",
+        "paymentMethodType": "CreditCard",
+        "acquirer": "CcMockProcessor",
+        "customerIdentifier": "ad009a9b-bac1-41b9-bb24-5566a79f19c1",
+        "customerReference": "df8f9c91-a450-4dee-9b05-bf876211f2df",
+        "merchantOrderId": "order_1234567893",
+        "paymentIdentifier": "19d10cb1-3a88-4c1e-a5c2-74cedfdbb111",
+        "paymentMethodIdentifier": "ca28d7b7-1f0f-4c42-b3f1-8552e3dc37bb",
+        "returnUrl": "",
+        "result": {
+            "resultType": "Accepted",
+            "merchantMessage": "",
+            "logIdentifier": "998b1ec7-89be-4ff1-98bb-f94c8ab3e466",
+            "logAsError": false
+        }
+    }
+]

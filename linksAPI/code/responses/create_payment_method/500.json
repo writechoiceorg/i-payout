@@ -22,5 +22,13 @@
             "logIdentifier": "c0dd44ce-b5f4-49da-9b1a-729f2717798d",
             "logAsError": false
         }
+    },
+    {
+        "result": {
+            "resultType": "Error",
+            "merchantMessage": "Internal error.",
+            "logIdentifier": "68db66e1-ccc6-4578-98f4-d589a4881463",
+            "logAsError": false
+        }
     }
 ]

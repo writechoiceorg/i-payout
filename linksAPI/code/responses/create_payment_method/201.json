@@ -1,0 +1,31 @@
+[
+    {
+        "merchantIdentifier": "af9a9d3e-3d3b-4f7d-9fde-4169f1abedd5",
+        "customerIdentifier": "c8ee51a9-f6c0-4108-a7c1-c8a821ffce2c",
+        "customerReference": "154564559",
+        "paymentMethodIdentifier": "583c748c-beea-4dc1-808a-2f34309e62f5",
+        "card": {
+            "cardNumber": "7580",
+            "expiryMonth": 11,
+            "expiryYear": 2026,
+            "cardHolderName": "Mitesh",
+            "cvv": null,
+            "creditCardBrand": "Visa"
+        },
+        "billingInformation": {
+            "firstLine": "540 NE 4th st",
+            "secondLine": "Second Floor",
+            "city": "FLL",
+            "region": "FL",
+            "zipCode": "33091",
+            "countryAlpha3Code": "USA",
+            "countryId": 1
+        },
+        "result": {
+            "resultType": "Accepted",
+            "merchantMessage": "",
+            "logIdentifier": "60554180-07ed-4cd0-92ca-3b5ac79c1fb3",
+            "logAsError": false
+        }
+    }
+]
