@@ -1,0 +1,144 @@
+using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+
+class Program
+{
+    private static readonly string BaseUrl = "https://merchantapi.testewallet.com/api/v1";
+    private static readonly string Username = "<USERNAME>";
+    private static readonly string Password = "<PASSWORD>";
+    private static readonly string MerchantId = "<MERCHANT_ID>";
+
+    static async Task Main(string[] args)
+    {
+        try
+        {
+            string apiToken = await GetApiToken();
+            string beneficiaryToken = await CreateBeneficiary(apiToken);
+            await AddTransferMethod(apiToken, beneficiaryToken);
+            await CreateTransfer(apiToken, beneficiaryToken);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    private static async Task<string> GetApiToken()
+    {
+        string authStr = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{Username}:{Password}"));
+
+        using HttpClient client = new HttpClient();
+        client.DefaultRequestHeaders.Add("X-MerchantId", MerchantId);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authStr);
+
+        HttpResponseMessage response = await client.GetAsync($"{BaseUrl}/authentication/login");
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        var json = JObject.Parse(responseBody);
+        return json["data"]["token"].ToString();
+    }
+
+    private static async Task<string> CreateBeneficiary(string apiToken)
+    {
+        using HttpClient client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
+        client.DefaultRequestHeaders.Add("X-MerchantId", MerchantId);
+
+        var body = new
+        {
+            username = "<USERNAME>",
+            firstName = "<FIRST_NAME>",
+            lastName = "<LAST_NAME>",
+            emailAddress = "<EMAIL_ADDRESS>"
+        };
+
+        StringContent content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PostAsync($"{BaseUrl}/beneficiaries", content);
+        string responseBody = await response.Content.ReadAsStringAsync();
+
+        var json = JObject.Parse(responseBody);
+        return json["data"]["beneficiaryToken"].ToString();
+    }
+
+    private static async Task AddTransferMethod(string apiToken, string beneficiaryToken)
+    {
+        using HttpClient client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
+        client.DefaultRequestHeaders.Add("X-MerchantId", MerchantId);
+
+        var body = new
+        {
+            beneficiaryToken = beneficiaryToken,
+            accountHolderName = "<ACCOUNT_HOLDER_NAME>",
+            accountNickName = "<ACCOUNT_NICKNAME>",
+            accountCurrency = "<CURRENCY>",
+            accountNumber = "<ACCOUNT_NUMBER>",
+            accountType1 = "<ACCOUNT_TYPE_1>",
+            accountType2 = "<ACCOUNT_TYPE_2>",
+            bankName = "<BANK_NAME>",
+            bankCode = "<BANK_CODE>",
+            bankCountry = "<BANK_COUNTRY>",
+            swiftCode = "<SWIFT_CODE>",
+            routingNumber = "<ROUTING_NUMBER>",
+            branchAddress = "<BRANCH_ADDRESS>",
+            beneficiaryFirstName = "<BENEFICIARY_FIRST_NAME>",
+            beneficiaryLastName = "<BENEFICIARY_LAST_NAME>",
+            beneficiaryCountry = "<BENEFICIARY_COUNTRY>",
+            beneficiaryAddress1 = "<BENEFICIARY_ADDRESS>",
+            beneficiaryState = "<BENEFICIARY_STATE>",
+            beneficiaryCity = "<BENEFICIARY_CITY>",
+            beneficiaryZipCode = "<BENEFICIARY_ZIP_CODE>"
+        };
+
+        StringContent content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+        await client.PostAsync($"{BaseUrl}/transfermethods/beneficiaries/{beneficiaryToken}/bank-accounts", content);
+    }
+
+    private static async Task CreateTransfer(string apiToken, string beneficiaryToken)
+    {
+        using HttpClient client = new HttpClient();
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiToken);
+        client.DefaultRequestHeaders.Add("X-MerchantId", MerchantId);
+
+        var body = new
+        {
+            merchantTransactionId = "<TRANSACTION_ID>",
+            beneficiaryToken = beneficiaryToken,
+            autoApprove = true,
+            comments = "<COMMENTS>",
+            dateExpire = "<EXPIRATION_DATE>",
+            destinationAmount = "<AMOUNT>",
+            destinationCurrency = "<CURRENCY>",
+            destinationType = "<DESTINATION_TYPE>",
+            bankAccount = new
+            {
+                accountNickName = "<ACCOUNT_NICKNAME>",
+                accountCurrency = "<CURRENCY>",
+                accountNumber = "<ACCOUNT_NUMBER>",
+                accountType1 = "<ACCOUNT_TYPE_1>",
+                accountType2 = "<ACCOUNT_TYPE_2>",
+                bankName = "<BANK_NAME>",
+                bankCountry = "<BANK_COUNTRY>",
+                routingNumber = "<ROUTING_NUMBER>",
+                branchAddress = "<BRANCH_ADDRESS>",
+                beneficiaryFirstName = "<BENEFICIARY_FIRST_NAME>",
+                beneficiaryLastName = "<BENEFICIARY_LAST_NAME>",
+                beneficiaryDateOfBirth = "<DATE_OF_BIRTH>",
+                beneficiaryGovernmentID = "<GOVERNMENT_ID>",
+                beneficiaryCountry = "<BENEFICIARY_COUNTRY>",
+                beneficiaryAddress1 = "<BENEFICIARY_ADDRESS>",
+                beneficiaryState = "<BENEFICIARY_STATE>",
+                beneficiaryCity = "<BENEFICIARY_CITY>",
+                beneficiaryZipCode = "<BENEFICIARY_ZIP_CODE>"
+            }
+        };
+
+        StringContent content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+        HttpResponseMessage response = await client.PostAsync($"{BaseUrl}/transfers", content);
+        Console.WriteLine(await response.Content.ReadAsStringAsync());
+    }
+}

@@ -27,10 +27,10 @@ api_token = response.json()["data"]["token"]
 
 customer_url = f"{base_url}/beneficiaries"
 body = {
-    "username": "john_doe",
+    "username": "john_doe212",
     "firstName": "John",
     "lastName": "Doe",
-    "emailAddress": "johndoe@mail.com",
+    "emailAddress": "johndoe212@mail.com",
 }
 headers = {
     "Authorization": f"Bearer {api_token}",
@@ -49,22 +49,24 @@ transfer_method_url = (
 body = {
     "beneficiaryToken": customer_token,
     "accountHolderName": "John Doe",
-    "accountNickName": "John's Personal Account",
-    "accountCurrency": "USD",
-    "accountNumber": "123456789",
+    "accountNickName": "John's UK Account",
+    "accountCurrency": "GBP",
+    "accountNumber": "987654321",
     "accountType1": "personal",  # can be either 'personal' or 'business'
     "accountType2": "checking",  # can be either 'checking' or 'savings'
-    "bankName": "Bank of America",
-    "bankCountry": "US",
-    "routingNumber": "987654321",
-    "branchAddress": "1234 Bank Street, Suite 567",
+    "bankName": "HSBC",
+    "bankCode": "HSBC123",
+    "bankCountry": "GB",
+    "swiftCode": "HBUKGB4B",
+    "routingNumber": "40-30-20",
+    "branchAddress": "1 Queen's Road, Central London",
     "beneficiaryFirstName": "John",
     "beneficiaryLastName": "Doe",
-    "beneficiaryCountry": "US",
-    "beneficiaryAddress1": "1234 Elm St",
-    "beneficiaryState": "CA",
-    "beneficiaryCity": "Los Angeles",
-    "beneficiaryZipCode": "90001",
+    "beneficiaryCountry": "GB",
+    "beneficiaryAddress1": "123 King St",
+    "beneficiaryState": "England",
+    "beneficiaryCity": "London",
+    "beneficiaryZipCode": "SW1A1",
 }
 
 headers = {
@@ -83,23 +85,28 @@ body = {
     "comments": "Payment for services",
     "dateExpire": "2024-12-31T23:59:59.999Z",
     "destinationAmount": 100.00,
-    "destinationCurrency": "USD",
-    "destinationType": "RealtimeACH",
+    "destinationCurrency": "GBP",
+    "destinationType": "Bank",
+    "sourceCurrency": "GBP",
     "bankAccount": {
-        "accountNickName": "John's Personal Account",
-        "accountCurrency": "USD",
-        "accountNumber": "123456789",
+        "accountNickName": "John's UK Account",
+        "accountCurrency": "GBP",
+        "accountNumber": "987654321",
         "accountType1": "personal",
         "accountType2": "checking",
-        "bankName": "Bank of America",
-        "bankCountry": "US",
-        "routingNumber": "987654321",
-        "branchAddress": "1234 Bank Street, Suite 567",
-        "beneficiaryCountry": "US",
-        "beneficiaryAddress1": "1234 Elm St",
-        "beneficiaryState": "CA",
-        "beneficiaryCity": "Los Angeles",
-        "beneficiaryZipCode": "90001",
+        "bankName": "HSBC",
+        "bankCountry": "GB",
+        "routingNumber": "40-30-20",
+        "branchAddress": "1 Queen's Road, Central London",
+        "beneficiaryFirstName": "John",
+        "beneficiaryLastName": "Doe",
+        "beneficiaryDateOfBirth": "1990-01-01",
+        "beneficiaryGovernmentID": "987654321",
+        "beneficiaryCountry": "GB",
+        "beneficiaryAddress1": "123 King St",
+        "beneficiaryState": "England",
+        "beneficiaryCity": "London",
+        "beneficiaryZipCode": "SW1A1",
     },
 }
 headers = {
@@ -108,6 +115,6 @@ headers = {
     "Content-Type": "application/json",
 }
 
-response = requests.post(transfer_method_url, headers=headers, json=body)
+response = requests.post(transfer_url, headers=headers, json=body)
 
 print(response.json())
